@@ -69,4 +69,12 @@
     <select id="selectMainImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
         SELECT * FROM mall.tab_imags where uid = #{main_image_id};
     </select>
+
+    <!-- 按编号查询 -->
+    <resultMap id="selectProductById" type="com.code.mallservice.mall.entity.ProductEntity">
+        <id column="id" property="id"/>
+    </resultMap>
+    <select id="findById" resultMap="selectProductById">
+      SELECT * FROM mall.tab_product where id = #{product_id};
+    </select>
 </mapper>

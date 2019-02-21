@@ -36,4 +36,11 @@ public interface ProductMapper {
      */
     Long findCount(@Param("product_id")int product_id, @Param("product_name")String product_name,
                                  @Param("user_id")int user_id);
+
+    /**
+     * 按照编号查询
+     * @param product_id
+     * @return
+     */
+    ProductEntity findById(@Param("product_id")int product_id);
 }

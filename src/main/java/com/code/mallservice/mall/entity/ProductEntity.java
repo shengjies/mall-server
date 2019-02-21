@@ -37,6 +37,8 @@ public class ProductEntity {
 
     private UserEntity userEntity;//创建者
 
+    private List<SizesEntity> sizes;//尺码属性
+
     public int getId() {
         return id;
     }
@@ -237,6 +239,14 @@ public class ProductEntity {
         this.userEntity = userEntity;
     }
 
+    public List<SizesEntity> getSizes() {
+        return sizes;
+    }
+
+    public void setSizes(List<SizesEntity> sizes) {
+        this.sizes = sizes;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
@@ -264,6 +274,8 @@ public class ProductEntity {
                 ", mainImage=" + mainImage +
                 ", roundImage=" + roundImage +
                 ", roundImageList=" + roundImageList +
+                ", userEntity=" + userEntity +
+                ", sizes=" + sizes +
                 '}';
     }
 }

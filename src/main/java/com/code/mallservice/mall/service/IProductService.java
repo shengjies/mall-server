@@ -31,4 +31,11 @@ public interface IProductService {
      * @return
      */
     Page<ProductEntity> findPage(int id,String product_name,int user_id,int page,int size);
+
+    /**
+     * 按编号查询
+     * @param id
+     * @return
+     */
+    ProductEntity findById(int id);
 }

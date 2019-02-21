@@ -1,0 +1,9 @@
+#====== 添加产品赠品尺码属性
+CREATE TABLE `tab_size_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `size_label` varchar(245) DEFAULT NULL,
+  `size_value` varchar(245) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  `c_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

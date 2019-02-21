@@ -4,9 +4,7 @@ import com.code.mallservice.mall.entity.ProductEntity;
 import com.code.mallservice.mall.service.IProductService;
 import com.code.mallservice.mall.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 产品
@@ -19,9 +17,8 @@ public class ProductController {
     private IProductService productService;
 
     @RequestMapping("/add")
-    public Result add(ProductEntity entity){
+    public Result add(@RequestBody ProductEntity entity){
         try {
-            System.out.println(entity);
             productService.add(entity);
             return Result.ok();
         }catch (Exception e){
@@ -60,6 +57,21 @@ public class ProductController {
                            @RequestParam(name = "size",defaultValue = "50")Integer size){
         try {
             return Result.ok(productService.findPage(id,name,user_id,page,size));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.error();
+    }
+
+    /**
+     * 按照编号查询
+     * @param id
+     * @return
+     */
+    @RequestMapping("/find/{id}")
+    public Result findById(@PathVariable("id")int id){
+        try {
+            return Result.ok(productService.findById(id));
         }catch (Exception e){
             e.printStackTrace();
         }

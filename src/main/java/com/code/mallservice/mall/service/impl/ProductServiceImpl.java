@@ -1,8 +1,10 @@
 package com.code.mallservice.mall.service.impl;
 
 import com.code.mallservice.mall.entity.ProductEntity;
+import com.code.mallservice.mall.entity.SizesEntity;
 import com.code.mallservice.mall.mapper.ImageMapper;
 import com.code.mallservice.mall.mapper.ProductMapper;
+import com.code.mallservice.mall.mapper.SizeMapper;
 import com.code.mallservice.mall.service.IProductService;
 import com.code.mallservice.mall.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private ImageMapper imageMapper;
+
+    @Autowired
+    private SizeMapper sizeMapper;
     /**
      * 添加产品
      * @param entity
@@ -55,6 +60,13 @@ public class ProductServiceImpl implements IProductService {
         if(entity.getCl_id() == 2){
             //自定义营销策略
         }
+        //尺码属性
+        if(entity.getSizes() != null && entity.getSizes().size() >0){
+            for (SizesEntity size : entity.getSizes()) {
+                size.setProduct_id(entity.getId());
+                sizeMapper.add(size);
+            }
+        }
         return 0;
     }
 
@@ -68,5 +80,10 @@ public class ProductServiceImpl implements IProductService {
         long count = productMapper.findCount(id,product_name,user_id);
         List<ProductEntity> list = productMapper.findPage(id,product_name,user_id,page*size,size);
         return new Page<>(list,count);
+    }
+
+    @Override
+    public ProductEntity findById(int id) {
+        return productMapper.findById(id);
     }
 }
