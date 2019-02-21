@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.UserMapper">
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mall`.`tab_user`(`username`,`password`,`c_date`,`role_code`)
+        VALUES(#{username},#{password},now(),#{role_code});
+    </insert>
+
+    <update id="edit">
+        UPDATE `mall`.`tab_user` SET
+        `username` = #{username},
+        `password` = #{password}
+        WHERE `id` = #{id}
+    </update>
+    <!-- 分页查询 -->
+    <resultMap id="selectUserPage" type="com.code.mallservice.mall.entity.UserEntity">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="role_code" property="role_code"/>
+        <result column="c_date" property="c_date"/>
+        <collection property="fbEtities" column="id" select="selectUserFB">
+            <id column="id" property="id"/>
+            <result column="fb_name" property="fb_name"/>
+            <result column="remark" property="remark"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
+        <collection property="domailEntities" column="id" select="selectUserDomain">
+            <id column="id" property="id"/>
+            <result column="domain_name" property="domain_name"/>
+            <result column="remark" property="remark"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
+    </resultMap>
+    <select id="findList" resultMap="selectUserPage">
+        SELECT * FROM mall.tab_user where 1=1
+        <if test="username != null and username != ''">
+            and username like '${username}%'
+        </if>
+         order by c_date desc limit #{page},#{size};
+    </select>
+
+    <select id="selectUserFB" resultType="com.code.mallservice.mall.entity.FBEtity">
+        SELECT a.* FROM mall.tab_fb_info as a,tab_user_fb as b where a.id = b.fb_id and user_id=#{id};
+    </select>
+
+    <select id="selectUserDomain" resultType="com.code.mallservice.mall.entity.DomailEntity">
+        SELECT a.* FROM mall.tab_domain_info as a,tab_user_domain as  b where a.id = b.domain_id and b.user_id=#{id};
+    </select>
+    <select id="findCount" resultType="_long">
+        SELECT count(*) FROM mall.tab_user where 1=1
+        <if test="username != null and username != ''">
+            and username like '${username}%'
+        </if>
+    </select>
+    <!-- 用户登录-->
+    <select id="findLogin" resultType="com.code.mallservice.mall.entity.UserEntity">
+        SELECT * FROM mall.tab_user where username=#{username} and `password`=#{password} limit 1;
+    </select>
+
+    <!-- 配置fb-->
+    <insert id="addUserFb">
+        INSERT INTO `mall`.`tab_user_fb`(`user_id`,`fb_id`)
+        VALUES(#{user_id},#{fb_id});
+    </insert>
+
+    <delete id="delUserFb">
+        delete from tab_user_fb where user_id=#{user_id}
+    </delete>
+
+    <!-- 配置域名 -->
+    <insert id="addUserDomain">
+        INSERT INTO `mall`.`tab_user_domain`(`user_id`,`domain_id`)
+        VALUES(#{user_id},#{domain_id});
+    </insert>
+
+    <delete id="delUserDomain">
+        delete from tab_user_domain where user_id=#{user_id};
+    </delete>
+</mapper>

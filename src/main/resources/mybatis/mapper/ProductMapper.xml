@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.ProductMapper">
+    <!-- 添加产品 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mall`.`tab_product`(`main_image_id`,`name`,`introduction`,`description`,`cl_id`,`price`,
+        `o_price`,`country`,`unit`,`sold`,`comment_num`,`max_buy_num`,`facebook`,`comment`,`templ`,
+        `c_date`,`user_id`,`lang`,`purchase_url`,`remark`)
+        VALUES(#{main_image_id},#{name},#{introduction},#{description},#{cl_id},#{price},#{o_price},#{country},#{unit},
+        #{sold},#{comment_num},#{max_buy_num},#{facebook},#{comment},#{templ},now(),#{user_id},#{lang},#{purchase_url},
+        #{remark});
+    </insert>
+
+
+
+
+    <!-- 分页查询 -->
+    <resultMap id="selectProductPage" type="com.code.mallservice.mall.entity.ProductEntity">
+        <id column="id" property="id"/>
+        <result column="main_image_id" property="main_image_id"/>
+        <result column="name" property="name"/>
+        <result column="purchase_url" property="purchase_url"/>
+        <result column="user_id" property="user_id"/>
+        <result column="c_date" property="c_date"/>
+        <association property="userEntity" column="user_id" select="selectUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+        </association>
+        <association property="mainImage" column="main_image_id" select="selectMainImage">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+    </resultMap>
+    <select id="findPage" resultMap="selectProductPage">
+        SELECT id,main_image_id,`name`,purchase_url,user_id,c_date FROM mall.tab_product where 1=1
+        <if test="product_id > 0 ">
+            and id=#{product_id}
+        </if>
+        <if test="product_name != null and product_name != ''">
+            and `name` like '${product_name}%'
+        </if>
+        <if test="user_id != -1">
+            and user_id=#{user_id}
+        </if>
+          order by c_date desc limit #{page},#{size};
+    </select>
+
+    <select id="findCount" resultType="_long">
+        SELECT count(*) FROM mall.tab_product where 1=1
+        <if test="product_id > 0 ">
+            and id=#{product_id}
+        </if>
+        <if test="product_name != null and product_name != ''">
+            and `name` like '${product_name}%'
+        </if>
+        <if test="user_id != -1">
+            and user_id=#{user_id}
+        </if>
+    </select>
+
+    <!-- 查询用户 -->
+    <select id="selectUser" resultType="com.code.mallservice.mall.entity.UserEntity">
+        SELECT id,username FROM mall.tab_user where id = #{user_id};
+    </select>
+    <!-- 查询主图-->
+    <select id="selectMainImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
+        SELECT * FROM mall.tab_imags where uid = #{main_image_id};
+    </select>
+</mapper>

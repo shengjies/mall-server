@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.FBMapper">
+    <insert id="add">
+        INSERT INTO `mall`.`tab_fb_info`(`fb_name`,`remark`,`c_date`)
+        VALUES(#{fb_name},#{remark},now());
+    </insert>
+
+    <update id="edit">
+        UPDATE `mall`.`tab_fb_info`  SET
+        `fb_name` = #{fb_name},
+        `remark` = #{remark}
+        WHERE `id` = #{id};
+    </update>
+
+    <!-- 分页查询 -->
+    <select id="" resultType="com.code.mallservice.mall.entity.FBEtity">
+      SELECT * FROM mall.tab_fb_info where 1=1
+      <if test="">
+          and fb_name like '%${fbname}'
+      </if>
+      order by c_date desc limit #{page},#{size};
+    </select>
+
+    <select id="findCount" resultType="_long">
+        SELECT count(*) FROM mall.tab_fb_info where 1=1
+        <if test="">
+            and fb_name like '%${fbname}'
+        </if>
+    </select>
+
+    <select id="findById" resultType="com.code.mallservice.mall.entity.FBEtity">
+        SELECT * FROM mall.tab_fb_info where id =#{id}
+    </select>
+
+    <select id="findAll" resultType="com.code.mallservice.mall.entity.FBEtity">
+        SELECT * FROM mall.tab_fb_info order by c_date desc;
+    </select>
+</mapper>

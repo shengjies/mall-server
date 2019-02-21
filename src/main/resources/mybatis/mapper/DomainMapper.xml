@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.DomainMapper">
+
+    <select id="findAll" resultType="com.code.mallservice.mall.entity.DomailEntity">
+      SELECT * FROM mall.tab_domain_info order by c_date desc;
+    </select>
+
+    <select id="findById" resultType="com.code.mallservice.mall.entity.DomailEntity">
+        SELECT * FROM mall.tab_domain_info where id = #{id};
+    </select>
+</mapper>

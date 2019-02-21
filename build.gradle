@@ -45,4 +45,6 @@ dependencies {
     compile group: 'commons-io', name: 'commons-io', version: '2.4'
     // https://mvnrepository.com/artifact/commons-lang/commons-lang
     compile group: 'commons-lang', name: 'commons-lang', version: '2.6'
+    compile group: 'org.jcodec', name: 'jcodec', version: '0.2.2'
+    compile group: 'org.jcodec', name: 'jcodec-javase', version: '0.2.2'
 }
