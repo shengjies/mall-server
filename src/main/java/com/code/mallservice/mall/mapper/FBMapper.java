@@ -53,4 +53,11 @@ public interface FBMapper {
      * @return
      */
     List<FBEtity> findAll();
+
+    /**
+     * 查询对应用户分配的FB
+     * @param user_id
+     * @return
+     */
+    List<FBEtity> findByUser(@Param("user_id")int user_id);
 }

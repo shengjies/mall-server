@@ -10,6 +10,11 @@ public class UrlEntity {
     private String c_date;
     private String product_id;
     private String user_id;
+    private String remark;//备注
+
+    private UserEntity userEntity;
+
+    private ProductEntity productEntity;
 
     public String getId() {
         return id;
@@ -57,5 +62,29 @@ public class UrlEntity {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
 }

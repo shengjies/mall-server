@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.UrlMapper">
+    <!-- 添加 -->
+    <insert id="add">
+        INSERT INTO `mall`.`tab_url_info`(`id`,`title`,`preview_url`,`c_date`,`product_id`,`user_id`,`remark`)
+        VALUES(#{id},#{title},#{preview_url},now(),#{product_id},#{user_id},#{remark});
+    </insert>
+
+    <!--修改-->
+    <update id="edit">
+        UPDATE `mall`.`tab_url_info`
+        SET
+        `title` = #{title},
+        `preview_url` = #{preview_url},
+        `product_id` =#{product_id},
+        `remark`=#{remark}
+        WHERE `id` = #{id};
+    </update>
+
+    <!--分页查询-->
+    <resultMap id="selectUrlPage" type="com.code.mallservice.mall.entity.UrlEntity">
+        <id column="id" property="id"/>
+        <result column="title" property="title"/>
+        <result column="preview_url" property="preview_url"/>
+        <result column="c_date" property="c_date"/>
+        <result column="product_id" property="product_id"/>
+        <result column="user_id" property="user_id"/>
+        <result column="remark" property="remark"/>
+        <association property="userEntity" column="user_id" select="selectUrlUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+        </association>
+        <association property="productEntity" column="product_id" select="selectUrlProduct">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+    <select id="findPage" resultMap="selectUrlPage">
+        SELECT * FROM mall.tab_url_info where 1=1
+        <if test="code != null and code != ''">
+            and id = #{code}
+        </if>
+        <if test="product_id != -1">
+            and product_id = #{product_id}
+        </if>
+        <if test="user_id != -1">
+            and user_id = #{user_id}
+        </if>
+          order by c_date desc limit #{page},#{size};
+    </select>
+    <!-- 查询用户 -->
+    <select id="selectUrlUser" resultType="com.code.mallservice.mall.entity.UserEntity">
+        SELECT id,username FROM mall.tab_user where id = #{user_id};
+    </select>
+    <select id="selectUrlProduct" resultType="com.code.mallservice.mall.entity.ProductEntity">
+        SELECT id,name FROM mall.tab_product where id = #{product_id};
+    </select>
+
+    <!--分页统计-->
+    <select id="findCount" resultType="_long">
+        SELECT count(*) FROM mall.tab_url_info where 1=1
+        <if test="code != null and code != ''">
+            and id = #{code}
+        </if>
+        <if test="product_id != -1">
+            and product_id = #{product_id}
+        </if>
+        <if test="user_id != -1">
+            and user_id = #{user_id}
+        </if>
+    </select>
+</mapper>

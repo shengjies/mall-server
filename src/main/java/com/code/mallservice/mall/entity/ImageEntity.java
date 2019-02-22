@@ -10,12 +10,13 @@ public class ImageEntity {
     private String c_date;
     private int product_id;//产品编号
 
-    public int getId() {
+
+    public int getUid() {
         return uid;
     }
 
-    public void setId(int id) {
-        this.uid = id;
+    public void setUid(int uid) {
+        this.uid = uid;
     }
 
     public String getUrl() {

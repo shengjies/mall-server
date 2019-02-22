@@ -24,4 +24,13 @@ public class DomainServiceImpl implements IDomainService {
     public List<DomailEntity> findAll() {
         return domainMapper.findAll();
     }
+    /**
+     * 查询对应用户下的域名
+     * @param user_id
+     * @return
+     */
+    @Override
+    public List<DomailEntity> findByUser(int user_id) {
+        return domainMapper.findByUser(user_id);
+    }
 }

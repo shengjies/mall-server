@@ -11,8 +11,30 @@
         #{remark});
     </insert>
 
-
-
+    <!-- 修改产品信息 -->
+    <update id="edit">
+        UPDATE `mall`.`tab_product`
+        SET
+        `main_image_id` = #{main_image_id},
+        `name` = #{name},
+        `introduction` = #{introduction},
+        `description` = #{description},
+        `cl_id` = #{cl_id},
+        `price` = #{price},
+        `o_price` = #{o_price},
+        `country` = #{country},
+        `unit` = #{unit},
+        `sold` = #{sold},
+        `comment_num` = #{comment_num},
+        `max_buy_num` = #{max_buy_num},
+        `facebook` = #{facebook},
+        `comment` = #{comment},
+        `templ` = #{templ},
+        `lang` = #{lang},
+        `purchase_url` = #{purchase_url},
+        `remark` = #{remark}
+        WHERE `id` = #{id};
+    </update>
 
     <!-- 分页查询 -->
     <resultMap id="selectProductPage" type="com.code.mallservice.mall.entity.ProductEntity">
@@ -73,8 +95,77 @@
     <!-- 按编号查询 -->
     <resultMap id="selectProductById" type="com.code.mallservice.mall.entity.ProductEntity">
         <id column="id" property="id"/>
+        <result column="main_image_id" property="main_image_id"/>
+        <result column="name" property="name"/>
+        <result column="introduction" property="introduction"/>
+        <result column="description" property="description"/>
+        <result column="cl_id" property="cl_id"/>
+        <result column="price" property="price"/>
+        <result column="o_price" property="o_price"/>
+        <result column="country" property="country"/>
+        <result column="unit" property="unit"/>
+        <result column="sold" property="sold"/>
+        <result column="comment_num" property="comment_num"/>
+        <result column="max_buy_num" property="max_buy_num"/>
+        <result column="facebook" property="facebook"/>
+        <result column="comment" property="comment"/>
+        <result column="templ" property="templ"/>
+        <result column="c_date" property="c_date"/>
+        <result column="user_id" property="user_id"/>
+        <result column="lang" property="lang"/>
+        <result column="purchase_url" property="purchase_url"/>
+        <result column="remark" property="remark"/>
+        <association property="mainImage" column="main_image_id" select="selectMainImage">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+        <association property="userEntity" column="user_id" select="selectUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+        </association>
+        <collection property="roundImageList" column="id" select="selectRoundImage">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </collection>
+        <collection property="sizes" column="id" select="selectProductSize">
+            <id column="id" property="id"/>
+            <result column="size_label" property="size_label"/>
+            <result column="size_value" property="size_value"/>
+            <result column="product_id" property="product_id"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
     </resultMap>
-    <select id="findById" resultMap="selectProductById">
+    <select id="findAllById" resultMap="selectProductById">
       SELECT * FROM mall.tab_product where id = #{product_id};
+    </select>
+
+    <!-- 查询轮播图 -->
+    <select id="selectRoundImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
+        SELECT * FROM mall.tab_imags where product_id = #{id};
+    </select>
+
+    <!--查询尺码-->
+    <select id="selectProductSize" resultType="com.code.mallservice.mall.entity.SizesEntity">
+          SELECT * FROM mall.tab_size_info where product_id=#{id};
+    </select>
+
+    <!-- 按照编号查询产品基本信息-->
+    <select id="findById" resultType="com.code.mallservice.mall.entity.ProductEntity">
+      SELECT * FROM mall.tab_product where id = #{product_id};
+    </select>
+
+    <!--用于下拉列表-->
+    <select id="listAll" resultType="com.code.mallservice.mall.entity.ProductEntity">
+        SELECT id,name FROM mall.tab_product where 1=1
+        <if test="user_id != -1">
+            and user_id = #{user_id}
+        </if>
+         order by c_date desc;
     </select>
 </mapper>

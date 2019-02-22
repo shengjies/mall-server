@@ -7,3 +7,17 @@ CREATE TABLE `tab_size_info` (
   `c_date` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+#=======添加产品赠品类型属性
+CREATE TABLE `tab_type_info` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `type_lable` varchar(245) DEFAULT NULL,
+  `type_value` varchar(245) DEFAULT NULL,
+  `img_id` int(11) DEFAULT NULL,
+  `product_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+ALTER TABLE `mall`.`tab_url_info`
+ADD COLUMN `remark` TEXT NULL AFTER `user_id`;

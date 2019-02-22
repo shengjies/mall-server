@@ -23,4 +23,11 @@ public interface DomainMapper {
      * @return
      */
     DomailEntity findById(@Param("id")int id);
+
+    /**
+     * 查询对应用户分配的域名
+     * @param user_id
+     * @return
+     */
+    List<DomailEntity> findByUser(@Param("user_id")int user_id);
 }

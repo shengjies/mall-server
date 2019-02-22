@@ -15,11 +15,11 @@
 
     <!-- 分页查询 -->
     <select id="" resultType="com.code.mallservice.mall.entity.FBEtity">
-      SELECT * FROM mall.tab_fb_info where 1=1
-      <if test="">
-          and fb_name like '%${fbname}'
-      </if>
-      order by c_date desc limit #{page},#{size};
+        SELECT * FROM mall.tab_fb_info where 1=1
+        <if test="">
+            and fb_name like '%${fbname}'
+        </if>
+        order by c_date desc limit #{page},#{size};
     </select>
 
     <select id="findCount" resultType="_long">
@@ -35,5 +35,14 @@
 
     <select id="findAll" resultType="com.code.mallservice.mall.entity.FBEtity">
         SELECT * FROM mall.tab_fb_info order by c_date desc;
+    </select>
+
+    <select id="findByUser" resultType="com.code.mallservice.mall.entity.FBEtity">
+        <if test="user_id == -1">
+            SELECT * FROM mall.tab_fb_info
+        </if>
+        <if test="user_id != -1">
+            SELECT a.* FROM mall.tab_fb_info as a,tab_user_fb as b where a.id = b.fb_id and b.user_id = #{user_id}
+        </if>
     </select>
 </mapper>

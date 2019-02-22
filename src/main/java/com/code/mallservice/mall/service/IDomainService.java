@@ -13,4 +13,11 @@ public interface IDomainService {
      * @return
      */
     List<DomailEntity> findAll();
+
+    /**
+     * 查询对应用户下的域名
+     * @param user_id
+     * @return
+     */
+    List<DomailEntity> findByUser(int user_id);
 }

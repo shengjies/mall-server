@@ -16,6 +16,13 @@ public interface ProductMapper {
     int add(ProductEntity entity);
 
     /**
+     * 修改产品
+     * @param entity
+     * @return
+     */
+    int edit(ProductEntity entity);
+
+    /**
      * 分页查询
      * @param product_id
      * @param product_name
@@ -38,9 +45,22 @@ public interface ProductMapper {
                                  @Param("user_id")int user_id);
 
     /**
-     * 按照编号查询
+     * 按照编号查询产品所有信息
+     * @param product_id
+     * @return
+     */
+    ProductEntity findAllById(@Param("product_id")int product_id);
+
+    /**
+     * 查询产品基本信息
      * @param product_id
      * @return
      */
     ProductEntity findById(@Param("product_id")int product_id);
+
+    /**
+     * 用于下拉列表
+     * @return
+     */
+    List<ProductEntity> listAll(@Param("user_id")int user_id);
 }

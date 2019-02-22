@@ -3,6 +3,8 @@ package com.code.mallservice.mall.service;
 import com.code.mallservice.mall.entity.ProductEntity;
 import com.code.mallservice.mall.utils.Page;
 
+import java.util.List;
+
 /**
  * 产品信息
  */
@@ -37,5 +39,12 @@ public interface IProductService {
      * @param id
      * @return
      */
-    ProductEntity findById(int id);
+    ProductEntity findAllById(int id);
+
+    /**
+     * 用于下拉列表
+     * @param user_id
+     * @return
+     */
+    List<ProductEntity> listAll(int user_id);
 }

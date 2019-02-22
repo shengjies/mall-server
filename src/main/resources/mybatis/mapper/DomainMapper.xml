@@ -9,4 +9,15 @@
     <select id="findById" resultType="com.code.mallservice.mall.entity.DomailEntity">
         SELECT * FROM mall.tab_domain_info where id = #{id};
     </select>
+
+    <select id="findByUser" resultType="com.code.mallservice.mall.entity.DomailEntity">
+        <if test="user_id == -1">
+            SELECT * FROM mall.tab_domain_info
+        </if>
+         <if test="user_id != -1">
+             SELECT a.* FROM mall.tab_domain_info as a,tab_user_domain as b
+             where a.id  = b.domain_id
+             and b.user_id = #{user_id};
+         </if>
+    </select>
 </mapper>

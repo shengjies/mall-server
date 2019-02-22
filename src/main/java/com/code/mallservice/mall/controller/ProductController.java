@@ -19,6 +19,7 @@ public class ProductController {
     @RequestMapping("/add")
     public Result add(@RequestBody ProductEntity entity){
         try {
+//            System.out.println(entity);
             productService.add(entity);
             return Result.ok();
         }catch (Exception e){
@@ -32,9 +33,10 @@ public class ProductController {
      * @return
      */
     @RequestMapping("/edit")
-    public Result edit(ProductEntity entity){
+    public Result edit(@RequestBody ProductEntity entity){
         try {
-
+            System.out.println(entity);
+            return Result.ok();
         }catch (Exception e){
             e.printStackTrace();
         }
@@ -71,7 +73,21 @@ public class ProductController {
     @RequestMapping("/find/{id}")
     public Result findById(@PathVariable("id")int id){
         try {
-            return Result.ok(productService.findById(id));
+            return Result.ok(productService.findAllById(id));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.error();
+    }
+
+    /**
+     * 用于下拉列表
+     * @return
+     */
+    @RequestMapping("/list/all")
+    public Result listAll(){
+        try {
+            return Result.ok(productService.listAll(-1));
         }catch (Exception e){
             e.printStackTrace();
         }

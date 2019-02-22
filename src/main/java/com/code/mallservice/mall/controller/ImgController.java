@@ -38,7 +38,7 @@ public class ImgController {
      * @return
      */
     @RequestMapping("/upload")
-    public Result upload(MultipartFile file) {
+    public Result upload(MultipartFile file,Integer key) {
         InputStream in =null;
         OutputStream out =null;
         try {
@@ -65,6 +65,7 @@ public class ImgController {
                 ImageIO.write(bufferedImage,"png",img1);
                 entity.setMin_url(domainPath+File.separator+imageName);
             }
+            entity.setProduct_id(key == null?0:key);
             iImageService.add(entity);
             return Result.ok(entity);
         } catch (Exception e) {

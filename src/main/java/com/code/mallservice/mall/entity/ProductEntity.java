@@ -39,6 +39,8 @@ public class ProductEntity {
 
     private List<SizesEntity> sizes;//尺码属性
 
+    private List<TypeEntity> types;//类型
+
     public int getId() {
         return id;
     }
@@ -247,6 +249,14 @@ public class ProductEntity {
         this.sizes = sizes;
     }
 
+    public List<TypeEntity> getTypes() {
+        return types;
+    }
+
+    public void setTypes(List<TypeEntity> types) {
+        this.types = types;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
@@ -276,6 +286,7 @@ public class ProductEntity {
                 ", roundImageList=" + roundImageList +
                 ", userEntity=" + userEntity +
                 ", sizes=" + sizes +
+                ", types=" + types +
                 '}';
     }
 }

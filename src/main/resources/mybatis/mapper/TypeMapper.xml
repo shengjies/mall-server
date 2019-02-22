@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.TypeMapper">
+
+    <!--按照产品编号查询-->
+    <resultMap id="selectByProductId" type="com.code.mallservice.mall.entity.TypeEntity">
+        <id column="id" property="id"/>
+        <result column="type_lable" property="type_lable"/>
+        <result column="type_value" property="type_value"/>
+        <result column="img_id" property="img_id"/>
+        <result column="product_id" property="product_id"/>
+        <association property="imageEntity" column="img_id" select="selectTypeImage">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+    </resultMap>
+
+    <select id="findByProductId" resultMap="selectByProductId">
+        SELECT * FROM mall.tab_type_info where product_id =#{product_id};
+    </select>
+
+    <!--查询类型图片-->
+    <select id="selectTypeImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
+        SELECT * FROM mall.tab_imags where uid = #{img_id};
+    </select>
+</mapper>
