@@ -1,6 +1,8 @@
 package com.code.mallservice.mall.service.impl;
 
+import com.code.mallservice.mall.entity.ProductEntity;
 import com.code.mallservice.mall.entity.UrlEntity;
+import com.code.mallservice.mall.mapper.ProductMapper;
 import com.code.mallservice.mall.mapper.UrlMapper;
 import com.code.mallservice.mall.service.IUrlService;
 import com.code.mallservice.mall.utils.Page;
@@ -18,9 +20,20 @@ public class UrlServiceImpl implements IUrlService {
     @Autowired
     private UrlMapper urlMapper;
 
+    @Autowired
+    private ProductMapper productMapper;
+
     @Override
     public int add(UrlEntity entity) {
+        String lang = "en";
         entity.setId(UuidUtils.compressedUuid());
+        ProductEntity productEntity = productMapper.findById(entity.getProduct_id());
+        if(productEntity != null){
+            lang = productEntity.getLang();
+        }
+        String url = entity.getDomaim()+"/"+entity.getId()+"?lang="+lang;
+        entity.setPreview_url(url);
+        entity.setUser_id(1);
         return urlMapper.add(entity);
     }
 
@@ -34,5 +47,10 @@ public class UrlServiceImpl implements IUrlService {
         long count = urlMapper.findCount(code,product_id,user_id);
         List<UrlEntity> list = urlMapper.findPage(code,product_id,user_id,page *size,size);
         return new Page<>(list,count);
+    }
+
+    @Override
+    public UrlEntity findById(String code) {
+        return urlMapper.findById(code);
     }
 }

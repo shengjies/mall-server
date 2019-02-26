@@ -1,7 +1,7 @@
 package com.code.mallservice.mall.controller;
 
-import com.code.mallservice.mall.entity.UrlEntity;
-import com.code.mallservice.mall.service.IUrlService;
+import com.code.mallservice.mall.entity.TemplateEntity;
+import com.code.mallservice.mall.service.ITemplateService;
 import com.code.mallservice.mall.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -10,22 +10,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/urls")
-public class UrlController {
+@RequestMapping("/tem")
+public class TemplateController {
 
     @Autowired
-    private IUrlService urlService;
+    private ITemplateService templateService;
 
     /**
      * 添加
-     * @param urlEntity
+     * @param entity
      * @return
      */
     @RequestMapping("/add")
-    public Result add(@RequestBody UrlEntity urlEntity){
+    public Result add(@RequestBody TemplateEntity entity){
         try {
-//            System.out.println(urlEntity);
-            urlService.add(urlEntity);
+            templateService.add(entity);
             return Result.ok();
         }catch (Exception e){
             e.printStackTrace();
@@ -39,9 +38,9 @@ public class UrlController {
      * @return
      */
     @RequestMapping("/edit")
-    public Result edit(@RequestBody UrlEntity entity){
+    public Result edit(@RequestBody TemplateEntity entity){
         try {
-            urlService.edit(entity);
+            templateService.edit(entity);
             return Result.ok();
         }catch (Exception e){
             e.printStackTrace();
@@ -51,20 +50,17 @@ public class UrlController {
 
     /**
      * 分页查询
-     * @param code
-     * @param product_id
-     * @param user_id
+     * @param t_name
      * @param page
      * @param size
      * @return
      */
     @RequestMapping("/find")
-    public Result findPage(String code, @RequestParam(name = "product_id" ,defaultValue = "-1")Integer product_id,
-                           @RequestParam(name = "user_id",defaultValue = "-1")Integer user_id,
+    public Result findPage(String t_name,
                            @RequestParam(name = "page",defaultValue = "0")Integer page,
                            @RequestParam(name = "size",defaultValue = "50")Integer size){
         try {
-            return Result.ok(urlService.findPage(code,product_id,user_id,page,size));
+            return Result.ok(templateService.findPage(t_name,page,size));
         }catch (Exception e){
             e.printStackTrace();
         }

@@ -31,4 +31,11 @@ public interface IUrlService {
      * @return
      */
     Page<UrlEntity> findPage(String code,int product_id,int user_id,int page,int size);
+
+    /**
+     * 按编号查询链接
+     * @param code
+     * @return
+     */
+    UrlEntity findById(String code);
 }

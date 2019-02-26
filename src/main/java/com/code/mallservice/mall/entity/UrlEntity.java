@@ -8,9 +8,11 @@ public class UrlEntity {
     private String title;
     private String preview_url;
     private String c_date;
-    private String product_id;
-    private String user_id;
+    private int product_id;
+    private int user_id;
     private String remark;//备注
+
+    private String domaim;//域名 用来接收前端传入的域名拼接链接
 
     private UserEntity userEntity;
 
@@ -48,19 +50,19 @@ public class UrlEntity {
         this.c_date = c_date;
     }
 
-    public String getProduct_id() {
+    public int getProduct_id() {
         return product_id;
     }
 
-    public void setProduct_id(String product_id) {
+    public void setProduct_id(int product_id) {
         this.product_id = product_id;
     }
 
-    public String getUser_id() {
+    public int getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(String user_id) {
+    public void setUser_id(int user_id) {
         this.user_id = user_id;
     }
 
@@ -86,5 +88,29 @@ public class UrlEntity {
 
     public void setRemark(String remark) {
         this.remark = remark;
+    }
+
+    public String getDomaim() {
+        return domaim;
+    }
+
+    public void setDomaim(String domaim) {
+        this.domaim = domaim;
+    }
+
+    @Override
+    public String toString() {
+        return "UrlEntity{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", preview_url='" + preview_url + '\'' +
+                ", c_date='" + c_date + '\'' +
+                ", product_id='" + product_id + '\'' +
+                ", user_id='" + user_id + '\'' +
+                ", remark='" + remark + '\'' +
+                ", domaim='" + domaim + '\'' +
+                ", userEntity=" + userEntity +
+                ", productEntity=" + productEntity +
+                '}';
     }
 }

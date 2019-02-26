@@ -21,3 +21,17 @@ CREATE TABLE `tab_type_info` (
 
 ALTER TABLE `mall`.`tab_url_info`
 ADD COLUMN `remark` TEXT NULL AFTER `user_id`;
+
+
+#=======添加模板信息列表
+CREATE TABLE `mall`.`tab_template` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `t_name` VARCHAR(145) NULL,
+  `t_value` VARCHAR(45) NULL,
+  `t_order` VARCHAR(45) NULL,
+  `t_url` VARCHAR(245) NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `mall`.`tab_template`
+ADD COLUMN `remark` TEXT NULL AFTER `c_date`;

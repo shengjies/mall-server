@@ -45,4 +45,11 @@ public interface UrlMapper {
      */
     List<UrlEntity> findPage(@Param("code") String code,@Param("product_id") int product_id,@Param("user_id") int user_id,
                              @Param("page")int page,@Param("size")int size);
+
+    /**
+     * 按编号查询
+     * @param id
+     * @return
+     */
+    UrlEntity findById(@Param("id")String id);
 }

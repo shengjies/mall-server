@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.TemplateMapper">
+    <!--添加模板信息-->
+    <insert id="add">
+      INSERT INTO `mall`.`tab_template`(`t_name`,`t_value`,`t_order`,`t_url`,`c_date`,`remark`)
+      VALUES(#{t_name},#{t_value},#{t_order},#{t_url},now(),#{remark});
+    </insert>
+
+    <!--修改信息-->
+    <update id="edit">
+        UPDATE `mall`.`tab_template`
+        SET
+        `t_name` = #{t_name},
+        `t_value` = #{t_value},
+        `t_order` = #{t_order},
+        `t_url` = #{t_url},
+        `remark` = #{remark}
+        WHERE `id` = #{id};
+    </update>
+
+    <select id="findById" resultType="com.code.mallservice.mall.entity.TemplateEntity">
+        SELECT * FROM mall.tab_template where id = #{id};
+    </select>
+
+    <!--分页查询-->
+    <select id="findPage" resultType="com.code.mallservice.mall.entity.TemplateEntity">
+      SELECT * FROM mall.tab_template where 1=1
+      <if test="t_name != null and t_name != ''">
+          and t_name=#{t_name}
+      </if>
+       order by id desc limit #{page},#{size};
+    </select>
+
+    <select id="countFind" resultType="_long">
+        SELECT count(*) FROM mall.tab_template where 1=1
+        <if test="t_name != null and t_name != ''">
+            and t_name=#{t_name}
+        </if>
+    </select>
+</mapper>

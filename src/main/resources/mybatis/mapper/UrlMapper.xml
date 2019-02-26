@@ -12,7 +12,6 @@
         UPDATE `mall`.`tab_url_info`
         SET
         `title` = #{title},
-        `preview_url` = #{preview_url},
         `product_id` =#{product_id},
         `remark`=#{remark}
         WHERE `id` = #{id};
@@ -69,5 +68,10 @@
         <if test="user_id != -1">
             and user_id = #{user_id}
         </if>
+    </select>
+
+    <!--按编号查询-->
+    <select id="findById" resultType="com.code.mallservice.mall.entity.UrlEntity">
+        SELECT * FROM mall.tab_url_info where id =#{id} limit 1;
     </select>
 </mapper>
