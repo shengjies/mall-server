@@ -7,6 +7,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
@@ -39,8 +40,10 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Bean(name = "localeResolver")
     public LocaleResolver localeResolverBean(){
-        SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+        CookieLocaleResolver localeResolver = new CookieLocaleResolver();
+        //设置默认区域,
         localeResolver.setDefaultLocale(Locale.US);
+        localeResolver.setCookieMaxAge(3600);//设置cookie有效期.
         return localeResolver;
     }
 
