@@ -1,13 +1,18 @@
 package com.code.mallservice.mall.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.code.mallservice.mall.entity.UserEntity;
 import com.code.mallservice.mall.service.IUserService;
+import com.code.mallservice.mall.utils.JwtUtils;
 import com.code.mallservice.mall.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 用户信息
@@ -77,7 +82,15 @@ public class UserController {
     @RequestMapping("/login")
     public Result login(String username,String password){
         try {
-            return Result.ok(userService.findByUserNameAndPwd(username,password));
+            Map<String,String> resultMap = new HashMap<>();
+            UserEntity entity = userService.findByUserNameAndPwd(username,password);
+            if(entity == null) return Result.userorpasserror();
+            Map<String,Object>map = new HashMap<>();
+            map.put(JwtUtils.CLAIM_KEY_USER,JSON.toJSONString(entity));
+            String token = JwtUtils.getToken(map);
+            resultMap.put("r",entity.getRole_code());
+            resultMap.put("t",token);
+            return Result.ok(resultMap);
         }catch (Exception e){
             e.printStackTrace();
         }

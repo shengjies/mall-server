@@ -37,4 +37,11 @@ public interface IFBService {
      * @return
      */
     List<FBEtity> findAll();
+
+    /**
+     * 查询对应用户下的FB账号
+     * @param user_id
+     * @return
+     */
+    List<FBEtity> findByUser(int user_id);
 }

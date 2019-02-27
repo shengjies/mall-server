@@ -38,4 +38,9 @@ public class FBServiceImpl implements IFBService {
     public List<FBEtity> findAll() {
         return fbMapper.findAll();
     }
+
+    @Override
+    public List<FBEtity> findByUser(int user_id) {
+        return fbMapper.findByUser(user_id);
+    }
 }

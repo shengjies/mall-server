@@ -24,7 +24,6 @@ public class UrlController {
     @RequestMapping("/add")
     public Result add(@RequestBody UrlEntity urlEntity){
         try {
-//            System.out.println(urlEntity);
             urlService.add(urlEntity);
             return Result.ok();
         }catch (Exception e){

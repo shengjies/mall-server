@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 @RestController
 @RequestMapping("/fb")
 public class FBController {
@@ -74,6 +76,21 @@ public class FBController {
         try {
 
             return Result.ok(ifbService.findAll());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.error();
+    }
+
+    /**
+     * 查询对应用户的FB账号
+     * @param request
+     * @return
+     */
+    @RequestMapping("/list/all")
+    public Result findByUser(HttpServletRequest request){
+        try {
+            return Result.ok(ifbService.findByUser(-1));
         }catch (Exception e){
             e.printStackTrace();
         }
