@@ -41,6 +41,8 @@ public class ProductEntity {
 
     private List<TypeEntity> types;//类型
 
+    private List<PolicyEntity> policys;//自定义策略
+
     public int getId() {
         return id;
     }
@@ -257,6 +259,14 @@ public class ProductEntity {
         this.types = types;
     }
 
+    public List<PolicyEntity> getPolicys() {
+        return policys;
+    }
+
+    public void setPolicys(List<PolicyEntity> policys) {
+        this.policys = policys;
+    }
+
     @Override
     public String toString() {
         return "ProductEntity{" +
@@ -287,6 +297,7 @@ public class ProductEntity {
                 ", userEntity=" + userEntity +
                 ", sizes=" + sizes +
                 ", types=" + types +
+                ", policys=" + policys +
                 '}';
     }
 }

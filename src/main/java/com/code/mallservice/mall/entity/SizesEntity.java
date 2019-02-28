@@ -49,4 +49,15 @@ public class SizesEntity {
     public void setC_date(String c_date) {
         this.c_date = c_date;
     }
+
+    @Override
+    public String toString() {
+        return "SizesEntity{" +
+                "id=" + id +
+                ", size_label='" + size_label + '\'' +
+                ", size_value='" + size_value + '\'' +
+                ", product_id=" + product_id +
+                ", c_date='" + c_date + '\'' +
+                '}';
+    }
 }

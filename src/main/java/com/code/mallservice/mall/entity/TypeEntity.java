@@ -58,4 +58,16 @@ public class TypeEntity {
     public void setImageEntity(ImageEntity imageEntity) {
         this.imageEntity = imageEntity;
     }
+
+    @Override
+    public String toString() {
+        return "TypeEntity{" +
+                "id=" + id +
+                ", type_lable='" + type_lable + '\'' +
+                ", type_value='" + type_value + '\'' +
+                ", img_id=" + img_id +
+                ", product_id=" + product_id +
+                ", imageEntity=" + imageEntity +
+                '}';
+    }
 }

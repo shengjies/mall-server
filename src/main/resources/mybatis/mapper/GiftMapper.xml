@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.GiftMapper">
+    <!--添加赠品信息-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mall`.`tab_gift`(`name`,`price`,`cgurl`,`remark`,`user_id`,`c_date`,`zp_image_id`)
+        VALUES(#{name},#{price},#{cgurl},#{remark},#{user_id},now(),#{zp_image_id});
+    </insert>
+    <!--修改赠品信息-->
+    <update id="edit">
+        UPDATE `mall`.`tab_gift`
+        SET
+        `name` = #{name},
+        `price` = #{price},
+        `cgurl` = #{cgurl},
+        `remark` = #{remark},
+        `zp_image_id`=#{zp_image_id}
+        WHERE `id` = #{id};
+    </update>
+
+    <!--分页查询-->
+    <resultMap id="selectGiftPage" type="com.code.mallservice.mall.entity.GiftEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="zp_image_id" property="zp_image_id"/>
+        <result column="price" property="price"/>
+        <result column="cgurl" property="cgurl"/>
+        <result column="remark" property="remark"/>
+        <result column="user_id" property="user_id"/>
+        <result column="c_date" property="c_date"/>
+        <association property="imageEntity" column="zp_image_id" select="selectGiftMainImg">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+        <association property="userEntity" column="user_id" select="selectGiftUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+        </association>
+    </resultMap>
+
+    <select id="findPage" resultMap="selectGiftPage">
+        SELECT * FROM mall.tab_gift where 1=1
+        <if test="name != null and name !=''">
+            and `name` like '${name}%'
+        </if>
+         order by id desc limit #{page},#{size};
+    </select>
+
+    <select id="selectGiftUser" resultType="com.code.mallservice.mall.entity.UserEntity">
+        SELECT id,username FROM mall.tab_user where id = #{user_id};
+    </select>
+    <select id="selectGiftMainImg" resultType="com.code.mallservice.mall.entity.ImageEntity">
+        SELECT * FROM mall.tab_imags where uid = #{zp_image_id};
+    </select>
+    <select id="countFind" resultType="_long">
+        SELECT count(*) FROM mall.tab_gift where 1=1
+        <if test="name != null and name !=''">
+            and `name` like '${name}%'
+        </if>
+    </select>
+
+    <!--查询所有-->
+    <select id="listAll" resultType="com.code.mallservice.mall.entity.GiftEntity">
+        SELECT * FROM mall.tab_gift order by id desc
+    </select>
+
+    <!--按编号查询-->
+    <resultMap id="selectGiftById" type="com.code.mallservice.mall.entity.GiftEntity">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="zp_image_id" property="zp_image_id"/>
+        <result column="price" property="price"/>
+        <result column="cgurl" property="cgurl"/>
+        <result column="remark" property="remark"/>
+        <result column="user_id" property="user_id"/>
+        <result column="c_date" property="c_date"/>
+        <association property="imageEntity" column="zp_image_id" select="selectGiftMainImg">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+        <collection property="zpsizes" column="id" select="selectGiftSize">
+            <id column="id" property="id"/>
+            <result column="zpzlable" property="zpzlable"/>
+            <result column="zpzvalue" property="zpzvalue"/>
+            <result column="gift_id" property="gift_id"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
+    </resultMap>
+    <select id="findById" resultMap="selectGiftById">
+        SELECT * FROM mall.tab_gift where id = #{id}
+    </select>
+
+    <select id="selectGiftSize" resultType="com.code.mallservice.mall.entity.GiftSizeEntity">
+      SELECT * FROM mall.tab_gift_size where gift_id =#{id};
+    </select>
+</mapper>

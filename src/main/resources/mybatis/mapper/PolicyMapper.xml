@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.PolicyMapper">
+    <!-- 添加策略 -->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mall`.`tab_policy`(`tcname`,`tcnum`,`tcmoney`,`tcattr`,`product_id`,`c_date`)
+        VALUES(#{tcname},#{tcnum},#{tcmoney},#{tcattr},#{product_id},now());
+    </insert>
+
+    <!--根据产品编号查询对应的产品的自定义策略-->
+    <resultMap id="selectPolicyByProductId" type="com.code.mallservice.mall.entity.PolicyEntity">
+        <id column="id" property="id"/>
+        <result column="tcname" property="tcname"/>
+        <result column="tcnum" property="tcnum"/>
+        <result column="tcmoney" property="tcmoney"/>
+        <result column="tcattr" property="tcattr"/>
+        <result column="product_id" property="product_id"/>
+        <result column="c_date" property="c_date"/>
+        <collection property="gir" column="id" select="selectProductGriConfig">
+            <id column="id" property="id"/>
+            <result column="zpnum" property="zpnum"/>
+            <result column="zpname" property="zpname"/>
+            <result column="policy_id" property="policy_id"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
+    </resultMap>
+    <select id="findByProductId" resultMap="selectPolicyByProductId">
+        SELECT * FROM mall.tab_policy where product_id = #{product_id};
+    </select>
+    <select id="selectProductGriConfig" resultType="com.code.mallservice.mall.entity.PolicyGirEntity">
+        SELECT * FROM mall.tab_policy_gir where policy_id=#{id};
+    </select>
+</mapper>

@@ -27,7 +27,7 @@ public interface TypeMapper {
      * @param product_id
      * @return
      */
-    @Delete("DELETE FROM `mall`.`tab_type_info` WHERE where product_id=#{product_id}")
+    @Delete("DELETE FROM `mall`.`tab_type_info`  where product_id=#{product_id}")
     int del(@Param("product_id")int product_id);
 
     /**

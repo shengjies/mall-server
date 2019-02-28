@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.GiftTypeMapper">
+    <!--查询赠品的类型-->
+    <resultMap id="selectGiftType" type="com.code.mallservice.mall.entity.GiftTypeEntity">
+        <id column="id" property="id"/>
+        <result column="zptlable" property="zptlable"/>
+        <result column="zptvalue" property="zptvalue"/>
+        <result column="zptimg" property="zptimg"/>
+        <result column="gift_id" property="gift_id"/>
+        <result column="c_date" property="c_date"/>
+        <association property="imageEntity" column="zptimg" select="selectGiftTypeImage">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+    </resultMap>
+    <select id="findByGiftId" resultMap="selectGiftType">
+        SELECT * FROM mall.tab_gift_type where gift_id=#{gift_id};
+    </select>
+
+    <select id="selectGiftTypeImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
+         SELECT * FROM mall.tab_imags where uid = #{zptimg};
+    </select>
+</mapper>

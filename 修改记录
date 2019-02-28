@@ -35,3 +35,63 @@ CREATE TABLE `mall`.`tab_template` (
 
 ALTER TABLE `mall`.`tab_template`
 ADD COLUMN `remark` TEXT NULL AFTER `c_date`;
+
+
+#=========添加策略 02/28
+CREATE TABLE `mall`.`tab_policy` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `tcname` VARCHAR(245) NULL,
+  `tcnum` INT NULL,
+  `tcmoney` INT NULL,
+  `tcattr` TINYINT NULL,
+  `product_id` INT NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+ #========策略赠品
+ CREATE TABLE `mall`.`tab_policy_gir` (
+   `id` INT NOT NULL AUTO_INCREMENT,
+   `num` INT NULL,
+   `gir_id` INT NULL,
+   `policy_id` INT NULL,
+   `c_date` DATETIME NULL,
+   PRIMARY KEY (`id`));
+
+ALTER TABLE `mall`.`tab_policy_gir`
+CHANGE COLUMN `num` `zpnum` INT(11) NULL DEFAULT NULL ,
+CHANGE COLUMN `gir_id` `zpname` INT(11) NULL DEFAULT NULL ;
+
+
+#======
+添加赠品信息
+CREATE TABLE `mall`.`tab_gift` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(145) NULL,
+  `price` INT NULL,
+  `cgurl` VARCHAR(345) NULL,
+  `remark` TEXT NULL,
+  `user_id` INT NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+ALTER TABLE `mall`.`tab_gift`
+ADD COLUMN `zp_image_id` INT NULL AFTER `c_date`;
+
+
+CREATE TABLE `mall`.`tab_gift_type` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `zptlable` VARCHAR(145) NULL,
+  `zptvalue` VARCHAR(145) NULL,
+  `zptimg` INT NULL,
+  `gift_id` INT NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+CREATE TABLE `mall`.`tab_gift_size` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `zpzlable` VARCHAR(145) NULL,
+  `zpzvalue` VARCHAR(145) NULL,
+  `gift_id` INT NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+
