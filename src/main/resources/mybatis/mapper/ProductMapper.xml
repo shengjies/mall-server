@@ -5,10 +5,10 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `mall`.`tab_product`(`main_image_id`,`name`,`introduction`,`description`,`cl_id`,`price`,
         `o_price`,`country`,`unit`,`sold`,`comment_num`,`max_buy_num`,`facebook`,`comment`,`templ`,
-        `c_date`,`user_id`,`lang`,`purchase_url`,`remark`)
+        `c_date`,`user_id`,`lang`,`purchase_url`,`remark`,`teml_page`,`teml_order`)
         VALUES(#{main_image_id},#{name},#{introduction},#{description},#{cl_id},#{price},#{o_price},#{country},#{unit},
         #{sold},#{comment_num},#{max_buy_num},#{facebook},#{comment},#{templ},now(),#{user_id},#{lang},#{purchase_url},
-        #{remark});
+        #{remark},#{teml_page},#{teml_order});
     </insert>
 
     <!-- 修改产品信息 -->
@@ -32,7 +32,9 @@
         `templ` = #{templ},
         `lang` = #{lang},
         `purchase_url` = #{purchase_url},
-        `remark` = #{remark}
+        `remark` = #{remark},
+        `teml_page` =#{teml_page},
+        `teml_order` =#{teml_order}
         WHERE `id` = #{id};
     </update>
 
@@ -115,6 +117,8 @@
         <result column="lang" property="lang"/>
         <result column="purchase_url" property="purchase_url"/>
         <result column="remark" property="remark"/>
+        <result column="teml_page" property="teml_page"/>
+        <result column="teml_order" property="teml_order"/>
         <association property="mainImage" column="main_image_id" select="selectMainImage">
             <id column="uid" property="uid"/>
             <result column="url" property="url"/>

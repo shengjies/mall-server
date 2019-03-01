@@ -28,6 +28,9 @@ public class ProductEntity {
     private String purchase_url;//采购链接
     private String remark;//备注信息
 
+    private String teml_page;//模板主页
+    private String teml_order;//模板订单页面
+
     //属性操作
     private ImageEntity mainImage;//主图
 
@@ -42,6 +45,8 @@ public class ProductEntity {
     private List<TypeEntity> types;//类型
 
     private List<PolicyEntity> policys;//自定义策略
+
+    private List<CommentEntity> commentEntityList;//评论
 
     public int getId() {
         return id;
@@ -265,6 +270,31 @@ public class ProductEntity {
 
     public void setPolicys(List<PolicyEntity> policys) {
         this.policys = policys;
+    }
+
+
+    public String getTeml_page() {
+        return teml_page;
+    }
+
+    public void setTeml_page(String teml_page) {
+        this.teml_page = teml_page;
+    }
+
+    public String getTeml_order() {
+        return teml_order;
+    }
+
+    public void setTeml_order(String teml_order) {
+        this.teml_order = teml_order;
+    }
+
+    public List<CommentEntity> getCommentEntityList() {
+        return commentEntityList;
+    }
+
+    public void setCommentEntityList(List<CommentEntity> commentEntityList) {
+        this.commentEntityList = commentEntityList;
     }
 
     @Override

@@ -95,3 +95,18 @@ CREATE TABLE `mall`.`tab_gift_size` (
   PRIMARY KEY (`id`));
 
 
+#==========03/01
+ALTER TABLE `mall`.`tab_product`
+ADD COLUMN `teml_page` VARCHAR(145) NULL AFTER `remark`,
+ADD COLUMN `teml_order` VARCHAR(145) NULL AFTER `teml_page`;
+
+CREATE TABLE `tab_comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comment_name` varchar(245) DEFAULT NULL,
+  `comment_content` text,
+  `product_id` int(11) DEFAULT NULL,
+  `img_id` int(11) DEFAULT NULL,
+  `c_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

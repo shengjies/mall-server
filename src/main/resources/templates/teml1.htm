@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title init="product_title">标题</title>
+	<style>
+		/*菜鳥教程移動web開發兼容性處理*/
+		body {
+			font-family: "微軟雅黑", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+		}
+
+		select {
+			border: solid 1px #CCC;
+			appearance: none;
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			padding-right: 14px;
+		}
+
+		select::-ms-expand {
+			display: none;
+		}
+
+		/*全局*/
+		* {
+			padding: 0;
+			margin: 0;
+			font-family: 微软雅黑;
+		}
+
+		body {
+			background: url(https://img.alicdn.com/imgextra/i2/2445381426/TB2eKTbdQfb_uJkSnfoXXb_epXa_!!2445381426.jpg) no-repeat fixed;
+			background-size: 100% 100%;
+		}
+
+		ul li {
+			list-style: none;
+		}
+
+		/*整体*/
+		#content_box {
+			background: rgba(0, 0, 0, .3);
+			max-width: 620px;
+			padding: 0 10px;
+			margin: 0 auto;
+			position: relative;
+		}
+
+		/*顶部*/
+		#content_box>.top
+
+		/*部分*/
+		#content_box>.section {
+			margin-top: 20px;
+			background: #FFF;
+			border-radius: 8px 8px 0 0;
+			overflow: hidden;
+		}
+
+		/*部分标题*/
+		.section>.notes {
+			height: 40px;
+			line-height: 40px;
+			text-indent: 1rem;
+		}
+
+		.section>.notes::before {
+			content: "";
+			display: inline-block;
+			width: 4px;
+			height: 18px;
+			background: #dc7d2a;
+			margin-right: 8px
+		}
+
+		/*商品图片部分*/
+		#commodity_images {
+			line-height: 0;
+		}
+
+		#commodity_images img {
+			width: 100%;
+		}
+
+		/*限时折扣部分*/
+		#time_limit .time {
+			background: #FF9800;
+			color: white;
+			padding: 1px 5px;
+			border-radius: 4px;
+			margin-left: 15px;
+		}
+
+		#time_limit .details li {
+			float: left;
+			color: #FFF;
+			padding: 5px 0;
+		}
+
+		#time_limit .details li:first-child {
+			width: 60%;
+		}
+
+		#time_limit .details li:last-child {
+			width: 40%;
+		}
+
+		#time_limit .current_price {
+			background: #d42e22;
+			height: 90px;
+			line-height: 90px;
+			text-indent: 15px;
+		}
+
+		#time_limit .current_price .currency_symbol {
+			font-size: 1.2rem;
+		}
+
+		#time_limit .current_price .price {
+			font-size: 2rem;
+		}
+
+		#time_limit .other {
+			background: #bf0d00;
+		}
+
+		#time_limit .other div {
+			height: 30px;
+			line-height: 30px;
+			text-align: center;
+		}
+
+		#time_limit .count_down {
+			background: #98878F;
+			text-align: center;
+		}
+
+		#time_limit .count_down div {
+			height: 30px;
+			line-height: 30px;
+		}
+
+		#time_limit .product_title {
+			float: left;
+			width: 100%;
+			padding: 15px;
+			line-height: 25px;
+			font-weight: bold;
+			box-sizing: border-box;
+		}
+
+		#time_limit .product_service {
+			float: left;
+			width: 100%;
+			padding: 5px 0;
+			border-top: 1px solid #CCC;
+			border-bottom: 1px solid #CCC;
+		}
+
+		#time_limit .product_service span {
+			display: inline-block;
+			background: #d42e22;
+			color: #FFF;
+			margin: 5px 5px 5px 10px;
+			padding: 3px 8px;
+		}
+
+		#time_limit .product_introduction {
+			padding: 0 10px;
+			line-height: 25px;
+			color: red;
+		}
+
+		/*商品属性*/
+		/*#commodity_property dd {line-height:0;}*/
+		#commodity_property_images img {
+			display: block;
+		}
+
+		#commodity_property img {
+			width: 100%;
+		}
+
+		/*客户评价*/
+		#customer_evaluation dd {
+			height: 640px;
+			overflow: hidden;
+		}
+
+		#customer_evaluation ul {
+			width: 100%;
+			padding: 10px;
+			box-sizing: border-box;
+		}
+
+		#customer_evaluation li {
+			border-top: 1px solid #eee;
+			border-bottom: 1px solid #eee;
+			margin: 1px;
+			display: flex;
+			box-sizing: border-box;
+			padding: 5px 0px;
+		}
+
+		#customer_evaluation img {
+			height: 150px;
+		}
+
+		#customer_evaluation .name {
+			color: #555;
+			font-size: 16px;
+			padding: 0 20px;
+		}
+
+		#customer_evaluation .evaluate {
+			color: #777;
+			font-size: 16px;
+			position: relative;
+		}
+
+		/*立即下单*/
+		#beli_sekarang>#product_set_meal {
+			padding: 0 10px;
+		}
+
+		#beli_sekarang>#product_set_meal>dl {
+			padding: 5px 0;
+			border-bottom: 1px solid #CCC;
+			display: none;
+		}
+
+		#beli_sekarang>#product_set_meal>dl:first-of-type {
+			display: block;
+		}
+
+		#beli_sekarang>#product_set_meal .title {
+			color: #192231;
+			font-weight: bold;
+		}
+
+		#beli_sekarang>#product_set_meal [init="currency_symbol"],
+		#beli_sekarang>#product_set_meal [init="current_price"] {
+			color: red;
+		}
+
+		#beli_sekarang .btn_block button {
+			background: #FFF;
+			color: #555;
+			border: 1px solid #CCC;
+			outline: none;
+			cursor: pointer;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 10px;
+			border-radius: 5px;
+			margin: 5px 5px 5px 0;
+		}
+
+		#beli_sekarang .btn_block .selected {
+			border: 2px solid red;
+			padding: 0 9px;
+			margin: 4px 5px 4px 0;
+			color: red;
+		}
+
+		#beli_sekarang .img_block {
+			overflow: hidden;
+		}
+
+		#beli_sekarang .img_block div {
+			float: left;
+			width: 100px;
+			padding: 4px;
+			border: 1px solid #CCC;
+			border-radius: 5px;
+			margin: 5px 5px 5px 0;
+		}
+
+		#beli_sekarang .img_block img {
+			width: 100px;
+			height: 100px;
+		}
+
+		#beli_sekarang .img_block .selected {
+			border: 2px solid red;
+			padding: 3px;
+			color: red;
+		}
+
+		#beli_sekarang #customer_info {
+			padding: 10px;
+		}
+
+		#beli_sekarang #customer_info .title {
+			color: #192231;
+			font-weight: bold;
+		}
+
+		#beli_sekarang #customer_info input {
+			width: 100%;
+			height: 35px;
+			line-height: 35px;
+			border-radius: 5px;
+			outline: none;
+			border: 1px solid #bbb;
+			padding-left: 2%;
+			margin: 5px 0;
+			box-sizing: border-box;
+		}
+
+		#beli_sekarang #customer_info select {
+			width: 33.33%;
+			height: 35px;
+			line-height: 35px;
+			padding-left: 1%;
+			outline: none;
+			border: 1px solid #CCC;
+			margin: 5px 0;
+			box-sizing: border-box;
+			outline: 0;
+			background: #FFF;
+			font-size: 15px;
+		}
+
+		#beli_sekarang select {
+			padding-left: 10px;
+		}
+
+		#beli_sekarang select option:nth-of-type(2n) {
+			background: #f9f9f9;
+			color: #555;
+		}
+
+		#beli_sekarang #customer_info select:first-of-type {
+			border-radius: 5px 0 0 5px;
+		}
+
+		#beli_sekarang #customer_info select:last-of-type {
+			border-radius: 0 5px 5px 0;
+		}
+
+		#beli_sekarang #customer_info #submit {
+			width: 100%;
+			background: #d42e22;
+			height: 40px;
+			line-height: 40px;
+			border: 0;
+			color: #FFF;
+			font-size: 25px;
+			outline: none;
+			border-radius: 5px;
+			cursor: pointer;
+			margin-top: 20px;
+		}
+
+		#beli_sekarang #customer_info dt .star {
+			color: red;
+			font-size: 20px;
+		}
+
+		#beli_sekarang #payment_method button {
+			background: #FFF;
+			color: #000;
+			border: 1px solid #CCC;
+			outline: none;
+			cursor: pointer;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 10px;
+			border-radius: 5px;
+			margin: 5px 5px 5px 0;
+		}
+
+		/*qj改动*/
+		#beli_sekarang #payment_method button:not(:first-of-type) {
+			display: none;
+		}
+
+		.addr {
+			background: #e5e5e5;
+			cursor: not-allowed;
+		}
+
+		/*qj改动*/
+		#beli_sekarang #payment_method .selected {
+			border: 2px solid red;
+			padding: 0 9px;
+			margin: 4px 5px 4px 0;
+			color: red;
+		}
+
+		#beli_sekarang .set_meal_price .price {
+			font-size: 20px;
+			/*margin-top:5px;*/
+			color: red;
+		}
+
+		#beli_sekarang .order_price .title {
+			margin: 10px 0;
+		}
+
+		#beli_sekarang .order_price .title [init="currency_symbol"] {
+			color: #000 !important;
+		}
+
+		#beli_sekarang .order_price .ordered {
+			margin: 10px 0;
+		}
+
+		#beli_sekarang .order_price .price_blok {
+			text-align: right;
+			color: red;
+			font-size: 20px;
+			margin: 5px;
+		}
+
+		#beli_sekarang table {
+			width: 100%;
+			border-collapse: collapse;
+		}
+
+		#beli_sekarang table tr {
+			border: 1px solid #CCC;
+			border-top: 0;
+		}
+
+		#beli_sekarang table tr:first-child {
+			background: red;
+			color: #FFF;
+			line-height: 30px;
+			border: 0;
+		}
+
+		#beli_sekarang tr td:first-child {
+			line-height: 0;
+		}
+
+		#beli_sekarang tr td:first-child img {
+			margin: 5px;
+			width: 100px;
+			height: 100px;
+		}
+
+		#beli_sekarang tr th,
+		#beli_sekarang tr td {
+			text-align: center;
+			width: 25%;
+			box-sizing: border-box;
+		}
+
+		/*用户需知*/
+		#pemberitahuan_pelanggan {
+			background: rgba(255, 255, 255, 0.5) !important;
+		}
+
+		#pemberitahuan_pelanggan a {
+			color: #8a0000;
+		}
+
+		#pemberitahuan_pelanggan dt {
+			background: #fff;
+		}
+
+		#pemberitahuan_pelanggan dd {
+			padding: 10px;
+		}
+
+		#pemberitahuan_pelanggan p {
+			margin: 5px 0;
+		}
+
+		#pemberitahuan_pelanggan dd .title {
+			margin-top: 10px;
+			color: #b11207;
+		}
+
+		/*底部*/
+		.bottom {
+			position: fixed;
+			bottom: 0;
+			min-width: 620px;
+			z-index: 999;
+		}
+
+		.bottom button {
+			width: 100%;
+			background: #d42e22;
+			height: 50px;
+			line-height: 50px;
+			border: 0;
+			color: #FFF;
+			font-size: 25px;
+			outline: none;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+
+		/*弹出框*/
+		#pop_up_box {
+			position: fixed;
+			background: rgba(0, 0, 0, 0.8);
+			top: 0;
+			left: 0;
+			width: 100%;
+			display: none;
+		}
+
+		#pop_up_box .box {
+			background: #FFF;
+			position: absolute;
+			max-width: 600px;
+		}
+
+		#pop_up_box dt {
+			text-align: center;
+		}
+
+		#pop_up_box p {
+			margin: 5px;
+			font-size: 14px;
+		}
+
+		#pop_up_box .close {
+			position: absolute;
+			width: 30px;
+			height: 30px;
+			top: -10px;
+			right: -10px;
+			border-radius: 16px;
+			cursor: pointer;
+		}
+
+		#pop_up_box .success {
+			margin-top: 20px;
+			width: 60px;
+		}
+
+		#pop_up_box .info {
+			width: 85%;
+			margin: 0 auto;
+			padding: 2px;
+			border: 2px solid #333;
+			padding: 3px;
+		}
+
+		#pop_up_box .info div {
+			border: 1px solid #333;
+			padding: 0 10px;
+		}
+
+		#pop_up_box .notify {
+			width: 88%;
+			margin: 5px auto;
+			text-indent: 1rem;
+		}
+
+		#pop_up_box .btn {
+			width: 88%;
+			margin: 0 auto;
+			overflow: hidden;
+		}
+
+		#pop_up_box .btn a {
+			text-align: center;
+			display: inline-block;
+			background-color: #333;
+			width: 48%;
+			line-height: 2;
+			color: #fff;
+			border-radius: 2px;
+			box-shadow: 1px 1px 5px #ccc;
+			padding: 0 2%;
+			box-sizing: border-box;
+			text-decoration: none;
+			margin-bottom: 20px;
+		}
+
+		#pop_up_box .btn a:first-of-type {
+			float: left;
+		}
+
+		#pop_up_box .btn a:last-of-type {
+			float: right;
+		}
+
+		/*回到頂部*/
+		#to_top {
+			position: fixed;
+			width: 40px;
+			height: 40px;
+			background: rgba(255, 0, 0, 0.66);
+			bottom: 80px;
+			right: 20px;
+			z-index: 100;
+			border-radius: 40px;
+			color: #FFF;
+			text-align: center;
+			line-height: 40px;
+			cursor: pointer;
+		}
+
+		@media screen and (max-width:620px) {
+			.bottom button {
+				width: 100%;
+			}
+		}
+
+		/*--------------评论--------------*/
+		.touxiang {
+			background: url(https://img.alicdn.com/imgextra/i1/1048010507/O1CN011FcFFXTu088cfGs_!!1048010507.png);
+			background-size: 40px 40px;
+			width: 40px;
+			height: 40px;
+			padding: 0px;
+			margin: 0px;
+			display: block;
+			vertical-align: top;
+		}
+
+		.clearfix:before,
+		.clearfix:after {
+			content: "";
+			display: table;
+		}
+
+		.clearfix:after {
+			clear: both;
+		}
+
+		.clearfix {
+			*zoom: 1;
+		}
+
+		.evaluate_bg {
+			padding: 8px;
+			border-radius: 0.5em;
+			min-width: 51%;
+			margin-left: 0.8em;
+			display: inline-block;
+			height: auto;
+			width: 80%;
+		}
+
+		/*蓝色*/
+		[init='customer_evaluation_ul'] li:nth-child(odd) .evaluate_bg {
+			background: rgb(188, 227, 249);
+		}
+
+		[init='customer_evaluation_ul'] li:nth-child(odd) .evaluate_bg:before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			height: 20px;
+			width: 20px;
+			left: -20px;
+			background: url(https://img.alicdn.com/imgextra/i3/1048010507/O1CN011FcFFXTu07yEsbC_!!1048010507.png) no-repeat;
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-webkit-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+		}
+
+		/*橙色*/
+		[init='customer_evaluation_ul'] li:nth-child(even) .evaluate_bg {
+			background: rgb(255, 228, 200);
+		}
+
+		[init='customer_evaluation_ul'] li:nth-child(even) .evaluate_bg:before {
+			content: "";
+			display: inline-block;
+			position: absolute;
+			height: 20px;
+			width: 20px;
+			left: -20px;
+			background: url(https://img.alicdn.com/imgextra/i2/1048010507/O1CN011FcFFXeswzK9b45_!!1048010507.png) no-repeat;
+
+		}
+
+		#customer_evaluation .icon {
+			transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-webkit-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+			vertical-align: top;
+			height: 20px;
+		}
+
+		#customer_evaluation .icon2 {
+			vertical-align: top;
+			margin-top: 10px;
+			height: 20px;
+		}
+
+		/*--------后期变动-------*/
+		.product_attribute {
+			font-size: 14px;
+			color: #555;
+		}
+
+		#s_province,
+		#s_city,
+		#s_county {
+			color: #777;
+		}
+
+		[init="set_meal_btn_block"]>[disabled="disabled"],
+		.product_attribute>.img_block>[disabled="disabled"],
+		.product_attribute>.btn_block>[disabled="disabled"] {
+			text-decoration: line-through !important;
+			background: #CCC !important;
+			color: #FFF !important;
+			cursor: not-allowed !important;
+		}
+
+		/*更多商品*/
+		.section {
+			border-radius: 0;
+			margin-top: 20px;
+			background: #FFF;
+			border-radius: 8px 8px 0 0;
+			overflow: hidden;
+		}
+
+		.section .swiper-slide {
+			text-align: center;
+		}
+
+		.section .swiper-slide img {
+			width: 90%;
+		}
+
+		.section .swiper-slide p {
+			font-size: 12px;
+			color: #333;
+			padding: 0 10px;
+			line-height: 30px;
+			white-space: nowrap;
+			text-overflow: ellipsis;
+		}
+
+		.section .swiper-slide {
+			text-decoration: none;
+			overflow: hidden;
+		}
+
+		@media screen and (max-width: 400px) {
+			#beli_sekarang .img_block div {
+				width: 27%;
+			}
+
+			#beli_sekarang .img_block img {
+				width: 100%;
+			}
+		}
+
+		.swiper-container {
+			padding: 0 !important;
+		}
+	</style>
+	<script async="" src="http://www.jujc.net/twmtzdqxh/?cid=QQ-M2" charset="UTF-8" crossorigin="*"></script>
+	<script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+	<script type="text/javascript">
+
+		var init = {
+			product_top: "",//页面顶部标题
+			product_title: "不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！",	//商品标题
+			product_introduction: "",//商品描述
+			product_full_name: "美瞳自动清洗盒",	//后台显示(简体)
+			currency_symbol: "NT$",	//货币单位(台湾:NT$,香港:HK$,新加坡:SGD,马来西亚:RM,印度尼西亚:Rp,越南:₫,泰国:THB或฿)
+			words: "tw",	//語言 (台湾:tw,香港:hk,新加坡英文:sg_english,马来西亚英文:mas_english,马来西亚马来文:mas_malay,马来西亚马来文+繁体:mas_both,印度尼西亚:id,越南:vn,泰國:th)
+			tw_has_711: true,
+			current_price: "1099=2個",	//单价
+			original_price: "2699", //原价
+			discount: "",	//折扣
+			be_sold: "816328",	//已售数量
+			bms: "d",
+			tawk_to_src: "",
+			theme_color: ["#d42e22", "#bf0d00", "#d42e22"],
+			product_service: [],
+			product_first_image: ["https://img.alicdn.com/imgextra/i4/1048010507/O1CN01Wfp4eT1FcFItCOFCt_!!1048010507.gif"],
+			facebook_pixel: ["342288599885168"],	//facebook像素码
+			customer_evaluation_ul: [{ "name": "張緯娜", "evaluate": "覺得確實還是比手洗乾淨一些，顏值好高，少女粉。", "images": ["https://img.alicdn.com/imgextra/i3/1048010507/O1CN01RkgYrR1FcFIsGzhuu_!!1048010507.jpg"] }, { "name": "張益菖", "evaluate": "戴假睫毛就會弄髒瞳孔放大片，不認真洗下不敢戴，帶瞳孔放大片的可以備一個，那個醫用的矽膠棒還有矽膠夾很舒服，用起來比普通的眼鏡盒裡面的舒服些", "images": ["https://img.alicdn.com/imgextra/i3/1048010507/O1CN01cyXM2G1FcFIsGxd0N_!!1048010507.jpg"] }, { "name": "劉香密", "evaluate": "還不錯，今天戴了一天，看電腦居然眼睛不幹，不錯", "images": ["https://img.alicdn.com/imgextra/i4/1048010507/O1CN01nG4Kgc1FcFIq6QUNR_!!1048010507.jpg"] }, { "name": "余暐菁", "evaluate": "實物是很美麗的，而且我特別喜歡出門帶著方便。用過後眼睛感覺很舒服。", "images": ["https://img.alicdn.com/imgextra/i4/1048010507/O1CN01b80k0e1FcFIs9uF4f_!!1048010507.jpg"] }, { "name": "楊淑珍", "evaluate": "鑷子超級好用，很乾淨考究的樣子，定期自己把倉消毒一下。30秒就清洗鏡片了，現時清洗過的鏡片沒有眼睛畏光流淚，乾澀，眼睛紅，磨眼睛的情况。", "images": ["https://img.alicdn.com/imgextra/i3/1048010507/O1CN016l36Gx1FcFIq6S69L_!!1048010507.jpg"] }, { "name": "周麗真", "evaluate": "30秒就工作完畢！感覺一按開關就完成了。的確有些髒東西脫落～應該是有效的", "images": [] }, { "name": "余佳欣", "evaluate": "包裝很可愛！外觀小巧顏色不錯，這個是靜音的。洗的有效果的，用之前帶了半年多的年拋試過，效果很好！眼睛不幹了，好評！", "images": [] }, { "name": "陳桂芬", "evaluate": "挺萌的一顆白煮蛋，家裡有長毛汪星人，容易掉毛的那種，感覺用它清洗一下隱形眼鏡還是挺有必要的～好評！", "images": [] }],
+			set_meal_btn_block: [{ "text": "買一送一（2個）NT$1099", "show": "1,2", "price": "1099", "postage": "0", "status": true }, { "text": "加200再得一個（3個）NT$1299", "show": "1,2,3", "price": "1299", "postage": "0", "status": true }],
+			products_attribute: [{ "name": "超聲波清洗盒", "price": "2699", "img_block": { "title": "超聲波清洗盒", "select": [{ "text": "黑色", "back_text": "黑色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg", "status": true }, { "text": "橙色", "back_text": "橙色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg", "status": true }, { "text": "藍色", "back_text": "藍色", "image": "https://img.alicdn.com/imgextra/i1/1048010507/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg", "status": true }, { "text": "紫色", "back_text": "紫色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg", "status": true }, { "text": "粉色", "back_text": "粉色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg", "status": true }] } }, { "name": "超聲波清洗盒", "price": "2699", "img_block": { "title": "超聲波清洗盒", "select": [{ "text": "黑色", "back_text": "黑色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg", "status": true }, { "text": "橙色", "back_text": "橙色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg", "status": true }, { "text": "藍色", "back_text": "藍色", "image": "https://img.alicdn.com/imgextra/i1/1048010507/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg", "status": true }, { "text": "紫色", "back_text": "紫色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg", "status": true }, { "text": "粉色", "back_text": "粉色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg", "status": true }] } }, { "name": "超聲波清洗盒", "price": "2699", "img_block": { "title": "超聲波清洗盒", "select": [{ "text": "黑色", "back_text": "黑色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg", "status": true }, { "text": "橙色", "back_text": "橙色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg", "status": true }, { "text": "藍色", "back_text": "藍色", "image": "https://img.alicdn.com/imgextra/i1/1048010507/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg", "status": true }, { "text": "紫色", "back_text": "紫色", "image": "https://img.alicdn.com/imgextra/i3/1048010507/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg", "status": true }, { "text": "粉色", "back_text": "粉色", "image": "https://img.alicdn.com/imgextra/i2/1048010507/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg", "status": true }] } }],
+		}
+	</script>
+	<script type="text/javascript" src="teml1/words.js"></script>
+	<script type="text/javascript" src="teml1/jquery.js"></script>
+	<!-- Facebook Pixel Code -->
+	<script>
+		!function (f, b, e, v, n, t, s) {
+			if (f.fbq) return; n = f.fbq = function () {
+				n.callMethod ?
+				n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+			}; if (!f._fbq) f._fbq = n;
+			n.push = n; n.loaded = !0; n.version = '2.0'; n.queue = []; t = b.createElement(e); t.async = !0;
+			t.src = v; s = b.getElementsByTagName(e)[0]; s.parentNode.insertBefore(t, s)
+		}(window,
+			document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+		for (var i = 0, len = init["facebook_pixel"].length; i < len; i++) {
+			fbq('init', init["facebook_pixel"][i]);
+		}
+		fbq('track', "PageView");
+		fbq('track', "ViewContent");
+	</script>
+	<!-- End Facebook Pixel Code -->
+	<style type="text/css">
+		@font-face {
+			font-family: 'rbicon';
+			src: url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");
+			font-weight: normal;
+			font-style: normal;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="content_box">
+		<div class="top" init="product_top"
+			style="line-height:40px;color:#FFF;font-weight:bold;text-align:center;border-bottom:1px solid #FFF;font-size:20px;">
+		</div>
+		<dl class="section" id="commodity_images"
+			style="border-radius: 0; margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<dt class="notes" style="display: none;">商品圖片</dt>
+			<dd id="product_first_image" class="swiper-container">
+				<div class="swiper-wrapper" style="height: 349px;">
+					<img class="swiper-slide"
+						src="teml1/O1CN01Wfp4eT1FcFItCOFCt_!!1048010507.gif"
+						width="100%">
+				</div>
+				<link rel="stylesheet" href="teml1/swiper.css">
+				<script type="text/javascript" src="teml1/swiper.js"></script>
+				<script>
+					if (init["product_first_image"].length > 1) {
+						var mySwiper = new Swiper('.swiper-container', {
+							autoplay: 2500,
+							loop: true,
+						});
+					}
+				</script>
+			</dd>
+		</dl>
+		<dl class="section" id="time_limit"
+			style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<dt class="notes"><span word="限时折扣">限時折扣</span><span class="time">14:09:11</span></dt>
+			<dd>
+				<ul class="details">
+					<li class="current_price" style="background-color: rgb(212, 46, 34);">
+						<span init="currency_symbol">NT$</span>
+						<span class="price" init="current_price">1099=2個</span>
+					</li>
+					<li class="other" style="background-color: rgb(191, 13, 0);">
+						<div class="original_price">
+							<!-- <span word="原价"></span>: -->
+							<del>
+								<span init="currency_symbol">NT$</span>
+								<span init="original_price">2699</span>
+							</del>
+						</div>
+						<div><span word="折扣"></span><span init="discount">-60%</span></div>
+						<div><span word="已售">已售</span>:<span init="be_sold">816328</span></div>
+					</li>
+				</ul>
+				<div class="product_title" init="product_title">不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！</div>
+				<div class="product_service" init="product_service">
+					<span word="免邮费">免郵遞費</span><span word="货到付款">貨到付款</span><span word="优质服务">711超商取貨</span>
+				</div>
+				<div class="product_introduction" init="product_introduction"></div>
+			</dd>
+		</dl>
+		<!---详情-->
+		<dl class="section" id="commodity_property"
+			style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<dt class="notes">
+				<span word="商品信息">商品信息</span>
+			</dt>
+			<dd id="commodity_property_images">
+				<p style="text-align: center;">
+					<video
+						poster="https://img.alicdn.com/imgextra/i3/1048010507/O1CN01x3KRLi1FcFIrMPakG_!!1048010507.jpg"
+						src="https://cloud.video.taobao.com//play/u/1048010507/p/1/e/6/t/1/219640215213.mp4"
+						width="100%" controls="controls">
+					</video>
+					<img
+						src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01ctYGoy1FcFIqfxub9_!!1048010507.jpg"
+						alt="1.jpg">
+				</p>
+			</dd>
+		</dl>
+
+		<dl class="section" id="customer_evaluation"
+			style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<dt class="notes"><span word="客户评价">客戶評價</span></dt>
+			<dd>
+				<ul init="customer_evaluation_ul" style="margin-top: -792.843px;">
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>張緯娜</div>
+						<div class="evaluate evaluate_bg">覺得確實還是比手洗乾淨一些，顏值好高，少女粉。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01RkgYrR1FcFIsGzhuu_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>張益菖</div>
+						<div class="evaluate evaluate_bg">
+							戴假睫毛就會弄髒瞳孔放大片，不認真洗下不敢戴，帶瞳孔放大片的可以備一個，那個醫用的矽膠棒還有矽膠夾很舒服，用起來比普通的眼鏡盒裡面的舒服些<div class="images">
+								<img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01cyXM2G1FcFIsGxd0N_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>劉香密</div>
+						<div class="evaluate evaluate_bg">還不錯，今天戴了一天，看電腦居然眼睛不幹，不錯<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01nG4Kgc1FcFIq6QUNR_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>余暐菁</div>
+						<div class="evaluate evaluate_bg">實物是很美麗的，而且我特別喜歡出門帶著方便。用過後眼睛感覺很舒服。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01b80k0e1FcFIs9uF4f_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>楊淑珍</div>
+						<div class="evaluate evaluate_bg">
+							鑷子超級好用，很乾淨考究的樣子，定期自己把倉消毒一下。30秒就清洗鏡片了，現時清洗過的鏡片沒有眼睛畏光流淚，乾澀，眼睛紅，磨眼睛的情况。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN016l36Gx1FcFIq6S69L_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>周麗真</div>
+						<div class="evaluate evaluate_bg">30秒就工作完畢！感覺一按開關就完成了。的確有些髒東西脫落～應該是有效的<div class="images"></div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>余佳欣</div>
+						<div class="evaluate evaluate_bg">包裝很可愛！外觀小巧顏色不錯，這個是靜音的。洗的有效果的，用之前帶了半年多的年拋試過，效果很好！眼睛不幹了，好評！<div
+								class="images"></div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>陳桂芬</div>
+						<div class="evaluate evaluate_bg">挺萌的一顆白煮蛋，家裡有長毛汪星人，容易掉毛的那種，感覺用它清洗一下隱形眼鏡還是挺有必要的～好評！<div
+								class="images"></div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>張緯娜</div>
+						<div class="evaluate evaluate_bg">覺得確實還是比手洗乾淨一些，顏值好高，少女粉。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01RkgYrR1FcFIsGzhuu_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>張益菖</div>
+						<div class="evaluate evaluate_bg">
+							戴假睫毛就會弄髒瞳孔放大片，不認真洗下不敢戴，帶瞳孔放大片的可以備一個，那個醫用的矽膠棒還有矽膠夾很舒服，用起來比普通的眼鏡盒裡面的舒服些<div class="images">
+								<img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01cyXM2G1FcFIsGxd0N_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>劉香密</div>
+						<div class="evaluate evaluate_bg">還不錯，今天戴了一天，看電腦居然眼睛不幹，不錯<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01nG4Kgc1FcFIq6QUNR_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>余暐菁</div>
+						<div class="evaluate evaluate_bg">實物是很美麗的，而且我特別喜歡出門帶著方便。用過後眼睛感覺很舒服。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01b80k0e1FcFIs9uF4f_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>楊淑珍</div>
+						<div class="evaluate evaluate_bg">
+							鑷子超級好用，很乾淨考究的樣子，定期自己把倉消毒一下。30秒就清洗鏡片了，現時清洗過的鏡片沒有眼睛畏光流淚，乾澀，眼睛紅，磨眼睛的情况。<div class="images"><img
+									src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN016l36Gx1FcFIq6S69L_!!1048010507.jpg">
+							</div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>周麗真</div>
+						<div class="evaluate evaluate_bg">30秒就工作完畢！感覺一按開關就完成了。的確有些髒東西脫落～應該是有效的<div class="images"></div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>余佳欣</div>
+						<div class="evaluate evaluate_bg">包裝很可愛！外觀小巧顏色不錯，這個是靜音的。洗的有效果的，用之前帶了半年多的年拋試過，效果很好！眼睛不幹了，好評！<div
+								class="images"></div>
+						</div>
+					</li>
+					<li class="clearfix">
+						<div class="name"><span class="touxiang"></span>陳桂芬</div>
+						<div class="evaluate evaluate_bg">挺萌的一顆白煮蛋，家裡有長毛汪星人，容易掉毛的那種，感覺用它清洗一下隱形眼鏡還是挺有必要的～好評！<div
+								class="images"></div>
+						</div>
+					</li>
+				</ul>
+			</dd>
+		</dl>
+
+		<dl class="section" id="beli_sekarang"
+			style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<dt class="notes add_to_cart"><span word="立即下单">立即下單</span></dt>
+			<dd id="product_set_meal">
+				<dl id="set_meal">
+					<dt class="title"><span word="套餐选择">套餐選擇</span>:</dt>
+					<dd class="btn_block" init="set_meal_btn_block"><button type="button" show="1,2" price="1099"
+							postage="0" class="selected">買一送一（2個）NT$1099</button><button type="button" show="1,2,3"
+							price="1299" postage="0">加200再得一個（3個）NT$1299</button></dd>
+				</dl>
+				<dl class="set_meal_price" style="display: block;">
+					<dt class="title"><span word="套餐价格">套餐價格</span>:</dt>
+					<dd class="price">
+						<span init="currency_symbol" style="font-size: 20px;">NT$</span>
+						<span init="set_meal_price" style="font-size: 20px;">1099</span>
+					</dd>
+				</dl>
+				<dl id="product_attribute_1" class="product_attribute" style="display: block;">
+					<dt class="title">超聲波清洗盒：</dt>
+					<dd class="img_block">
+						<div back_text="黑色" class="selected"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg"
+								style="height: 100px;"><span>黑色</span></div>
+						<div back_text="橙色" class=""><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg"
+								style="height: 100px;"><span>橙色</span></div>
+						<div back_text="藍色" class=""><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg"
+								style="height: 100px;"><span>藍色</span></div>
+						<div back_text="紫色" class=""><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg"
+								style="height: 100px;"><span>紫色</span></div>
+						<div back_text="粉色" class=""><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg"
+								style="height: 100px;"><span>粉色</span></div>
+					</dd>
+				</dl>
+				<dl id="product_attribute_2" class="product_attribute" style="display: block;">
+					<dt class="title">超聲波清洗盒：</dt>
+					<dd class="img_block">
+						<div back_text="黑色" class="selected"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg"
+								style="height: 100px;"><span>黑色</span></div>
+						<div back_text="橙色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg"
+								style="height: 100px;"><span>橙色</span></div>
+						<div back_text="藍色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg"
+								style="height: 100px;"><span>藍色</span></div>
+						<div back_text="紫色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg"
+								style="height: 100px;"><span>紫色</span></div>
+						<div back_text="粉色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg"
+								style="height: 100px;"><span>粉色</span></div>
+					</dd>
+				</dl>
+				<dl id="product_attribute_3" class="product_attribute" style="display: none;">
+					<dt class="title">超聲波清洗盒：</dt>
+					<dd class="img_block">
+						<div back_text="黑色" class="selected"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01ViIo3Q1FcFIiVQaJc_!!1048010507.jpg"
+								style="height: 100px;"><span>黑色</span></div>
+						<div back_text="橙色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01mULxFG1FcFIbcm5F2_!!1048010507.jpg"
+								style="height: 100px;"><span>橙色</span></div>
+						<div back_text="藍色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01TL4Y3x1FcFIj66Flk_!!1048010507.jpg"
+								style="height: 100px;"><span>藍色</span></div>
+						<div back_text="紫色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN01J0RKCd1FcFIjGZN3E_!!1048010507.jpg"
+								style="height: 100px;"><span>紫色</span></div>
+						<div back_text="粉色"><img
+								src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/O1CN012F8BeD1FcFIkBMz6P_!!1048010507.jpg"
+								style="height: 100px;"><span>粉色</span></div>
+					</dd>
+				</dl>
+				<dl class="order_price" style="display: block;">
+					<dt class="title"><span word="已订购">已訂購</span>:</dt>
+					<dd class="ordered">
+
+						<div class="price_blok price_1">
+							<span word="已订购-数量">數量</span>:<span class="number">2</span>，
+							<span word="已订购-合計">合計</span>:<span init="currency_symbol">NT$</span><span
+								class="price">5398</span>
+						</div>
+						<div class="price_blok price_2">
+							-<span word="已订购-满减优惠">滿減優惠</span>:<span init="currency_symbol">NT$</span><span
+								class="price">4299</span>
+						</div>
+						<div class="price_blok price_4">
+							+<span word="已订购-邮费">運費</span><span init="currency_symbol">NT$</span><span
+								class="price">0</span>
+						</div>
+						<div class="price_blok price_3">
+							<span word="已订购-最终应付">最終應付</span>:<span style="font-size: 30px;"><span
+									init="currency_symbol">NT$</span><span class="price">1099</span></span>
+						</div>
+					</dd>
+				</dl>
+			</dd>
+			<dd id="customer_info">
+				<form>
+					<dl>
+						<dt class="title"><span class="star">*</span><b><span word="表单-付款方式">付款方式</span>:</b></dt>
+						<!-- qj改动 -->
+						<dd id="payment_method">
+							<button type="button" class="selected" method="roc"><span word="货到付款">貨到付款</span></button>
+							<button type="button" method="roc_711" style="display: inline-block;">711超商取貨</button>
+							<button type="button" method="roc_qj" style="display: inline-block;">全家取貨</button>
+						</dd>
+						<!-- qj改动 -->
+						<dt class="title"><span class="star">*</span><b><span word="表单-姓名">姓名</span>:</b></dt>
+						<dd>
+							<input type="text" name="username" placeholder="請填寫您的姓名" word="表单-姓名-填写提示">
+						</dd>
+						<dt class="title"><span class="star">*</span><b><span word="表单-手机号码">手機號碼</span>:</b></dt>
+						<dd>
+							<input type="text" name="mobile" placeholder="請填寫您的手機號碼" word="表单-手机号码-填写提示">
+						</dd>
+						<dt class="title"><span class="star">*</span><b><span word="表单-收货地区">收貨地區</span></b>：</dt>
+						<!-- qj改动 -->
+						<dd id="area">
+							<select id="s_province" name="cusprovince">
+								<option value="國家/地區">國家/地區</option>
+								<option value="台灣">台灣</option>
+							</select>
+							<!--
+		                    --><select id="s_city" name="cuscity">
+								<option value="縣/市">縣/市</option>
+							</select>
+							<!--
+		                    --><select id="s_county" name="cusarea">
+								<option value="鎮/鄉/區">鎮/鄉/區</option>
+							</select>
+							<script language="javascript" id="regional_linkage"
+								src="teml1/roc.js"></script>
+							<script type="text/javascript">
+								document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js?" + Math.random() + "'></scr" + "ipt>");
+								document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js?" + Math.random() + "'></scr" + "ipt>");
+							</script>
+							<script type="text/javascript"
+								src="teml1/roc_711.js"></script>
+							<script type="text/javascript"
+								src="teml1/roc_qj.js"></script>
+							<!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js"></script> -->
+							<!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js"></script> -->
+							<script>
+								var area_1, area_2, area_3, currency = init["currency_symbol"];
+								switch (init["currency_symbol"]) {
+									case "NT$":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/roc.js");
+										break;
+									case "HK$":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_hk.js");
+										break;
+									case "RM":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_mas.js");
+										break;
+									case "₫":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_vn.js");
+										break;
+									case "Rp":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_id.js");
+										break;
+									case "THB":
+									case "฿":
+										$("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_th.js");
+										break;
+									case "SGD":
+										var inner_html =
+											'<select id="s_province" name="cusprovince" style="width:50%;cursor:not-allowed" disabled="disabled">' +
+											'<option value="Singapore" selected="selected">Singapore</option>' +
+											'</select>' +
+											'<select id="s_city" name="cuscity" style="width:50%">' +
+											'<option value="District">District</option>' +
+											'<option value="Central Singapore">Central Singapore</option>' +
+											'<option value="North East">North East</option>' +
+											'<option value="North West">North West</option>' +
+											'<option value="South East">South East</option>' +
+											'<option value="South West">South West</option>' +
+											'</select>';
+										document.getElementById("area").innerHTML = inner_html;
+								}
+							</script>
+						</dd>
+						<!-- qj改动 -->
+						<dt class="title" id="address"><span class="star">*</span><b>詳細地址</b>：</dt>
+						<dd>
+							<input type="text" name="addr" placeholder="請填寫收貨人的街道地址" word="表单-详细地址-填写提示">
+						</dd>
+						<dt class="title" style="display: none;"><span class="star">*</span><b><span
+									word="表单-邮政区号">╮(￣▽￣)╭</span></b>：</dt>
+						<dd style="display: none;">
+							<input type="text" name="postal" placeholder="╮(￣▽￣)╭" word="表单-邮政区号-填写提示">
+						</dd>
+						<dt class="title"><b><span word="表单-E-mail">E-mail</span></b>：</dt>
+						<dd>
+							<input type="text" name="mail" placeholder="可填寫您的E-mail，方便聯繫" word="表单-邮箱-填写提示">
+						</dd>
+						<dt class="title"><b><span word="表单-留言">留言</span></b>：</dt>
+						<dd>
+							<input type="text" name="remark" placeholder="如有特別需求，可留言給商家" word="表单-留言-填写提示">
+						</dd>
+						<dd>
+							<button type="button" id="submit"><span word="提交订单">下訂單</span></button>
+						</dd>
+					</dl>
+					<!--表單隱藏域start-->
+					<input type="hidden" name="protype" value="不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！">
+					<input type="hidden" name="profullname" value="美瞳自动清洗盒">
+					<input type="hidden" name="backurl" value="http://www.jujc.net/twmtzdqxh/?cid=QQ-M2">
+					<input type="hidden" name="fromurl" value="http://www.jujc.net/twmtzdqxh/?cid=QQ-M2">
+					<input type="hidden" name="cid" value="QQ-M2">
+					<input type="hidden" name="bm" value="">
+					<input type="hidden" name="proname">
+					<input type="hidden" name="productpackage" value="(買一送一（2個）NT$1099) [超聲波清洗盒：黑色] [超聲波清洗盒：黑色] ">
+					<input type="hidden" name="num" value="1">
+					<input type="hidden" name="pri">
+					<!--表單隱藏域end-->
+				</form>
+			</dd>
+		</dl>
+
+		<dl class="section" id="pemberitahuan_pelanggan"
+			style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+			<a name="pemberitahuan_pelanggan"></a>
+			<dt class="notes"><span word="客户须知">客戶須知</span></dt>
+			<dd>
+				<p style="text-indent: 2rem;"><span
+						word="客户须知1">本產品的實際使用效果根據個人情況決定，不保證每位用戶都能享受到所宣傳的效果。若有疑問請諮詢在線客服或通過電子郵箱聯絡我們，本公司享有最終解釋權。</span></p>
+				<span word="客户须知2" class="title">·關於發貨方式</span>
+				<p style="text-indent: 2rem;"><span word="客户须知3">支援貨到付款+免郵費+七天無理由退換貨！收到貨有任何疑問請聯繫我們在線客服! 也可隨時聯繫：</span><a
+						href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+						word="客户须知4">同時請附上您的姓名及聯繫方式及訂單編號在郵件當中，以便我們能快速的給您及時處理，祝您購物愉快！！！</span></p>
+				<span word="客户须知5" class="title">·關於配送時間</span>
+				<p style="text-indent: 2rem;"><span
+						word="客户须知6">下訂成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</span></p>
+				<span word="客户须知7" class="title">·如何申請退換貨</span>
+				<p style="text-indent: 2rem;"><span word="客户须知8">由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至</span><a
+						href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+						word="客户须知9">，客服會在收到郵件後的1-3個工作日內受理您的請求。</span></p>
+				<span word="客户须知10" class="title">·退換貨流程：</span>
+				<p style="text-indent: 2rem;"><span word="客户须知11">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</span>
+				</p>
+				<span><span word="客户须知12" class="title">·退換貨請註明：訂單號、姓名、電話。</span><br><span word="客户须知13"
+						class="title">·如何取消訂單</span></span>
+				<p style="text-indent: 2rem;"><span word="客户须知14">取消訂單需要向售後服務中心發送郵件並註明相關原因，郵件內容應註明您的訂單號、姓名、電話。</span>
+				</p>
+			</dd>
+		</dl>
+		<div id="to_top">Top</div>
+		<div class="bottom">
+			<!--<button type="button" class="add_to_cart"><span word="立即抢购"></span></button>-->
+			<button type="button" class="add_to_cart"
+				style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span
+					word="立即抢购">立即搶購</span></button>
+		</div>
+	</div>
+	<div id="pop_up_box">
+		<dl class="box">
+			<dt>
+				<img src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/TB2_WnPcgfH8KJjy1zcXXcTzpXa_!!2445381426.png"
+					class="close">
+				<img src="./不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！_files/TB2OgOXbwmTBuNjy1XbXXaMrVXa_!!2445381426.png"
+					class="success">
+				<p><span word="弹出框-购买成功">購買成功！</span></p>
+			</dt>
+			<dd class="info">
+				<div>
+					<p class="number"><span word="弹出框-编号">編號</span>:<span class="value"></span></p>
+					<p class="name"><span word="弹出框-姓名">姓名</span>:<span class="value"></span></p>
+					<p class="product"><span word="弹出框-商品">商品</span>:<span class="value"></span></p>
+					<p class="price"><span word="弹出框-价格">價格</span>:<span class="value"></span></p>
+					<p class="moblie"><span word="弹出框-手机号码">手機號碼</span>:<span class="value"></span></p>
+					<p class="address"><span word="弹出框-详细地址">詳細地址</span><span class="value"></span></p>
+				</div>
+			</dd>
+			<dd class="notify"><span word="弹出框-温馨提示">您訂購的商品將於7到10個工作日內送達！貨到付款！免郵遞費！如有問題可以在正常工作時間聯繫我們！</span></dd>
+			<dd class="btn">
+				<a href="javascript:document.location.reload();"><span word="弹出框-购买更多">購買更多</span></a>
+				<a href="http://www.jujc.net/twmtzdqxh/?cid=QQ-M2#pemberitahuan_pelanggan"><span
+						word="弹出框-客户须知">客戶須知</span></a>
+			</dd>
+		</dl>
+	</div>
+	<script>
+		//qj改动
+		window.onload = function () {
+			//qj改动
+			//初始化数据渲染
+			//价格转数字格式start
+			function pri2num(price) {
+				return parseInt(String(price).replace(/,/g, ""));
+			}
+			//价格转数字格式end
+
+			//数字转价格格式start
+			function num2pri(price) {
+				var temp = String(pri2num(price)).split("").reverse().join("");
+				var price = "";
+				for (var i = 0, len = temp.length; i < len; i++) {
+					if (i % 3 == 0 && i != 0) {
+						price += ",";
+					}
+					price += temp[i];
+				}
+				return price.split("").reverse().join("");
+			}
+			//数字转及价格格式end
+
+			$("[init='product_top']").text(init["product_top"]);	//页面顶部
+			$("[init='product_title']").text(init["product_title"]);	//商品标题
+			$("[init='product_introduction']").text(init["product_introduction"]);
+			$("[init='currency_symbol']").text(init["currency_symbol"]);	//货币符号
+			$("[init='current_price']").text(init["current_price"]);	//现价
+			$(".current_price").css("background-color", init["theme_color"][0]);
+			$(".other").css("background-color", init["theme_color"][1]);
+			$(".add_to_cart").eq(1).css("background-color", init["theme_color"][2]);
+			(function () {
+				var current_price = pri2num(init["current_price"]);
+				if (init["discount"] != "" && init["original_price"] == "") {
+					var discount = 1 - parseInt(init["discount"]) * (-1) / 100;
+					var original_price = Math.floor(current_price / discount) + "";
+					original_price = num2pri(original_price);
+					if (init["currency_symbol"] == "NT$" || init["currency_symbol"] == "HK$" || init["currency_symbol"] == "SGD" || init["currency_symbol"] == "RM" || init["currency_symbol"] == "THB" || init["currency_symbol"] == "฿") {
+						original_price = pri2num(original_price);
+					}
+					$("[init='original_price']").text(original_price)	//原价
+					$("[init='discount']").text(init["discount"]);	//折扣
+				} else if (init["original_price"] != "" && init["discount"] == "") {
+					var original_price = pri2num(init["original_price"]);
+					var discount = Math.floor((original_price - current_price) / original_price * (-100)) + "%";
+					$("[init='original_price']").text(init["original_price"])	//原价
+					$("[init='discount']").text(discount);	//折扣
+				}
+			})();
+			(function () {
+				if (init["product_service"].length !== 0) {
+					var product_service_inner_html = "";
+					for (var i = 0, len = init["product_service"].length; i < len; i++) {
+						product_service_inner_html += "<span>" + init["product_service"][i] + "</span>";
+					}
+					$("[init='product_service']").html(product_service_inner_html);
+				}
+			})();
+			$("[init='be_sold']").text(init["be_sold"]);	//已售
+			$(".bottom button").width($("#content_box").width() + "px");	//底部按钮宽度
+			//多国语言切换start
+			(function () {
+				for (key in words[init["words"]]) {
+					for (var i = 0, len = $("[word]").size(); i < len; i++) {
+						if ($("[word]").eq(i).attr("word") == key) {
+							var placeholder_arr = ["表单-姓名-填写提示", "表单-手机号码-填写提示", "表单-详细地址-填写提示", "表单-邮政区号-填写提示", "表单-邮箱-填写提示", "表单-留言-填写提示",];
+							if ($.inArray(key, placeholder_arr) == -1) {
+								$("[word]").eq(i).text(words[init["words"]][key]);
+							} else {
+								$("[word]").eq(i).attr("placeholder", words[init["words"]][key]);
+							}
+						}
+					}
+				}
+			})();
+			// 多国语言切换end
+
+			// 事件start
+			// 套餐选择start
+			(function () {
+				var set_meal_btn_block_inner_html = "";
+				for (var i = 0, len = init["set_meal_btn_block"].length; i < len; i++) {
+					var show = init["set_meal_btn_block"][i]["show"];
+					var price = init["set_meal_btn_block"][i]["price"];
+					var text = init["set_meal_btn_block"][i]["text"];
+					var status = init["set_meal_btn_block"][i]["status"];
+					var postage = init["set_meal_btn_block"][i]["postage"];
+					if (status) {
+						set_meal_btn_block_inner_html += '<button type="button" show="' + show + '" price="' + pri2num(price) + '" postage="' + pri2num(postage) + '">' + text + '</button>';
+					} else {
+						set_meal_btn_block_inner_html += '<button type="button" show="' + show + '" price="' + pri2num(price) + '" disabled="disabled" postage="' + pri2num(postage) + '">' + text + '</button>';
+					}
+				}
+				$("[init='set_meal_btn_block']").html(set_meal_btn_block_inner_html);
+			})();
+			// 套餐选择end
+
+			// 商品属性start
+			(function () {
+				var products_attribute_html = "";
+				for (var i = 0, i_len = init["products_attribute"].length; i < i_len; i++) {
+					products_attribute_html += '<dl id="product_attribute_' + (i + 1) + '" class="product_attribute">';
+					if (init["products_attribute"][i]["img_block"]) {
+						var title = init["products_attribute"][i]["img_block"]["title"];
+						products_attribute_html += '<dt class="title">' + title + '：</dt><dd class="img_block">';
+						for (var j = 0, j_len = init["products_attribute"][i]["img_block"]["select"].length; j < j_len; j++) {
+							var image = init["products_attribute"][i]["img_block"]["select"][j]["image"];
+							var text = init["products_attribute"][i]["img_block"]["select"][j]["text"];
+							var back_text = init["products_attribute"][i]["img_block"]["select"][j]["back_text"];
+							var status = init["products_attribute"][i]["img_block"]["select"][j]["status"];
+							if (status) {
+								products_attribute_html += '<div back_text="' + back_text + '"><img src="' + image + '"><span>' + text + '</span></div>';
+							} else {
+								products_attribute_html += '<div disabled="disabled" back_text="' + back_text + '"><img src="' + image + '"><span>' + text + '</span></div>';
+							}
+						}
+						products_attribute_html += "</dd>";
+					}
+
+					if (init["products_attribute"][i]["btn_block"]) {
+						var title = init["products_attribute"][i]["btn_block"]["title"];
+						products_attribute_html += '<dt class="title">' + title + '：</dt><dd class="btn_block">';
+						for (var j = 0, j_len = init["products_attribute"][i]["btn_block"]["select"].length; j < j_len; j++) {
+							var text = init["products_attribute"][i]["btn_block"]["select"][j]["text"];
+							var back_text = init["products_attribute"][i]["btn_block"]["select"][j]["back_text"];
+							var status = init["products_attribute"][i]["btn_block"]["select"][j]["status"];
+							if (status) {
+								products_attribute_html += '<button back_text="' + back_text + '" type="button">' + text + '</button>';
+							} else {
+								products_attribute_html += '<button disabled="disabled" back_text="' + back_text + '" type="button">' + text + '</button>';
+							}
+						}
+						products_attribute_html += "</dd>";
+					}
+					products_attribute_html += "</dl>";
+				}
+				$(".set_meal_price").eq(0).after(products_attribute_html);
+				$(".product_attribute>.img_block>div:not([disabled]):eq(0)").addClass("selected");
+				$(".product_attribute>.btn_block>button:not([disabled]):eq(0)").addClass("selected");
+				for (var i = 0, len = $(".product_attribute").size(); i < len; i++) {
+					$(".product_attribute:eq(" + i + ")>.img_block>div:not([disabled]):eq(0)").addClass("selected");
+					$(".product_attribute:eq(" + i + ")>.btn_block>button:not([disabled]):eq(0)").addClass("selected");
+				}
+			})();
+			// 商品属性end
+
+			// 客户评论start
+			(function () {
+				if (init["customer_evaluation_ul"].length > 0) {
+					var customer_evaluation_ul_inner_html = "";
+					for (var i = 0, i_len = init["customer_evaluation_ul"].length; i < i_len; i++) {
+						customer_evaluation_ul_inner_html += "<li class='clearfix'>";
+						var name = init["customer_evaluation_ul"][i]["name"];
+						var evaluate = init["customer_evaluation_ul"][i]["evaluate"];
+						customer_evaluation_ul_inner_html += '<div class="name"><span class="touxiang"></span>' + name + '</div><div class="evaluate evaluate_bg">' + evaluate;
+						if (init["customer_evaluation_ul"][i]["images"]) {
+							customer_evaluation_ul_inner_html += '<div class="images">';
+							for (var j = 0, j_len = init["customer_evaluation_ul"][i]["images"].length; j < j_len; j++) {
+								var image = init["customer_evaluation_ul"][i]["images"][j];
+								customer_evaluation_ul_inner_html += '<img src="' + image + '">';
+							}
+							customer_evaluation_ul_inner_html += "</div></div>";
+						}
+						customer_evaluation_ul_inner_html += "</li>";
+					}
+					$("[init='customer_evaluation_ul']").html(customer_evaluation_ul_inner_html)
+				} else {
+					$("#customer_evaluation").remove();
+				}
+			})();
+			// 客户评论end
+
+			// 每个国家的差异start
+			(function () {
+				switch (init["currency_symbol"]) {
+					case "NT$":
+						// qj改动
+						if (init["tw_has_711"]) {
+							$("[method='roc']").nextAll().show();
+						} else {
+							$("[method='roc']").nextAll().hide();
+						}
+						// qj改动
+						$("[name='postal']").val("000000").parent().hide().prev().hide();
+						break;
+					case "HK$":
+						$("[name='postal']").val("000000").parent().hide().prev().hide();
+						setTimeout(function () {
+							$("#s_province").val($("#s_province option").eq(1).val()).change().attr("disabled", "disabled").css("cursor", "not-allowed");
+						}, 1000);
+						break;
+					case "₫":
+						$("[name='postal']").val("000000").parent().hide().prev().hide();
+						break;
+				}
+				if (init["words"] == "tw" || init["words"] == "hk" || init["words"] == "mas_both") {
+					$("#pemberitahuan_pelanggan p").css("text-indent", "2rem");
+				}
+			})();
+			// 每个国家的样式布局差异end
+			// 初始化数据渲染
+
+
+			// 事件
+			// 倒计时start
+			(function () {
+				setInterval(function () {
+					var leftTime = (new Date(2118, 0, 1, 0, 0, 0)) - (new Date());
+					var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10);
+					var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);
+					var seconds = parseInt(leftTime / 1000 % 60, 10);
+					hours = hours < 10 ? '0' + hours : hours;
+					minutes = minutes < 10 ? '0' + minutes : minutes;
+					seconds = seconds < 10 ? '0' + seconds : seconds;
+					$("#time_limit .time").text(hours + ':' + minutes + ':' + seconds);
+				}, 1000);
+			})();
+			// 倒计时end
+
+			// 客户评论滚动事件start
+			(function () {
+				var list = $("#customer_evaluation li").clone(true);
+				$("#customer_evaluation ul").append(list);
+				var end = -$("#customer_evaluation ul").height() / 2 + "px";
+				var time = $("#customer_evaluation li").size() * 1000;
+				function customerEvaluationSlide() {
+					$("#customer_evaluation ul").css('margin-top', 0).stop().animate({
+						"margin-top": end
+					}, time, "linear", function () {
+						customerEvaluationSlide();
+					});
+				};
+				customerEvaluationSlide();
+			})();
+			// 客户评论滚动事件end
+
+			// 商品属性选择点击事件start
+			(function () {
+				$(".product_attribute .btn_block button, .product_attribute .img_block div:not([disabled]), #set_meal button, #payment_method button").on("click", function () {
+					$(this).addClass("selected").siblings().removeClass("selected");
+					$(".order_price .ordered table").html("");
+					var set_meal_price = $("#set_meal .selected").attr("price");
+					var postage_price = $("#set_meal .selected").attr("postage");
+					var set_meal_text = '<tr>' +
+						'<th word="已订购-商品图片">' + words[init["words"]]["已订购-商品图片"] + '</th>' +
+						'<th word="已订购-商品名称">' + words[init["words"]]["已订购-商品名称"] + '</th>' +
+						'<th word="已订购-属性">' + words[init["words"]]["已订购-属性"] + '</th>' +
+						'<th word="已订购-单价">' + words[init["words"]]["已订购-单价"] + '</th>' +
+						'</tr>';
+					var productpackage_val = "(" + $("[init='set_meal_btn_block'] .selected").text() + ") ";
+					var show_list = $("[init='set_meal_btn_block'] .selected").attr("show").split(",");
+					var original_price = 0;
+					for (var i = 0, len = show_list.length; i < len; i++) {
+						var product_name = init["products_attribute"][show_list[i] - 1]["name"];
+						var product_img_url = $("#product_attribute_" + show_list[i] + ">.img_block .selected img").attr("src");
+						var product_price = pri2num(init["products_attribute"][show_list[i] - 1]["price"]);
+						var img_title = $("#product_attribute_" + show_list[i] + ">.img_block").prev().text();
+						var img_text = $("#product_attribute_" + show_list[i] + ">.img_block>.selected>span").text() || "";
+						var btn_title = $("#product_attribute_" + show_list[i] + ">.btn_block").prev().text();
+						if (btn_title) {
+							btn_title = " , " + btn_title;
+						}
+						var btn_text = $("#product_attribute_" + show_list[i] + ">.btn_block>.selected").text() || "";
+						set_meal_text +=
+							'<tr>' +
+							'<td><img src="' + product_img_url + '"></td>' +
+							'<td>' + product_name + '</td>' +
+							'<td>' + img_text + '<br />' + btn_text + '</td>' +
+							'<td>' + ((init["currency_symbol"] == "Rp" || init["currency_symbol"] == "₫") ? num2pri(product_price) : pri2num(product_price)) + '</td>' +
+							'</tr>';
+						productpackage_val += "[" + img_title + img_text + btn_title + btn_text + "] ";
+						original_price += parseInt(product_price);
+					}
+					$(".order_price .ordered table").append(set_meal_text);
+					$("[name='productpackage']").val(productpackage_val);
+					$(".order_price .price_1 .number").text($(".order_price .ordered table tr").size() - 1);
+					$(".order_price .price_1 .price").text(original_price);
+					$(".order_price .price_2 .price").text(original_price - set_meal_price);
+					$(".order_price .price_3 .price").text(pri2num(set_meal_price) + pri2num(postage_price));
+					$(".order_price .price_4 .price").text(postage_price);
+					if (init["currency_symbol"] == "Rp" || init["currency_symbol"] == "₫") {
+						$(".order_price .price_1 .price").text(num2pri(original_price));
+						$(".order_price .price_2 .price").text(num2pri(original_price - set_meal_price));
+						$(".order_price .price_3 .price").text(num2pri(pri2num(set_meal_price) + pri2num(postage_price)));
+						$(".order_price .price_4 .price").text(num2pri(postage_price));
+					}
+				});
+			})();
+			// 商品属性选择点击事件end
+
+			// 套餐选择点击事件start
+			(function () {
+				$("#set_meal button").on("click", function () {
+					var show_num = $(this).attr("show").split(",");
+					$(".product_attribute").hide();
+					$("#beli_sekarang .order_price, #beli_sekarang .set_meal_price").show();
+					for (var i = 0; i < show_num.length; i++) {
+						$("#product_attribute_" + show_num[i]).show();
+					}
+					var set_meal_price_text = pri2num($(this).attr("price")) + pri2num($(this).attr("postage"));
+					$(".set_meal_price [init='set_meal_price']").text(set_meal_price_text);
+					if (init["currency_symbol"] == "Rp" || init["currency_symbol"] == "₫") {
+						$(".set_meal_price [init='set_meal_price']").text(num2pri(set_meal_price_text));
+					}
+				});
+				$("[init='set_meal_btn_block'] button:not([disabled])").eq(0).click();
+			})();
+			// 套餐选择点击事件end
+
+			// 页面滚动监听事件start
+			(function () {
+				$(document, window).on("scroll", function (e) {
+					var flag = $("html,body").scrollTop() + $(window).height();
+					if ($("#beli_sekarang").offset().top < flag) {
+						$(".bottom button").hide();
+					} else {
+						$(".bottom button").show();
+					}
+				});
+			})();
+			// 页面滚动监听事件end
+
+			// 底部立即下单点击事件start
+			(function () {
+				$(".bottom button").on("click", function () {
+					$("html,body").animate({
+						scrollTop: $("#beli_sekarang").offset().top
+					})
+				});
+			})();
+			// 底部立即下单点击事件end
+
+			// 表单提交事件start
+			(function () {
+				function getQueryString(name) {
+					var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+					var r = window.location.search.substr(1).match(reg);
+					if (r != null) return unescape(r[2]);
+					return null;
+				}
+				$("[name='protype']").val(init["product_title"]);
+				$("[name='profullname']").val(init["product_full_name"]);
+				$("[name='backurl']").val(window.location.href);
+				$("[name='fromurl']").val(window.location.href);
+				$("[name='cid']").val(getQueryString("cid"));
+				$("[name='bm']").val(getQueryString("bm"));
+
+				// qj改动
+				$("#submit").on("click", function () {
+					var type = $("#payment_method .selected").attr("method");
+					if ($("[name='username']").val().trim() === "") {
+						alert(words[init["words"]]["表单-姓名-错误提示"]);
+						return;
+					}
+					if ($("[name='mobile']").val().trim() === "") {
+						alert(words[init["words"]]["表单-手机号码-错误提示"]);
+						return;
+					} else if (init["currency_symbol"] == "NT$" && /^09\d{7}$/g.test($("[name='mobile']").val())) {
+						alert(words[init["words"]]["表单-手机号码-错误提示"]);
+						return;
+					} else if (type == "roc_711") {
+						if (!/^09\d{8}$/g.test($("[name='mobile']").val())) {
+							alert(words[init["words"]]["表单-手机号码-错误提示"]);
+							return;
+						}
+					}
+					if ($("[name='cusprovince']").val() == $("[name='cusprovince'] option:eq(0)").val()) {
+						if (init["currency_symbol"] == "NT$" && (type == "roc_711" || type == "roc_qj")) {
+							alert("請選擇您所在的縣/市！");
+							return;
+						} else if (init["currency_symbol"] == "SGD") {
+							// pass
+						} else {
+							alert(words[init["words"]]["表单-三级联动1-错误提示"]);
+							return;
+						}
+					}
+					if ($("[name='cuscity']").val() == $("[name='cuscity'] option:eq(0)").val()) {
+						if (init["currency_symbol"] == "NT$" && (type == "roc_711" || type == "roc_qj")) {
+							alert("請選擇您所在的區/鄉鎮！");
+						} else {
+							alert(words[init["words"]]["表单-三级联动2-错误提示"]);
+						}
+						return;
+					}
+					if ($("[name='cusarea']").val() == $("[name='cusarea'] option:eq(0)").val()) {
+						if (init["currency_symbol"] == "NT$" && (type == "roc_711" || type == "roc_qj")) {
+							alert("請選擇您所在的門市！");
+							return
+						} else if (init["currency_symbol"] == "SGD") {
+							// pass
+						} else {
+							alert(words[init["words"]]["表单-三级联动3-错误提示"]);
+							return
+						};
+					}
+					if ($("[name='addr']").val().trim() === "") {
+						alert(words[init["words"]]["表单-详细地址-错误提示"]);
+						return;
+					}
+					if ($("[name='postal']").val().trim() === "") {
+						alert(words[init["words"]]["表单-邮递区号-错误提示"]);
+						return;
+					}
+					var show_list = $("[init='set_meal_btn_block'] .selected").attr("show").split(",");
+					var set_meal_arr = [];
+					for (var i = 0, len = show_list.length; i < len; i++) {
+						var img_text = $("#product_attribute_" + show_list[i] + ">.img_block>.selected").attr("back_text");
+						var btn_text = $("#product_attribute_" + show_list[i] + ">.btn_block>.selected").attr("back_text") || "";
+						set_meal_arr.push(img_text + btn_text);
+					}
+					(function arrayCnt(arr) {
+						var proname_val = "";
+						var newArr = [];
+						newArr = [...new Set(arr)];
+						var newarr2 = new Array(newArr.length);
+						for (var t = 0; t < newarr2.length; t++) {
+							newarr2[t] = 0;
+						}
+						for (var p = 0; p < newArr.length; p++) {
+							for (var j = 0; j < arr.length; j++) {
+								if (newArr[p] == arr[j]) {
+									newarr2[p]++;
+								}
+							}
+
+						}
+						for (var m = 0; m < newArr.length; m++) {
+							proname_val += newArr[m] + "x" + newarr2[m] + " | ";
+						}
+						$("[name='proname']").val(proname_val.slice(0, -2).replace(/x1/g, ""));
+					})(set_meal_arr);
+					$("[name='pri']").val(pri2num($("[init='set_meal_btn_block'] .selected").attr("price")) + pri2num($("[init='set_meal_btn_block'] .selected").attr("postage")));
+
+					$("#pop_up_box").show();
+					$(window).resize();
+
+					var date = new Date();
+					var orderdate = date.getFullYear() + "" + (date.getMonth() + 1) + "" + date.getDate() + "" + date.getHours() + "" + date.getMinutes() + "" + date.getSeconds();
+					$("#pop_up_box .number .value").text(orderdate);
+					$("#pop_up_box .name .value").text($("[name='username']").val());
+					$("#pop_up_box .product .value").text(init["product_title"]);
+					$("#pop_up_box .price  .value").text(init["currency_symbol"] + $("[name='pri']").val().trim());
+					$("#pop_up_box .moblie .value").text($("[name='mobile']").val().trim());
+					$("#pop_up_box .address .value").text($("[name='addr']").val().trim());
+					var other = "";
+					if (init["currency_symbol"] == "NT$" && (type == "roc_711" || type == "roc_qj")) {
+						var cusarea_val = $("[name='cusarea']").val().split("-")[1];
+						var addr_val = $("[name='addr']").val();
+						var addr = addr_val.replace(cusarea_val + "，", "");
+						var cuscity_val = $("[name='cuscity']").val();
+						var cusarea_val = $("[name='cusarea']").val();
+						var start = cusarea_val.indexOf(cuscity_val) + cuscity_val.length;
+						var cusarea = cusarea_val.slice(start);
+						var cusprovince_val = $("[name='cusprovince']").val();
+						var cusprovince = (type == "roc_711" ? "711台湾 " : "全家台湾 ") + cusprovince_val;
+						other = "&cusprovince=" + cusprovince + "&cusarea=" + cusarea + "&addr=" + addr;
+					} else if (init["currency_symbol"] == "HK$" || init["currency_symbol"] == "SGD") {
+						other = "&cusprovince=" + $("[name='cusprovince']").val();
+					} else if (init["currency_symbol"] == "Rp") {
+						other = "&cusprovince=" + "Indonesia " + $("[name='cusprovince']").val() + "&pri=" + $("[name='pri']").val().replace(/,/g, "");
+					} else if (init["currency_symbol"] == "₫") {
+						other = "&cusprovince=" + "Vietnam " + $("[name='cusprovince']").val() + "&pri=" + $("[name='pri']").val().replace(/,/g, "");
+					}
+					$("#pop_up_box").show();
+					$.ajax({
+						type: "POST",
+						url: "http://post.odaq.cn/order_hw" + init["bms"] + ".php/",
+						data: $("form").serialize() + other,
+						dataType: "text",
+						error: function (request) {  //失败
+							alert("Connection error");
+						},
+						success: function (data) {  //成功
+							fbq('track', 'Purchase');
+							$("form")[0].reset();
+							$("#pop_up_box").show();
+							$(window).resize();
+						}
+					});
+				});
+				// qj改动
+			})();
+			// 表单提交事件end
+
+			// 弹出框start
+			(function () {
+				$(window).on("resize", function () {
+					$(".bottom button").width($("#content_box").width() + "px");
+					var pop_up_box_width = $("#pop_up_box .box").width();
+					var pop_up_box_height = $("#pop_up_box .box").height();
+					var window_width = $(window).width();
+					var window_height = $(window).height();
+					$("#pop_up_box").css({
+						"width": window_width + "px",
+						"height": window_height + "px",
+					});
+					$("#pop_up_box .box").css({
+						"left": (window_width - pop_up_box_width) / 2 + "px",
+						"top": (window_height - pop_up_box_height) / 2 + "px",
+					});
+				});
+				$("#pop_up_box .close").on("click", function () {
+					document.location.reload();
+				});
+				$("#pop_up_box .btn a:eq(1)").on("click", function () {
+					$("#pop_up_box").hide();
+				})
+			})();
+
+			// 弹出框end
+
+			// 付款方式start
+			(function () {
+				// qj改动
+				if (currency == "NT$") {
+					var init = ["國家/地區", "縣/市", "鎮/鄉/區"];
+					var init2 = ["縣/市", "區/鄉鎮", "門市"];
+					//判断类型
+					function type_tip() {
+						$("[name=addr]").val("");
+						var choose, type = $("#payment_method .selected").attr("method");
+						if (type == "roc") {
+							choose = init;
+							$("#address b").text("詳細地址");
+							$("[name='addr']").val("").removeClass("addr").prop("disabled", false).attr("placeholder", "請填寫收貨人的街道地址");
+						} else {
+							choose = init2;
+							$("#address b").text("門市地址");
+							$("[name='addr']").addClass("addr").prop("disabled", true).attr("placeholder", "");
+						}
+						$("#area select").each(function (idx) {
+							$(this).html("<option value=" + choose[idx] + ">" + choose[idx] + "</option>");
+							if (idx == 0) {
+								console.log(222);
+								switch (type) {
+									case "roc": roc(); break;
+									case "roc_711": roc_711(); break;
+									case "roc_qj": roc_qj(); break;
+								}
+								for (var i = 0; i < area_1.length; i++) {
+									$("<option value=" + area_1[i] + ">" + area_1[i] + "</option>").appendTo($(this));
+								}
+							}
+						});
+					}
+					type_tip();
+					//选择付款类型
+					$("#payment_method button").on("click", function () {
+						type_tip();
+					})
+					var idx = [-1, -1, -1];//记录选择的index
+					$("#area select").on("change", function () {
+						//清除内容
+						$("[name=addr]").val("");
+						$(this).nextAll("select").find("option:gt(0)").remove();
+						//记录选择的index
+						$("#area select").each(function (index) {
+							idx[index] = $(this).find('option:selected').index() - 1;
+						})
+						var current_idx = $(this).index();
+						var area = current_idx < 2 ? eval("area_" + (current_idx + 2)) : [];
+						var arr = area[idx[0]] || [];
+						var type = $("#payment_method .selected").attr("method");
+						if (type != "roc") {
+							if (current_idx == 1) {
+								arr = area[idx[0]][idx[1]];
+							}
+							if (current_idx == 2) {
+								arr = area_3[idx[0]][idx[1]][idx[2]];
+							}
+						} else {
+							if (current_idx == 1) {
+								arr = area[idx[1]];
+							}
+						}
+						if (arr.constructor == Array) {
+							if (arr[0].constructor == String) {
+								for (var i = 0; i < arr.length; i++) {
+									$("<option value=" + arr[i] + ">" + arr[i] + "</option>").appendTo($(this).next());
+								}
+							}
+							else {
+								for (var j in arr) {
+									var name = arr[j]["POIName"] || arr[j]["name"];
+									var addr = arr[j]["Address"] || arr[j]["addr"];
+									var val = name + "-" + addr;
+									$("<option value=" + val + ">" + val + "</option>").appendTo($(this).next());
+								}
+							}
+						}
+						if (arr.constructor == Object) {
+							var name = arr["POIName"] || arr["name"];
+							var addr = arr["Address"] || arr["addr"];
+							var pid = arr["POIID"] || arr["pkey"];
+							var tel = arr["Telno"] || arr["tel"];
+							var val = addr + "，店名：" + name + "，店號：" + pid + "，電話：" + tel;
+							$("[name=addr]").val(val);
+						}
+					})
+				}
+				// qj改动
+			})();
+			// 付款方式end
+
+			// 回到頂部事件start
+			(function () {
+				$("#to_top").on("click", function () {
+					$("html,body").animate({
+						scrollTop: 0
+					})
+				});
+			})();
+			// 回到頂部事件end
+
+			// 添加購物車事件start
+			(function () {
+				$(".add_to_cart").click(function () {
+					fbq('track', 'AddToCart');
+				});
+				$(window).scroll(function () {
+					var scrollTop = $(this).scrollTop();
+					var scrollHeight = $(document).height();
+					var windowHeight = $(this).height();
+					if (scrollTop + windowHeight == scrollHeight) {
+						fbq('track', 'AddToCart');
+					}
+				});
+			})();
+			// 添加購物車事件end
+			//事件end
+
+			//动态改变产品图宽高
+			$(".img_block img").each(function () {
+				$(this).height($(this).width());
+			})
+
+		};//qj改动
+	</script>
+
+	<div id="rememberry__extension__root" style="all: unset;"></div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.CommentMapper">
+    <!--添加评论-->
+    <insert id="add">
+        INSERT INTO `mall`.`tab_comment`(`comment_name`,`comment_content`,`product_id`,`img_id`,`c_date`)
+        VALUES(#{comment_name},#{comment_content},#{product_id},#{img_id},now());
+    </insert>
+
+    <!--编辑评论-->
+    <update id="edit">
+        UPDATE `mall`.`tab_comment`
+        SET
+        `comment_name` = #{comment_name},
+        `comment_content` = #{comment_content},
+        `product_id` = #{product_id},
+        `img_id` = #{img_id}
+        WHERE `id` = #{id};
+    </update>
+
+    <!--分页查询-->
+    <resultMap id="selectCommentPage" type="com.code.mallservice.mall.entity.CommentEntity">
+        <id column="id" property="id"/>
+        <result column="comment_name" property="comment_name"/>
+        <result column="comment_content" property="comment_content"/>
+        <result column="product_id" property="product_id"/>
+        <result column="img_id" property="img_id"/>
+        <result column="c_date" property="c_date"/>
+        <association property="imageEntity" column="img_id" select="selectCommentImg">
+            <id column="uid" property="uid"/>
+            <result column="url" property="url"/>
+            <result column="min_url" property="min_url"/>
+            <result column="c_date" property="c_date"/>
+            <result column="product_id" property="product_id"/>
+        </association>
+    </resultMap>
+    <select id="findPage" resultMap="selectCommentPage">
+        SELECT * FROM mall.tab_comment where product_id=#{product_id} order by id desc limit #{page},#{size};
+    </select>
+    <select id="selectCommentImg" resultType="com.code.mallservice.mall.entity.ImageEntity">
+         SELECT * FROM mall.tab_imags where uid = #{img_id};
+    </select>
+
+    <select id="countFind" resultType="_long">
+        SELECT count(*) FROM mall.tab_comment where product_id=#{product_id}
+    </select>
+
+    <!--查询产品的评论-->
+    <select id="findByProduct" resultMap="selectCommentPage">
+        SELECT * FROM mall.tab_comment where product_id=#{product_id} order by id desc;
+    </select>
+</mapper>

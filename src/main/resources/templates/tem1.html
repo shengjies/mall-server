@@ -1,10 +1,1175 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${title}"></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:utext="${title}"></title>
+    <style>
+        /*菜鳥教程移動web開發兼容性處理*/
+        body {
+            font-family: "微軟雅黑", "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+        }
+        select {
+            border: solid 1px #CCC;
+            appearance: none;
+            -moz-appearance: none;
+            -webkit-appearance: none;
+            padding-right: 14px;
+        }
+
+        select::-ms-expand {
+            display: none;
+        }
+
+        /*全局*/
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 微软雅黑;
+        }
+
+        body {
+            background: url(https://img.alicdn.com/imgextra/i2/2445381426/TB2eKTbdQfb_uJkSnfoXXb_epXa_!!2445381426.jpg) no-repeat fixed;
+            background-size: 100% 100%;
+        }
+
+        ul li {
+            list-style: none;
+        }
+
+        /*整体*/
+        #content_box {
+            background: rgba(0, 0, 0, .3);
+            max-width: 620px;
+            padding: 0 10px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /*顶部*/
+        #content_box>.top
+
+            /*部分*/
+        #content_box>.section {
+            margin-top: 20px;
+            background: #FFF;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        /*部分标题*/
+        .section>.notes {
+            height: 40px;
+            line-height: 40px;
+            text-indent: 1rem;
+        }
+
+        .section>.notes::before {
+            content: "";
+            display: inline-block;
+            width: 4px;
+            height: 18px;
+            background: #dc7d2a;
+            margin-right: 8px
+        }
+
+        /*商品图片部分*/
+        #commodity_images {
+            line-height: 0;
+        }
+
+        #commodity_images img {
+            width: 100%;
+        }
+
+        /*限时折扣部分*/
+        #time_limit .time {
+            background: #FF9800;
+            color: white;
+            padding: 1px 5px;
+            border-radius: 4px;
+            margin-left: 15px;
+        }
+
+        #time_limit .details li {
+            float: left;
+            color: #FFF;
+            padding: 5px 0;
+        }
+
+        #time_limit .details li:first-child {
+            width: 60%;
+        }
+
+        #time_limit .details li:last-child {
+            width: 40%;
+        }
+
+        #time_limit .current_price {
+            background: #d42e22;
+            height: 90px;
+            line-height: 90px;
+            text-indent: 15px;
+        }
+
+        #time_limit .current_price .currency_symbol {
+            font-size: 1.2rem;
+        }
+
+        #time_limit .current_price .price {
+            font-size: 2rem;
+        }
+
+        #time_limit .other {
+            background: #bf0d00;
+        }
+
+        #time_limit .other div {
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+        }
+
+        #time_limit .count_down {
+            background: #98878F;
+            text-align: center;
+        }
+
+        #time_limit .count_down div {
+            height: 30px;
+            line-height: 30px;
+        }
+
+        #time_limit .product_title {
+            float: left;
+            width: 100%;
+            padding: 15px;
+            line-height: 25px;
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+
+        #time_limit .product_service {
+            float: left;
+            width: 100%;
+            padding: 5px 0;
+            border-top: 1px solid #CCC;
+            border-bottom: 1px solid #CCC;
+        }
+
+        #time_limit .product_service span {
+            display: inline-block;
+            background: #d42e22;
+            color: #FFF;
+            margin: 5px 5px 5px 10px;
+            padding: 3px 8px;
+        }
+
+        #time_limit .product_introduction {
+            padding: 0 10px;
+            line-height: 25px;
+            color: red;
+        }
+
+        /*商品属性*/
+        /*#commodity_property dd {line-height:0;}*/
+        #commodity_property_images img {
+            display: block;
+        }
+
+        #commodity_property img {
+            width: 100%;
+        }
+
+        /*客户评价*/
+        #customer_evaluation dd {
+            height: 640px;
+            overflow: hidden;
+        }
+
+        #customer_evaluation ul {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        #customer_evaluation li {
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            margin: 1px;
+            display: flex;
+            box-sizing: border-box;
+            padding: 5px 0px;
+        }
+
+        #customer_evaluation img {
+            height: 150px;
+        }
+
+        #customer_evaluation .name {
+            color: #555;
+            font-size: 16px;
+            padding: 0 20px;
+        }
+
+        #customer_evaluation .evaluate {
+            color: #777;
+            font-size: 16px;
+            position: relative;
+        }
+
+        /*立即下单*/
+        #beli_sekarang>#product_set_meal {
+            padding: 0 10px;
+        }
+
+        #beli_sekarang>#product_set_meal>dl {
+            padding: 5px 0;
+            border-bottom: 1px solid #CCC;
+            display: none;
+        }
+
+        #beli_sekarang>#product_set_meal>dl:first-of-type {
+            display: block;
+        }
+
+        #beli_sekarang>#product_set_meal .title {
+            color: #192231;
+            font-weight: bold;
+        }
+
+        #beli_sekarang>#product_set_meal [init="currency_symbol"],
+        #beli_sekarang>#product_set_meal [init="current_price"] {
+            color: red;
+        }
+
+        #beli_sekarang .btn_block button {
+            background: #FFF;
+            color: #555;
+            border: 1px solid #CCC;
+            outline: none;
+            cursor: pointer;
+            height: 35px;
+            line-height: 35px;
+            padding: 0 10px;
+            border-radius: 5px;
+            margin: 5px 5px 5px 0;
+        }
+
+        #beli_sekarang .btn_block .selected {
+            border: 2px solid red;
+            padding: 0 9px;
+            margin: 4px 5px 4px 0;
+            color: red;
+        }
+
+        #beli_sekarang .img_block {
+            overflow: hidden;
+        }
+
+        #beli_sekarang .img_block div {
+            float: left;
+            width: 100px;
+            padding: 4px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            margin: 5px 5px 5px 0;
+        }
+
+        #beli_sekarang .img_block img {
+            width: 100px;
+            height: 100px;
+        }
+
+        #beli_sekarang .img_block .selected {
+            border: 2px solid red;
+            padding: 3px;
+            color: red;
+        }
+
+        #beli_sekarang #customer_info {
+            padding: 10px;
+        }
+
+        #beli_sekarang #customer_info .title {
+            color: #192231;
+            font-weight: bold;
+        }
+
+        #beli_sekarang #customer_info input {
+            width: 100%;
+            height: 35px;
+            line-height: 35px;
+            border-radius: 5px;
+            outline: none;
+            border: 1px solid #bbb;
+            padding-left: 2%;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        #beli_sekarang #customer_info select {
+            width: 33.33%;
+            height: 35px;
+            line-height: 35px;
+            padding-left: 1%;
+            outline: none;
+            border: 1px solid #CCC;
+            margin: 5px 0;
+            box-sizing: border-box;
+            outline: 0;
+            background: #FFF;
+            font-size: 15px;
+        }
+
+        #beli_sekarang select {
+            padding-left: 10px;
+        }
+
+        #beli_sekarang select option:nth-of-type(2n) {
+            background: #f9f9f9;
+            color: #555;
+        }
+
+        #beli_sekarang #customer_info select:first-of-type {
+            border-radius: 5px 0 0 5px;
+        }
+
+        #beli_sekarang #customer_info select:last-of-type {
+            border-radius: 0 5px 5px 0;
+        }
+
+        #beli_sekarang #customer_info #submit {
+            width: 100%;
+            background: #d42e22;
+            height: 40px;
+            line-height: 40px;
+            border: 0;
+            color: #FFF;
+            font-size: 25px;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        #beli_sekarang #customer_info dt .star {
+            color: red;
+            font-size: 20px;
+        }
+
+        #beli_sekarang #payment_method button {
+            background: #FFF;
+            color: #000;
+            border: 1px solid #CCC;
+            outline: none;
+            cursor: pointer;
+            height: 35px;
+            line-height: 35px;
+            padding: 0 10px;
+            border-radius: 5px;
+            margin: 5px 5px 5px 0;
+        }
+
+        /*qj改动*/
+        #beli_sekarang #payment_method button:not(:first-of-type) {
+            display: none;
+        }
+
+        .addr {
+            background: #e5e5e5;
+            cursor: not-allowed;
+        }
+
+        /*qj改动*/
+        #beli_sekarang #payment_method .selected {
+            border: 2px solid red;
+            padding: 0 9px;
+            margin: 4px 5px 4px 0;
+            color: red;
+        }
+
+        #beli_sekarang .set_meal_price .price {
+            font-size: 20px;
+            /*margin-top:5px;*/
+            color: red;
+        }
+
+        #beli_sekarang .order_price .title {
+            margin: 10px 0;
+        }
+
+        #beli_sekarang .order_price .title [init="currency_symbol"] {
+            color: #000 !important;
+        }
+
+        #beli_sekarang .order_price .ordered {
+            margin: 10px 0;
+        }
+
+        #beli_sekarang .order_price .price_blok {
+            text-align: right;
+            color: red;
+            font-size: 20px;
+            margin: 5px;
+        }
+
+        #beli_sekarang table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #beli_sekarang table tr {
+            border: 1px solid #CCC;
+            border-top: 0;
+        }
+
+        #beli_sekarang table tr:first-child {
+            background: red;
+            color: #FFF;
+            line-height: 30px;
+            border: 0;
+        }
+
+        #beli_sekarang tr td:first-child {
+            line-height: 0;
+        }
+
+        #beli_sekarang tr td:first-child img {
+            margin: 5px;
+            width: 100px;
+            height: 100px;
+        }
+
+        #beli_sekarang tr th,
+        #beli_sekarang tr td {
+            text-align: center;
+            width: 25%;
+            box-sizing: border-box;
+        }
+
+        /*用户需知*/
+        #pemberitahuan_pelanggan {
+            background: rgba(255, 255, 255, 0.5) !important;
+        }
+
+        #pemberitahuan_pelanggan a {
+            color: #8a0000;
+        }
+
+        #pemberitahuan_pelanggan dt {
+            background: #fff;
+        }
+
+        #pemberitahuan_pelanggan dd {
+            padding: 10px;
+        }
+
+        #pemberitahuan_pelanggan p {
+            margin: 5px 0;
+        }
+
+        #pemberitahuan_pelanggan dd .title {
+            margin-top: 10px;
+            color: #b11207;
+        }
+
+        /*底部*/
+        .bottom {
+            position: fixed;
+            bottom: 0;
+            min-width: 620px;
+            z-index: 999;
+        }
+
+        .bottom button {
+            width: 100%;
+            background: #d42e22;
+            height: 50px;
+            line-height: 50px;
+            border: 0;
+            color: #FFF;
+            font-size: 25px;
+            outline: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        /*弹出框*/
+        #pop_up_box {
+            position: fixed;
+            background: rgba(0, 0, 0, 0.8);
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: none;
+        }
+
+        #pop_up_box .box {
+            background: #FFF;
+            position: absolute;
+            max-width: 600px;
+        }
+
+        #pop_up_box dt {
+            text-align: center;
+        }
+
+        #pop_up_box p {
+            margin: 5px;
+            font-size: 14px;
+        }
+
+        #pop_up_box .close {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            top: -10px;
+            right: -10px;
+            border-radius: 16px;
+            cursor: pointer;
+        }
+
+        #pop_up_box .success {
+            margin-top: 20px;
+            width: 60px;
+        }
+
+        #pop_up_box .info {
+            width: 85%;
+            margin: 0 auto;
+            padding: 2px;
+            border: 2px solid #333;
+            padding: 3px;
+        }
+
+        #pop_up_box .info div {
+            border: 1px solid #333;
+            padding: 0 10px;
+        }
+
+        #pop_up_box .notify {
+            width: 88%;
+            margin: 5px auto;
+            text-indent: 1rem;
+        }
+
+        #pop_up_box .btn {
+            width: 88%;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        #pop_up_box .btn a {
+            text-align: center;
+            display: inline-block;
+            background-color: #333;
+            width: 48%;
+            line-height: 2;
+            color: #fff;
+            border-radius: 2px;
+            box-shadow: 1px 1px 5px #ccc;
+            padding: 0 2%;
+            box-sizing: border-box;
+            text-decoration: none;
+            margin-bottom: 20px;
+        }
+
+        #pop_up_box .btn a:first-of-type {
+            float: left;
+        }
+
+        #pop_up_box .btn a:last-of-type {
+            float: right;
+        }
+
+        /*回到頂部*/
+        #to_top {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 0, 0, 0.66);
+            bottom: 80px;
+            right: 20px;
+            z-index: 100;
+            border-radius: 40px;
+            color: #FFF;
+            text-align: center;
+            line-height: 40px;
+            cursor: pointer;
+        }
+
+        @media screen and (max-width:620px) {
+            .bottom button {
+                width: 100%;
+            }
+        }
+
+        /*--------------评论--------------*/
+        .touxiang {
+            background: url(https://img.alicdn.com/imgextra/i1/1048010507/O1CN011FcFFXTu088cfGs_!!1048010507.png);
+            background-size: 40px 40px;
+            width: 40px;
+            height: 40px;
+            padding: 0px;
+            margin: 0px;
+            display: block;
+            vertical-align: top;
+        }
+
+        .clearfix:before,
+        .clearfix:after {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            *zoom: 1;
+        }
+
+        .evaluate_bg {
+            padding: 8px;
+            border-radius: 0.5em;
+            min-width: 51%;
+            margin-left: 0.8em;
+            display: inline-block;
+            height: auto;
+            width: 80%;
+        }
+
+        /*蓝色*/
+        [init='customer_evaluation_ul'] li:nth-child(odd) .evaluate_bg {
+            background: rgb(188, 227, 249);
+        }
+
+        [init='customer_evaluation_ul'] li:nth-child(odd) .evaluate_bg:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: -20px;
+            background: url(https://img.alicdn.com/imgextra/i3/1048010507/O1CN011FcFFXTu07yEsbC_!!1048010507.png) no-repeat;
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+        }
+
+        /*橙色*/
+        [init='customer_evaluation_ul'] li:nth-child(even) .evaluate_bg {
+            background: rgb(255, 228, 200);
+        }
+
+        [init='customer_evaluation_ul'] li:nth-child(even) .evaluate_bg:before {
+            content: "";
+            display: inline-block;
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            left: -20px;
+            background: url(https://img.alicdn.com/imgextra/i2/1048010507/O1CN011FcFFXeswzK9b45_!!1048010507.png) no-repeat;
+
+        }
+
+        #customer_evaluation .icon {
+            transform: rotate(180deg);
+            -ms-transform: rotate(180deg);
+            -moz-transform: rotate(180deg);
+            -webkit-transform: rotate(180deg);
+            -o-transform: rotate(180deg);
+            vertical-align: top;
+            height: 20px;
+        }
+
+        #customer_evaluation .icon2 {
+            vertical-align: top;
+            margin-top: 10px;
+            height: 20px;
+        }
+
+        /*--------后期变动-------*/
+        .product_attribute {
+            font-size: 14px;
+            color: #555;
+        }
+
+        #s_province,
+        #s_city,
+        #s_county {
+            color: #777;
+        }
+
+        [init="set_meal_btn_block"]>[disabled="disabled"],
+        .product_attribute>.img_block>[disabled="disabled"],
+        .product_attribute>.btn_block>[disabled="disabled"] {
+            text-decoration: line-through !important;
+            background: #CCC !important;
+            color: #FFF !important;
+            cursor: not-allowed !important;
+        }
+
+        /*更多商品*/
+        .section {
+            border-radius: 0;
+            margin-top: 20px;
+            background: #FFF;
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+        }
+
+        .section .swiper-slide {
+            text-align: center;
+        }
+
+        .section .swiper-slide img {
+            width: 90%;
+        }
+
+        .section .swiper-slide p {
+            font-size: 12px;
+            color: #333;
+            padding: 0 10px;
+            line-height: 30px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .section .swiper-slide {
+            text-decoration: none;
+            overflow: hidden;
+        }
+
+        @media screen and (max-width: 400px) {
+            #beli_sekarang .img_block div {
+                width: 27%;
+            }
+
+            #beli_sekarang .img_block img {
+                width: 100%;
+            }
+        }
+
+        .swiper-container {
+            padding: 0 !important;
+        }
+    </style>
+    <script type="text/javascript" src="teml1/words.js"></script>
+    <script type="text/javascript" src="teml1/jquery.js"></script>
+    <style type="text/css">
+        @font-face {
+            font-family: 'rbicon';
+            src: url(chrome-extension://dipiagiiohfljcicegpgffpbnjmgjcnf/fonts/rbicon.woff2) format("woff2");
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
 </head>
 <body>
-    <h1>模板1</h1>
+<div id="content_box">
+    <div class="top" init="product_top"
+         style="line-height:40px;color:#FFF;font-weight:bold;text-align:center;border-bottom:1px solid #FFF;font-size:20px;">
+    </div>
+    <!--图片轮播-->
+    <dl class="section" id="commodity_images"
+        style="border-radius: 0; margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <dt class="notes" style="display: none;">商品圖片</dt>
+        <dd id="product_first_image"  class="swiper-container">
+            <div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}"  th:each="item :${product.roundImageList}"
+                 style="transform: translate3d(-1240px, 0px, 0px); transition-duration: 0ms; height: 701px;">
+                <img class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next" th:src="${item.url}" width="100%"
+                    data-swiper-slide-index="0" style="width: 620px;">
+            </div>
+            <link rel="stylesheet" href="teml1/swiper.css">
+            <script type="text/javascript" src="teml1/swiper.js"></script>
+            <script>
+                var mySwiper = new Swiper('.swiper-container', {
+                        autoplay: 2000,
+                        loop: true,
+                    });
+            </script>
+        </dd>
+    </dl>
+    <!--限時折扣 -->
+    <dl class="section" id="time_limit"
+        style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <dt class="notes">
+            <span word="限时折扣">限時折扣</span>
+            <span class="time">14:09:11</span>
+        </dt>
+        <dd>
+            <ul class="details">
+                <li class="current_price" style="background-color: rgb(212, 46, 34);">
+                    <!--现价-->
+                    <span init="currency_symbol" th:utext="${product.unit}"></span>
+                    <span class="price" init="current_price" th:utext="${product.price}"></span>
+                </li>
+                <li class="other" style="background-color: rgb(191, 13, 0);">
+                    <!--原价-->
+                    <div class="original_price">
+                        <del>
+                            <span init="currency_symbol" th:utext="${product.unit}"></span>
+                            <span init="original_price" th:utext="${product.o_price}"></span>
+                        </del>
+                    </div>
+                    <div>
+                        <span word="折扣"></span>
+                        <span></span></div>
+                    <div>
+                        <span word="已售">已售</span>:<span th:utext="${product.sold}"></span>
+                    </div>
+                </li>
+            </ul>
+            <!--产品标题-->
+            <div class="product_title" th:utext="${title}"></div>
+            <!--配送方式-->
+            <div class="product_service">
+                <span word="免邮费">免郵遞費</span>
+                <span word="货到付款">貨到付款</span>
+                <span word="优质服务">711超商取貨</span>
+            </div>
+            <!--产品简介-->
+            <div class="product_introduction" init="product_introduction" th:utext="${product.introduction}"></div>
+        </dd>
+    </dl>
+    <!---详情-->
+    <dl class="section" id="commodity_property"
+        style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <dt class="notes">
+            <span word="商品信息">商品信息</span>
+        </dt>
+        <dd id="commodity_property_images" th:utext="${product.description}"></dd>
+    </dl>
+    <!--客服评论-->
+    <dl class="section" id="customer_evaluation" th:if="${product.comment}"
+        style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <dt class="notes">
+            <span word="客户评价">客戶評價</span>
+        </dt>
+        <dd>
+            <ul init="customer_evaluation_ul" style="margin-top: -792.843px;" th:if="${not #lists.isEmpty(product.commentEntityList)}">
+                <li class="clearfix" th:each="item :${product.commentEntityList}">
+                    <div class="name">
+                        <span class="touxiang"></span>
+                        <span th:utext="${item.comment_name}"></span>
+                    </div>
+                    <div class="evaluate evaluate_bg">
+                        <span th:utext="${item.comment_content}"></span>
+                        <div class="images" th:if="${item.imageEntity != null}">
+                            <img th:src="${item.imageEntity.url}">
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+    <!--立即下單-->
+    <dl class="section" id="beli_sekarang"
+        style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <dt class="notes add_to_cart">
+            <span word="立即下单">立即下單</span>
+        </dt>
+        <dd id="product_set_meal">
+            <dl id="set_meal" th:if="${product.cl_id == 2 }">
+                <dt class="title">
+                    <span word="套餐选择">套餐選擇</span>:
+                </dt>
+                <dd class="btn_block" init="set_meal_btn_block" th:if="${not #lists.isEmpty(product.policys)}">
+                    <button type="button" show="1,2" th:price="${item.tcmoney}" th:postage="${start.index}"
+                            th:class="${start.index ==0?'selected':''}" th:each="item,start :${product.policys}" th:utext="${item.tcname}">
+
+                    </button>
+                </dd>
+            </dl>
+            <dl class="set_meal_price" style="display: block;">
+                <dt class="title">
+                    <span th:utext="${product.cl_id == 2?'套餐價格':'单价'}">套餐價格</span>:
+                </dt>
+                <dd class="price">
+                    <span init="currency_symbol" style="font-size: 20px;" th:utext="${product.unit}"></span>
+                    <span init="set_meal_price" style="font-size: 20px;"
+                          th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></span>
+                </dd>
+            </dl>
+            <div style="border-bottom:1px solid #ccc" th:if="${not #lists.isEmpty(product.policys)}" th:each="item,start:${product.policys}">
+                <dl id="product_attribute_1" class="product_attribute"
+                    th:if="${not #lists.isEmpty(product.types)}"
+                    style="display: block;">
+                    <dt class="title">颜色：</dt>
+                    <dd class="img_block">
+                        <div th:back_text="${t.type_value}" style="text-align: center" th:class="${tstart.index == 0?'selected':''}" th:each="t,tstart:${product.types}">
+                            <img th:if="${t.imageEntity != null}" th:src="${t.imageEntity.url}"
+                                 style="height: 100px;">
+                            <span th:utext="${t.type_lable}"></span>
+                        </div>
+                    </dd>
+                </dl>
+                <dl id="product_attribute_size_1" class="product_attribute"
+                    th:if="${not #lists.isEmpty(product.sizes)}"
+                    style="display: block;">
+                    <dt class="title">尺码：</dt>
+                    <dd class="img_block">
+                        <div th:back_text="${s.size_value}" style="text-align: center" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
+                            <span th:utext="${s.size_value}"></span>
+                        </div>
+                    </dd>
+                </dl>
+            </div>
+            <!--价格数量提示-->
+            <dl class="order_price" style="display: block;">
+                <dt class="title"></dt>
+                <dd class="ordered">
+                    <div class="price_blok price_1">
+                        <span word="已订购-数量">數量</span>:<span class="number">2</span>，
+                        <span word="已订购-合計">合計</span>:<span init="currency_symbol">NT$</span><span
+                            class="price">1099</span>
+                    </div>
+                </dd>
+            </dl>
+        </dd>
+        <!--表单-->
+        <dd id="customer_info">
+            <form>
+                <dl>
+                    <dt class="title">
+                        <span class="star">*</span><b>
+                        <span word="表单-付款方式">付款方式</span>:</b>
+                    </dt>
+                    <!-- qj改动 -->
+                    <dd id="payment_method">
+                        <button type="button" class="selected" method="roc"><span word="货到付款">貨到付款</span></button>
+                        <button type="button" method="roc_711" style="display: inline-block;">711超商取貨</button>
+                        <button type="button" method="roc_qj" style="display: inline-block;">全家取貨</button>
+                    </dd>
+                    <!-- qj改动 -->
+                    <dt class="title">
+                        <span class="star">*</span><b>
+                        <span word="表单-姓名">姓名</span>:</b>
+                    </dt>
+                    <dd>
+                        <input type="text" name="username" placeholder="請填寫您的姓名" word="表单-姓名-填写提示">
+                    </dd>
+                    <dt class="title">
+                        <span class="star">*</span><b>
+                        <span word="表单-手机号码">手機號碼</span>:</b>
+                    </dt>
+                    <dd>
+                        <input type="text" name="mobile" placeholder="請填寫您的手機號碼" word="表单-手机号码-填写提示">
+                    </dd>
+                    <dt class="title">
+                        <span class="star">*</span><b>
+                        <span word="表单-收货地区">收貨地區</span></b>：
+                    </dt>
+                    <!-- qj改动 -->
+                    <dd id="area">
+                        <select id="s_province" name="cusprovince">
+                            <option value="國家/地區">國家/地區</option>
+                            <option value="台灣">台灣</option>
+                        </select><select id="s_city" name="cuscity">
+                        <option value="縣/市">縣/市</option>
+                    </select><select id="s_county" name="cusarea">
+                        <option value="鎮/鄉/區">鎮/鄉/區</option>
+                    </select>
+                        <script language="javascript" id="regional_linkage" src="teml1/roc.js"></script>
+                        <script type="text/javascript">
+                            document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js?" + Math.random() + "'></scr" + "ipt>");
+                            document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js?" + Math.random() + "'></scr" + "ipt>");
+                        </script>
+                        <script type="text/javascript" src="teml1/roc_711.js"></script>
+                        <script type="text/javascript" src="teml1/roc_qj.js"></script>
+                        <!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js"></script> -->
+                        <!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js"></script> -->
+                        <script>
+                            var area_1, area_2, area_3, currency = init["currency_symbol"];
+                            switch ("NT$") {
+                                case "NT$":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/roc.js");
+                                    break;
+                                case "HK$":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_hk.js");
+                                    break;
+                                case "RM":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_mas.js");
+                                    break;
+                                case "₫":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_vn.js");
+                                    break;
+                                case "Rp":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_id.js");
+                                    break;
+                                case "THB":
+                                case "฿":
+                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_th.js");
+                                    break;
+                                case "SGD":
+                                    var inner_html =
+                                        '<select id="s_province" name="cusprovince" style="width:50%;cursor:not-allowed" disabled="disabled">' +
+                                        '<option value="Singapore" selected="selected">Singapore</option>' +
+                                        '</select>' +
+                                        '<select id="s_city" name="cuscity" style="width:50%">' +
+                                        '<option value="District">District</option>' +
+                                        '<option value="Central Singapore">Central Singapore</option>' +
+                                        '<option value="North East">North East</option>' +
+                                        '<option value="North West">North West</option>' +
+                                        '<option value="South East">South East</option>' +
+                                        '<option value="South West">South West</option>' +
+                                        '</select>';
+                                    document.getElementById("area").innerHTML = inner_html;
+                            }
+                        </script>
+                    </dd>
+                    <!-- qj改动 -->
+                    <dt class="title" id="address">
+                        <span class="star">*</span>
+                        <b>詳細地址</b>：
+                    </dt>
+                    <dd>
+                        <input type="text" name="addr" placeholder="請填寫收貨人的街道地址" word="表单-详细地址-填写提示">
+                    </dd>
+                    <dt class="title" style="display: none;">
+                        <span class="star">*</span><b>
+                        <span word="表单-邮政区号">╮(￣▽￣)╭</span></b>：
+                    </dt>
+                    <dd style="display: none;">
+                        <input type="text" name="postal" placeholder="╮(￣▽￣)╭" word="表单-邮政区号-填写提示">
+                    </dd>
+                    <dt class="title"><b><span word="表单-E-mail">E-mail</span></b>：</dt>
+                    <dd>
+                        <input type="text" name="mail" placeholder="可填寫您的E-mail，方便聯繫" word="表单-邮箱-填写提示">
+                    </dd>
+                    <dt class="title"><b><span word="表单-留言">留言</span></b>：</dt>
+                    <dd>
+                        <input type="text" name="remark" placeholder="如有特別需求，可留言給商家" word="表单-留言-填写提示">
+                    </dd>
+                    <dd>
+                        <button type="button" id="submit"><span word="提交订单">下訂單</span></button>
+                    </dd>
+                </dl>
+                <!--表單隱藏域start-->
+                <input type="hidden" name="protype" value="不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！">
+                <!--表單隱藏域end-->
+            </form>
+        </dd>
+    </dl>
+    <!--客服须知-->
+    <dl class="section" id="pemberitahuan_pelanggan"
+        style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
+        <a name="pemberitahuan_pelanggan"></a>
+        <dt class="notes"><span word="客户须知">客戶須知</span></dt>
+        <dd>
+            <p style="text-indent: 2rem;"><span
+                    word="客户须知1">本產品的實際使用效果根據個人情況決定，不保證每位用戶都能享受到所宣傳的效果。若有疑問請諮詢在線客服或通過電子郵箱聯絡我們，本公司享有最終解釋權。</span></p>
+            <span word="客户须知2" class="title">·關於發貨方式</span>
+            <p style="text-indent: 2rem;"><span word="客户须知3">支援貨到付款+免郵費+七天無理由退換貨！收到貨有任何疑問請聯繫我們在線客服! 也可隨時聯繫：</span><a
+                    href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+                    word="客户须知4">同時請附上您的姓名及聯繫方式及訂單編號在郵件當中，以便我們能快速的給您及時處理，祝您購物愉快！！！</span></p>
+            <span word="客户须知5" class="title">·關於配送時間</span>
+            <p style="text-indent: 2rem;"><span
+                    word="客户须知6">下訂成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</span></p>
+            <span word="客户须知7" class="title">·如何申請退換貨</span>
+            <p style="text-indent: 2rem;"><span word="客户须知8">由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至</span><a
+                    href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+                    word="客户须知9">，客服會在收到郵件後的1-3個工作日內受理您的請求。</span></p>
+            <span word="客户须知10" class="title">·退換貨流程：</span>
+            <p style="text-indent: 2rem;"><span word="客户须知11">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</span>
+            </p>
+            <span><span word="客户须知12" class="title">·退換貨請註明：訂單號、姓名、電話。</span><br><span word="客户须知13"
+                                                                                       class="title">·如何取消訂單</span></span>
+            <p style="text-indent: 2rem;"><span word="客户须知14">取消訂單需要向售後服務中心發送郵件並註明相關原因，郵件內容應註明您的訂單號、姓名、電話。</span>
+            </p>
+        </dd>
+    </dl>
+
+    <div id="to_top">Top</div>
+    <div class="bottom">
+        <button type="button" id="add_to_cart_btn" class="add_to_cart"
+                style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span
+                word="立即抢购">立即搶購</span>
+        </button>
+    </div>
+</div>
+<script>
+    // 倒计时start
+    (function () {
+        setInterval(function () {
+            var leftTime = (new Date(2118, 0, 1, 0, 0, 0)) - (new Date());
+            var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10);
+            var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);
+            var seconds = parseInt(leftTime / 1000 % 60, 10);
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            $("#time_limit .time").text(hours + ':' + minutes + ':' + seconds);
+        }, 1000);
+    })();
+    // 倒计时 end
+    // 客户评论滚动事件start
+    (function () {
+        var list = $("#customer_evaluation li").clone(true);
+        $("#customer_evaluation ul").append(list);
+        var end = -$("#customer_evaluation ul").height() / 2 + "px";
+        var time = $("#customer_evaluation li").size() * 1000;
+        function customerEvaluationSlide() {
+            $("#customer_evaluation ul").css('margin-top', 0).stop().animate({
+                "margin-top": end
+            }, time, "linear", function () {
+                customerEvaluationSlide();
+            });
+        };
+        customerEvaluationSlide();
+    })();
+    // 客户评论滚动事件end
+    // 页面滚动监听事件start
+    (function () {
+        $(document, window).on("scroll", function (e) {
+            var flag = $("html,body").scrollTop() + $(window).height();
+            if ($("#beli_sekarang").offset().top < flag) {
+                $(".bottom button").hide();
+            } else {
+                $(".bottom button").show();
+            }
+        });
+    })();
+    // 页面滚动监听事件end
+
+    // 底部立即下单点击事件start
+    (function () {
+        $(".bottom button").on("click", function () {
+            $("html,body").animate({
+                scrollTop: $("#beli_sekarang").offset().top
+            })
+        });
+    })();
+    // 底部立即下单点击事件end
+    // 回到頂部事件start
+    (function () {
+        $("#to_top").on("click", function () {
+            $("html,body").animate({
+                scrollTop: 0
+            })
+        });
+        if($(window).width() < 620){
+            var w = $(window).width()-20;
+            $("#add_to_cart_btn").css("width",w+"px");
+        }else{
+            $("#add_to_cart_btn").css("width","620px");
+        }
+    })();
+    $(window).resize(function () {
+        if($(window).width() < 620){
+            var w = $(window).width()-20;
+            $("#add_to_cart_btn").css("width",w+"px");
+        }else{
+            $("#add_to_cart_btn").css("width","620px");
+        }
+    });
+    // 回到頂部事件end
+
+</script>
 </body>
 </html>

@@ -47,4 +47,12 @@ public interface IProductService {
      * @return
      */
     List<ProductEntity> listAll(int user_id);
+
+    /**
+     * 复制产品
+     * @param id
+     * @param country
+     * @throws Exception
+     */
+    void copyInfo(int id,String country) throws Exception;
 }

@@ -6,6 +6,7 @@ import com.code.mallservice.mall.service.IProductService;
 import com.code.mallservice.mall.utils.JwtUtils;
 import com.code.mallservice.mall.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +95,26 @@ public class ProductController {
     public Result listAll(){
         try {
             return Result.ok(productService.listAll(-1));
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.error();
+    }
+
+    /**
+     * 复制产品信息
+     * @param id
+     * @param country
+     * @return
+     */
+    @RequestMapping("/copy")
+    public Result copyInfo(Integer id,String country){
+        try {
+            if(id == null || StringUtils.isEmpty(country)){
+                return Result.error();
+            }
+            productService.copyInfo(id,country);
+            return  Result.ok();
         }catch (Exception e){
             e.printStackTrace();
         }

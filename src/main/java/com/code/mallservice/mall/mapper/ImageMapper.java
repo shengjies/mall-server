@@ -23,4 +23,7 @@ public interface ImageMapper {
      */
     @Update("update tab_imags set product_id=#{product_id} where uid=#{id}")
     int edit(@Param("id")int id,@Param("product_id")int product_id);
+
+    @Update("update tab_imags set product_id=null where product_id=#{product_id}")
+    int clearImg(@Param("product_id")int product_id);
 }

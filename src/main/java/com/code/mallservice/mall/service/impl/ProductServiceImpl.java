@@ -33,6 +33,12 @@ public class ProductServiceImpl implements IProductService {
     @Autowired
     private PolicyGirMapper policyGirMapper;
 
+    @Autowired
+    private TemplateMapper templateMapper;
+
+    @Autowired
+    private CommentMapper commentMapper;
+
     /**
      * 添加产品
      *
@@ -43,6 +49,11 @@ public class ProductServiceImpl implements IProductService {
     public int add(ProductEntity entity) {
         entity.setUnit(getUnit(entity.getCountry()));
         entity.setFacebook(entity.getFacebook().replace("[", "").replace("]", "").replaceAll("\"", ""));
+        TemplateEntity templateEntity = templateMapper.findById(entity.getTempl());
+        if(templateEntity != null){
+            entity.setTeml_page(templateEntity.getT_value());
+            entity.setTeml_order(templateEntity.getT_order());
+        }
         productMapper.add(entity);
         /**
          * 添加轮播图
@@ -108,7 +119,14 @@ public class ProductServiceImpl implements IProductService {
     public int edit(ProductEntity entity) {
         entity.setUnit(getUnit(entity.getCountry()));
         entity.setFacebook(entity.getFacebook().replace("[", "").replace("]", "").replaceAll("\"", ""));
+        TemplateEntity templateEntity = templateMapper.findById(entity.getTempl());
+        if(templateEntity != null){
+            entity.setTeml_page(templateEntity.getT_value());
+            entity.setTeml_order(templateEntity.getT_order());
+        }
         productMapper.edit(entity);
+        //情况轮播
+        imageMapper.clearImg(entity.getId());
         /**
          * 添加轮播图
          */
@@ -174,6 +192,8 @@ public class ProductServiceImpl implements IProductService {
         if(entity.getCl_id() == 2){
             entity.setPolicys(policyMapper.findByProductId(entity.getId()));
         }
+        //查询评论
+        entity.setCommentEntityList(commentMapper.findByProduct(entity.getId()));
         return entity;
     }
 
@@ -185,5 +205,62 @@ public class ProductServiceImpl implements IProductService {
     @Override
     public List<ProductEntity> listAll(int user_id) {
         return productMapper.listAll(user_id);
+    }
+
+    @Override
+    public void copyInfo(int id, String country) throws Exception {
+        ProductEntity entity = findAllById(id);
+        if(entity != null){
+            //添加产品
+            entity.setName(entity.getName()+" 副本,"+country);
+            entity.setCountry(country);
+            productMapper.add(entity);
+            //添加轮播图片
+            if(entity.getRoundImageList() != null ){
+                for (ImageEntity imageEntity : entity.getRoundImageList()) {
+                    imageEntity.setProduct_id(entity.getId());
+                    imageMapper.add(imageEntity);
+                    imageMapper.edit(imageEntity.getUid(),entity.getId());
+                }
+            }
+
+            //营销策略
+            if (entity.getCl_id() == 2 && entity.getPolicys() != null) {
+                //自定义营销策略
+                for (PolicyEntity policy : entity.getPolicys()) {
+                    policy.setProduct_id(entity.getId());
+                    policyMapper.add(policy);
+                    //添加赠品配置
+                    if(policy.getGir() != null){
+                        for (PolicyGirEntity gir : policy.getGir()) {
+                            gir.setPolicy_id(policy.getId());
+                            policyGirMapper.add(gir);
+                        }
+                    }
+                }
+            }
+            //尺码属性
+            if (entity.getSizes() != null && entity.getSizes().size() > 0) {
+                for (SizesEntity size : entity.getSizes()) {
+                    size.setProduct_id(entity.getId());
+                    sizeMapper.add(size);
+                }
+            }
+            //类型
+            if (entity.getTypes() != null && entity.getTypes().size() > 0) {
+                for (TypeEntity type : entity.getTypes()) {
+                    type.setProduct_id(entity.getId());
+                    typeMapper.add(type);
+                }
+            }
+            //复制评论
+            if(entity.getCommentEntityList() != null){
+                for (CommentEntity comment : entity.getCommentEntityList()) {
+                    comment.setProduct_id(entity.getId());
+                    commentMapper.add(comment);
+                }
+            }
+
+        }
     }
 }
