@@ -2,6 +2,7 @@ package com.code.mallservice.mall.service.impl;
 
 import com.code.mallservice.mall.entity.*;
 import com.code.mallservice.mall.mapper.*;
+import com.code.mallservice.mall.service.IGiftService;
 import com.code.mallservice.mall.service.IProductService;
 import com.code.mallservice.mall.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private CommentMapper commentMapper;
+
+    @Autowired
+    private IGiftService giftService;
 
     /**
      * 添加产品
@@ -196,7 +200,7 @@ public class ProductServiceImpl implements IProductService {
                 for (PolicyEntity policyEntity : policyEntities) {
                     if(policyEntity.getGir() != null){
                         for (PolicyGirEntity girEntity : policyEntity.getGir()) {
-
+                            girEntity.setGiftEntity(giftService.findById(girEntity.getZpname()));
                         }
                     }
                 }

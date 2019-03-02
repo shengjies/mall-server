@@ -2,6 +2,7 @@ package com.code.mallservice.mall.config;
 
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.util.unit.DataSize;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
 
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
     public LocaleChangeInterceptor localeChangeInterceptor(){
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();

@@ -802,7 +802,7 @@
     <dl class="section" id="time_limit"
         style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
         <dt class="notes">
-            <span word="限时折扣">限時折扣</span>
+            <span th:utext="#{label.click.flash_sale}"></span>
             <span class="time">14:09:11</span>
         </dt>
         <dd>
@@ -824,7 +824,7 @@
                         <span word="折扣"></span>
                         <span></span></div>
                     <div>
-                        <span word="已售">已售</span>:<span th:utext="${product.sold}"></span>
+                        <span th:utext="#{label.click.rush_to_buy}"></span>:<span th:utext="${product.sold}"></span>
                     </div>
                 </li>
             </ul>
@@ -832,9 +832,9 @@
             <div class="product_title" th:utext="${title}"></div>
             <!--配送方式-->
             <div class="product_service">
-                <span word="免邮费">免郵遞費</span>
-                <span word="货到付款">貨到付款</span>
-                <span word="优质服务">711超商取貨</span>
+                <span th:utext="#{label.click.free_freight}"></span>
+                <span th:utext="#{label.click.delivery_to_payment}"></span>
+                <span th:utext="#{label.click.return_goods}"></span>
             </div>
             <!--产品简介-->
             <div class="product_introduction" init="product_introduction" th:utext="${product.introduction}"></div>
@@ -844,7 +844,7 @@
     <dl class="section" id="commodity_property"
         style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
         <dt class="notes">
-            <span word="商品信息">商品信息</span>
+            <span th:utext="#{label.click.introduction}"></span>
         </dt>
         <dd id="commodity_property_images" th:utext="${product.description}"></dd>
     </dl>
@@ -852,7 +852,7 @@
     <dl class="section" id="customer_evaluation" th:if="${product.comment}"
         style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
         <dt class="notes">
-            <span word="客户评价">客戶評價</span>
+            <span th:utext="#{label.click.pj}"></span>
         </dt>
         <dd>
             <ul init="customer_evaluation_ul" style="margin-top: -792.843px;" th:if="${not #lists.isEmpty(product.commentEntityList)}">
@@ -875,12 +875,12 @@
     <dl class="section" id="beli_sekarang"
         style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
         <dt class="notes add_to_cart">
-            <span word="立即下单">立即下單</span>
+            <span th:utext="#{label.click.purchase_immediately}"></span>
         </dt>
         <dd id="product_set_meal" th:if="${product.cl_id == 2 }">
             <dl id="set_meal" th:if="${product.cl_id == 2 }">
                 <dt class="title">
-                    <span word="套餐选择">套餐選擇</span>:
+                    <span th:utext="#{label.click.choice.meal}"></span>:
                 </dt>
                 <dd class="btn_block" id="set_meal_btn_block" th:if="${not #lists.isEmpty(product.policys)}">
                     <button type="button" th:show="${'meal_'+start.index}" th:price="${item.tcmoney}"
@@ -892,7 +892,7 @@
             </dl>
             <dl class="set_meal_price" style="display: block;">
                 <dt class="title">
-                    <span th:utext="${product.cl_id == 2?'套餐價格':'单价'}">套餐價格</span>:
+                    <span th:utext="#{label.click.page.price}"></span>:
                 </dt>
                 <dd class="price">
                     <span init="currency_symbol" style="font-size: 20px;" th:utext="${product.unit}"></span>
@@ -902,32 +902,90 @@
             </dl>
             <div th:class="${start.index == 0?'':'show_meat'}" data-meal-info th:id="${'policy_meal_'+item.id}"
                  style="border-bottom:1px solid #ccc" th:if="${not #lists.isEmpty(product.policys)}" th:each="item,start:${product.policys}">
-                <div th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
+                <div  th:if="${#lists.isEmpty(product.types) and #lists.isEmpty(product.sizes)}">
+                    <dl data-type="product_attribute_type" class="product_attribute"
+                        style="display: block;">
+                        <dt class="title" th:utext="${product.name}"></dt>
+                        <dd class="img_block type_attr">
+                            <div  style="text-align: center;cursor: pointer;" class="selected" >
+                                <img th:if="${product.mainImage != null }" th:src="${product.mainImage.url}"
+                                     style="height: 100px;">
+                            </div>
+                        </dd>
+                    </dl>
+                </div>
+                <div  th:if="${not #lists.isEmpty(product.types) || not #lists.isEmpty(product.sizes)}" th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
                     <dl data-type="product_attribute_type" class="product_attribute"
                         th:if="${not #lists.isEmpty(product.types)}"
                         style="display: block;">
-                            <dt class="title">颜色：</dt>
+                            <dt class="title" th:utext="#{label.click.yanse}"></dt>
                             <dd class="img_block type_attr">
                                 <div th:back_text="${t.type_value}" style="text-align: center;cursor: pointer;" th:class="${tstart.index == 0?'selected':''}" th:each="t,tstart:${product.types}">
-                                    <img th:if="${t.imageEntity != null}" th:src="${t.imageEntity.url}"
+                                    <img th:if="${t.imageEntity != null && tindex == 1}" th:src="${t.imageEntity.url}"
+                                         style="height: 100px;">
+                                    <img th:if="${t.imageEntity != null && tindex != 0 && item.tcattr}" th:src="${t.imageEntity.url}"
                                          style="height: 100px;">
                                     <span th:utext="${t.type_lable}"></span>
                                 </div>
                             </dd>
-                        </dl>
+                    </dl>
                     <dl data-size="product_attribute_size" class="product_attribute"
                             th:if="${not #lists.isEmpty(product.sizes)}"
                             style="display: block;">
-                            <dt class="title">尺码：</dt>
+                            <dt class="title" th:utext="#{label.click.chima}"></dt>
                             <dd class="img_block size_attr">
-                                <div th:back_text="${s.size_value}" style="text-align: center;cursor: pointer" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
+                                <div th:back_text="${s.size_label}" style="text-align: center;cursor: pointer" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
                                     <span th:utext="${s.size_value}"></span>
                                 </div>
                             </dd>
                     </dl>
                 </div>
+
                 <!--赠品-->
-                <div>
+                <div th:if="${not #lists.isEmpty(item.gir)}" th:each="gir:${item.gir}">
+                    <div th:if="${gir.giftEntity != null &&  #lists.isEmpty(gir.giftEntity.zptypes) &&  #lists.isEmpty(gir.giftEntity.zpsizes)}">
+                        <div  style="border-top: 1px solid #ccc;line-height: 40px">
+                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span><span th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
+                        </div>
+                        <dl data-type="gir_attribute_type" class="product_attribute">
+                            <dd class="img_block type_attr">
+                                <div  style="text-align: center;cursor: pointer;" th:class="selected">
+                                    <img th:if="${gir.giftEntity.imageEntity != null}" th:src="${gir.giftEntity.imageEntity.url}"
+                                         style="height: 100px;">
+                                    <span th:if="${gir.giftEntity.imageEntity == null}" th:utext="${gir.giftEntity.name + ' X ' + gir.zpnum}"></span>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div th:each="zptindex:${#numbers.sequence(1,gir.zpnum)}"
+                         th:if="${gir.giftEntity != null && (not #lists.isEmpty(gir.giftEntity.zptypes) || not #lists.isEmpty(gir.giftEntity.zpsizes))}">
+                        <div  style="border-top: 1px solid #ccc;line-height: 40px">
+                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span><span th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
+                        </div>
+                        <dl data-type="gir_attribute_type" class="product_attribute"
+                            th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zptypes)}">
+                            <dt class="title" th:utext="#{label.click.yanse}"></dt>
+                            <dd class="img_block type_attr">
+                                <div th:back_text="${zpt.zptvalue}" style="text-align: center;cursor: pointer;" th:class="${zptstart.index == 0?'selected':''}"
+                                     th:each="zpt,zptstart:${gir.giftEntity.zptypes}">
+                                    <img th:if="${zpt.imageEntity != null}" th:src="${zpt.imageEntity.url}"
+                                         style="height: 100px;">
+                                    <span th:utext="${zpt.zptlable}"></span>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl data-size="gir_attribute_size" class="product_attribute" style="display: block;"
+                            th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zpsizes)}">
+
+                            <dt class="title" th:utext="#{label.click.chima}"></dt>
+                            <dd class="img_block size_attr">
+                                <div th:back_text="${zps.zpzvalue}" style="text-align: center;cursor: pointer" th:class="${zpsstart.index == 0?'selected':''}"
+                                     th:each="zps,zpsstart:${gir.giftEntity.zpsizes}">
+                                    <span th:utext="${zps.zpzlable}"></span>
+                                </div>
+                            </dd>
+                        </dl>
+                    </div>
 
                 </div>
             </div>
@@ -936,9 +994,9 @@
                 <dt class="title"></dt>
                 <dd class="ordered">
                     <div class="price_blok price_1">
-                        <span word="已订购-数量">數量</span>:
+                        <span th:utext="#{label.click.shuliang }">數量</span>
                         <span class="number" id="set_meal_num_1" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcnum:1}"></span>，
-                        <span word="已订购-合計">合計</span>:<span init="currency_symbol" th:utext="${product.unit}"></span>
+                        <span th:utext="#{label.click.heji}"></span><span init="currency_symbol" th:utext="${product.unit}"></span>
                         <span class="price" id="set_meal_price_2" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></span>
                     </div>
                 </dd>
@@ -950,32 +1008,32 @@
                 <dl>
                     <dt class="title">
                         <span class="star">*</span><b>
-                        <span word="表单-付款方式">付款方式</span>:</b>
+                        <span th:utext="#{label.click.pay.method}"></span>:</b>
                     </dt>
                     <!-- qj改动 -->
                     <dd id="payment_method">
-                        <button type="button" class="selected" method="roc"><span word="货到付款">貨到付款</span></button>
-                        <button type="button" method="roc_711" style="display: inline-block;">711超商取貨</button>
-                        <button type="button" method="roc_qj" style="display: inline-block;">全家取貨</button>
+                        <button type="button" class="selected" method="roc"><span th:utext="#{label.click.delivery_to_payment}"></span></button>
+                        <button type="button" method="roc_711" style="display: inline-block;" th:if="${product.country == 'TW'}">711超商取貨</button>
+                        <button type="button" method="roc_qj" style="display: inline-block;"  th:if="${product.country == 'TW'}">全家取貨</button>
                     </dd>
                     <!-- qj改动 -->
                     <dt class="title">
                         <span class="star">*</span><b>
-                        <span word="表单-姓名">姓名</span>:</b>
+                        <span th:utext="#{label.click.name}"></span></b>
                     </dt>
                     <dd>
-                        <input type="text" name="username" placeholder="請填寫您的姓名" word="表单-姓名-填写提示">
+                        <input type="text" name="username" th:placeholder="#{label.click.name.msg}" >
                     </dd>
                     <dt class="title">
                         <span class="star">*</span><b>
-                        <span word="表单-手机号码">手機號碼</span>:</b>
+                        <span th:utext="#{label.click.telephone}"></span></b>
                     </dt>
                     <dd>
-                        <input type="text" name="mobile" placeholder="請填寫您的手機號碼" word="表单-手机号码-填写提示">
+                        <input type="text" name="mobile" th:placeholder="#{label.click.telephone.msg}" >
                     </dd>
                     <dt class="title">
                         <span class="star">*</span><b>
-                        <span word="表单-收货地区">收貨地區</span></b>：
+                        <span th:utext="#{label.click.area}"></span></b>
                     </dt>
                     <!-- qj改动 -->
                     <dd id="area">
@@ -996,24 +1054,25 @@
                     <!-- qj改动 -->
                     <dt class="title" id="address">
                         <span class="star">*</span>
-                        <b>詳細地址</b>：
+                        <b th:utext="#{label.click.address}"></b>：
                     </dt>
                     <dd>
-                        <input type="text" name="addr" placeholder="請填寫收貨人的街道地址" word="表单-详细地址-填写提示">
+                        <input type="text" name="addr" th:placeholder="#{label.click.address.msg}">
                     </dd>
-                    <dd style="display: none;">
-                        <input type="text" name="postal" placeholder="╮(￣▽￣)╭" word="表单-邮政区号-填写提示">
+                    <dt class="title"><b><span th:utext="#{label.click.zip }"></span></b>：</dt>
+                    <dd >
+                        <input type="text" name="postal"  word="表单-邮政区号-填写提示">
                     </dd>
                     <dt class="title"><b><span word="表单-E-mail">E-mail</span></b>：</dt>
                     <dd>
-                        <input type="text" name="mail" placeholder="可填寫您的E-mail，方便聯繫" word="表单-邮箱-填写提示">
+                        <input type="text" name="mail"  \>
                     </dd>
-                    <dt class="title"><b><span word="表单-留言">留言</span></b>：</dt>
+                    <dt class="title"><b><span th:utext="#{label.click.msg}"></span></b>：</dt>
                     <dd>
-                        <input type="text" name="remark" placeholder="如有特別需求，可留言給商家" word="表单-留言-填写提示">
+                        <input type="text" name="remark" >
                     </dd>
                     <dd>
-                        <button type="button" id="submit"><span word="提交订单">下訂單</span></button>
+                        <button type="button" id="submit"><span th:utext="#{label.click.pay}"></span></button>
                     </dd>
                 </dl>
                 <!--表單隱藏域start-->
@@ -1026,27 +1085,26 @@
     <dl class="section" id="pemberitahuan_pelanggan"
         style="margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
         <a name="pemberitahuan_pelanggan"></a>
-        <dt class="notes"><span word="客户须知">客戶須知</span></dt>
+        <dt class="notes"><span th:utext="#{label.click.condition}"></span></dt>
         <dd>
-            <p style="text-indent: 2rem;"><span
-                    word="客户须知1">本產品的實際使用效果根據個人情況決定，不保證每位用戶都能享受到所宣傳的效果。若有疑問請諮詢在線客服或通過電子郵箱聯絡我們，本公司享有最終解釋權。</span></p>
-            <span word="客户须知2" class="title">·關於發貨方式</span>
-            <p style="text-indent: 2rem;"><span word="客户须知3">支援貨到付款+免郵費+七天無理由退換貨！收到貨有任何疑問請聯繫我們在線客服! 也可隨時聯繫：</span><a
-                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a><span
-                    word="客户须知4">同時請附上您的姓名及聯繫方式及訂單編號在郵件當中，以便我們能快速的給您及時處理，祝您購物愉快！！！</span></p>
-            <span word="客户须知5" class="title">·關於配送時間</span>
-            <p style="text-indent: 2rem;"><span
-                    word="客户须知6">下訂成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</span></p>
-            <span word="客户须知7" class="title">·如何申請退換貨</span>
-            <p style="text-indent: 2rem;"><span word="客户须知8">由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至</span><a
-                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a><span
-                    word="客户须知9">，客服會在收到郵件後的1-3個工作日內受理您的請求。</span></p>
-            <span word="客户须知10" class="title">·退換貨流程：</span>
-            <p style="text-indent: 2rem;"><span word="客户须知11">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</span>
+            <p style="text-indent: 2rem;"><span th:utext="#{label.click.to.know1}"></span></p>
+            <span  class="title" th:utext="#{label.click.to.know2}"></span>
+            <p style="text-indent: 2rem;"><span th:utext="#{label.click.to.tnow3}"></span><a
+                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a>
+                <span th:utext="#{label.click.to.tnow4}"></span></p>
+            <span  class="title" th:utext="#{label.click.to.tnow5}"></span>
+            <p style="text-indent: 2rem;">
+                <span th:utext="#{label.click.to.tnow6}"></span></p>
+            <span  class="title" th:utext="#{label.click.to.tnow7}"></span>
+            <p style="text-indent: 2rem;"><span th:utext="#{label.click.to.tnow8}"></span><a
+                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a>
+                <span th:utext="#{label.click.to.tnow9}"></span></p>
+            <span  class="title" th:utext="#{label.click.to.tnow10 }"></span>
+            <p style="text-indent: 2rem;"><span th:utext="#{label.click.to.tnow11}"></span>
             </p>
-            <span><span word="客户须知12" class="title">·退換貨請註明：訂單號、姓名、電話。</span><br><span word="客户须知13"
-                                                                                       class="title">·如何取消訂單</span></span>
-            <p style="text-indent: 2rem;"><span word="客户须知14">取消訂單需要向售後服務中心發送郵件並註明相關原因，郵件內容應註明您的訂單號、姓名、電話。</span>
+            <span><span  class="title" th:utext="#{label.click.to.tnow12}"></span><br>
+                <span  class="title" th:utext="#{label.click.to.tnow13 }"></span></span>
+            <p style="text-indent: 2rem;"><span word="客户须知14" th:utext="#{label.click.to.tnow14}"></span>
             </p>
         </dd>
     </dl>
@@ -1054,8 +1112,7 @@
     <div id="to_top">Top</div>
     <div class="bottom">
         <button type="button" id="add_to_cart_btn" class="add_to_cart"
-                style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span
-                word="立即抢购">立即搶購</span>
+                style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span th:utext="#{label.click.now.buy}"></span>
         </button>
     </div>
     <div id="pop_up_box">
