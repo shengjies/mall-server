@@ -768,6 +768,9 @@
             font-weight: normal;
             font-style: normal;
         }
+        .show_meat{
+            display:none;
+        }
     </style>
 </head>
 <body>
@@ -879,8 +882,9 @@
                 <dt class="title">
                     <span word="套餐选择">套餐選擇</span>:
                 </dt>
-                <dd class="btn_block" init="set_meal_btn_block" th:if="${not #lists.isEmpty(product.policys)}">
-                    <button type="button" show="1,2" th:price="${item.tcmoney}" th:postage="${start.index}"
+                <dd class="btn_block" id="set_meal_btn_block" th:if="${not #lists.isEmpty(product.policys)}">
+                    <button type="button" th:show="${'meal_'+start.index}" th:price="${item.tcmoney}"
+                            th:tcnum="${item.tcnum}" th:postage="${start.index}" th:data-id="${item.id}"
                             th:class="${start.index ==0?'selected':''}" th:each="item,start :${product.policys}" th:utext="${item.tcname}">
 
                     </button>
@@ -892,42 +896,46 @@
                 </dt>
                 <dd class="price">
                     <span init="currency_symbol" style="font-size: 20px;" th:utext="${product.unit}"></span>
-                    <span init="set_meal_price" style="font-size: 20px;"
+                    <span id="set_meal_price_1" style="font-size: 20px;"
                           th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></span>
                 </dd>
             </dl>
-            <div style="border-bottom:1px solid #ccc" th:if="${not #lists.isEmpty(product.policys)}" th:each="item,start:${product.policys}">
-                <dl id="product_attribute_1" class="product_attribute"
-                    th:if="${not #lists.isEmpty(product.types)}"
-                    style="display: block;">
-                    <dt class="title">颜色：</dt>
-                    <dd class="img_block">
-                        <div th:back_text="${t.type_value}" style="text-align: center" th:class="${tstart.index == 0?'selected':''}" th:each="t,tstart:${product.types}">
-                            <img th:if="${t.imageEntity != null}" th:src="${t.imageEntity.url}"
-                                 style="height: 100px;">
-                            <span th:utext="${t.type_lable}"></span>
-                        </div>
-                    </dd>
-                </dl>
-                <dl id="product_attribute_size_1" class="product_attribute"
-                    th:if="${not #lists.isEmpty(product.sizes)}"
-                    style="display: block;">
-                    <dt class="title">尺码：</dt>
-                    <dd class="img_block">
-                        <div th:back_text="${s.size_value}" style="text-align: center" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
-                            <span th:utext="${s.size_value}"></span>
-                        </div>
-                    </dd>
-                </dl>
+            <div th:class="${start.index == 0?'':'show_meat'}" data-meal-info th:id="${'policy_meal_'+item.id}"
+                 style="border-bottom:1px solid #ccc" th:if="${not #lists.isEmpty(product.policys)}" th:each="item,start:${product.policys}">
+                <div th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
+                    <dl id="product_attribute_1" class="product_attribute"
+                        th:if="${not #lists.isEmpty(product.types)}"
+                        style="display: block;">
+                            <dt class="title">颜色：</dt>
+                            <dd class="img_block type_attr">
+                                <div th:back_text="${t.type_value}" style="text-align: center;cursor: pointer;" th:class="${tstart.index == 0?'selected':''}" th:each="t,tstart:${product.types}">
+                                    <img th:if="${t.imageEntity != null}" th:src="${t.imageEntity.url}"
+                                         style="height: 100px;">
+                                    <span th:utext="${t.type_lable}"></span>
+                                </div>
+                            </dd>
+                        </dl>
+                        <dl id="product_attribute_size_1" class="product_attribute"
+                            th:if="${not #lists.isEmpty(product.sizes)}"
+                            style="display: block;">
+                            <dt class="title">尺码：</dt>
+                            <dd class="img_block size_attr">
+                                <div th:back_text="${s.size_value}" style="text-align: center;cursor: pointer" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
+                                    <span th:utext="${s.size_value}"></span>
+                                </div>
+                            </dd>
+                        </dl>
+                </div>
             </div>
             <!--价格数量提示-->
             <dl class="order_price" style="display: block;">
                 <dt class="title"></dt>
                 <dd class="ordered">
                     <div class="price_blok price_1">
-                        <span word="已订购-数量">數量</span>:<span class="number">2</span>，
-                        <span word="已订购-合計">合計</span>:<span init="currency_symbol">NT$</span><span
-                            class="price">1099</span>
+                        <span word="已订购-数量">數量</span>:
+                        <span class="number" id="set_meal_num_1" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcnum:1}"></span>，
+                        <span word="已订购-合計">合計</span>:<span init="currency_symbol" th:utext="${product.unit}"></span>
+                        <span class="price" id="set_meal_price_2" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></span>
                     </div>
                 </dd>
             </dl>
@@ -1169,7 +1177,37 @@
         }
     });
     // 回到頂部事件end
+    //套餐点击 start
+    $(function () {
+        $("#set_meal_btn_block button").bind('click',function () {
+            $(this).addClass("selected")
+            $(this).siblings("button").removeClass("selected");
+            $("#set_meal_price_1").text($(this).attr("price"));
+            $("#set_meal_price_2").text($(this).attr("price"));
+            $("#set_meal_num_1").text($(this).attr("tcnum"));
+            $("div[data-meal-info]").addClass("show_meat");
+            var meal =$("#policy_meal_"+$(this).attr("data-id"));
+            $(meal).removeClass("show_meat");
 
+        })
+    })
+    //套餐点击 end
+    //颜色 start
+    $(function () {
+        $("dd[class='img_block type_attr'] div").bind('click',function () {
+            $(this).addClass("selected")
+            $(this).siblings("div").removeClass("selected");
+        })
+    });
+    //颜色 end
+    //尺码 start
+    $(function () {
+        $("dd[class='img_block size_attr'] div").bind('click',function () {
+            $(this).addClass("selected")
+            $(this).siblings("div").removeClass("selected");
+        })
+    })
+    //尺码 end
 </script>
 </body>
 </html>
