@@ -784,7 +784,7 @@
         <dt class="notes" style="display: none;">商品圖片</dt>
         <dd id="product_first_image"  class="swiper-container">
             <div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}"  th:each="item :${product.roundImageList}"
-                 style="transform: translate3d(-1240px, 0px, 0px); transition-duration: 0ms; height: 701px;">
+                 style="transform: translate3d(-1240px, 0px, 0px); transition-duration: 0ms; height: 100%">
                 <img class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next" th:src="${item.url}" width="100%"
                     data-swiper-slide-index="0" style="width: 620px;">
             </div>
@@ -877,7 +877,7 @@
         <dt class="notes add_to_cart">
             <span word="立即下单">立即下單</span>
         </dt>
-        <dd id="product_set_meal">
+        <dd id="product_set_meal" th:if="${product.cl_id == 2 }">
             <dl id="set_meal" th:if="${product.cl_id == 2 }">
                 <dt class="title">
                     <span word="套餐选择">套餐選擇</span>:
@@ -903,7 +903,7 @@
             <div th:class="${start.index == 0?'':'show_meat'}" data-meal-info th:id="${'policy_meal_'+item.id}"
                  style="border-bottom:1px solid #ccc" th:if="${not #lists.isEmpty(product.policys)}" th:each="item,start:${product.policys}">
                 <div th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
-                    <dl id="product_attribute_1" class="product_attribute"
+                    <dl data-type="product_attribute_type" class="product_attribute"
                         th:if="${not #lists.isEmpty(product.types)}"
                         style="display: block;">
                             <dt class="title">颜色：</dt>
@@ -915,7 +915,7 @@
                                 </div>
                             </dd>
                         </dl>
-                        <dl id="product_attribute_size_1" class="product_attribute"
+                        <dl data-size="product_attribute_size" class="product_attribute"
                             th:if="${not #lists.isEmpty(product.sizes)}"
                             style="display: block;">
                             <dt class="title">尺码：</dt>
@@ -977,59 +977,17 @@
                     <dd id="area">
                         <select id="s_province" name="cusprovince">
                             <option value="國家/地區">國家/地區</option>
-                            <option value="台灣">台灣</option>
                         </select><select id="s_city" name="cuscity">
                         <option value="縣/市">縣/市</option>
                     </select><select id="s_county" name="cusarea">
                         <option value="鎮/鄉/區">鎮/鄉/區</option>
                     </select>
-                        <script language="javascript" id="regional_linkage" src="teml1/roc.js"></script>
-                        <script type="text/javascript">
-                            document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js?" + Math.random() + "'></scr" + "ipt>");
-                            document.write("<s" + "cript type='text/javascript' src='http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js?" + Math.random() + "'></scr" + "ipt>");
-                        </script>
+                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_tw.js"></script>-->
+                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_th.js"></script>-->
+                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_mlxy.js"></script>-->
+                        <script type="text/javascript" src="teml1/roc.js"></script>
                         <script type="text/javascript" src="teml1/roc_711.js"></script>
                         <script type="text/javascript" src="teml1/roc_qj.js"></script>
-                        <!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_711.js"></script> -->
-                        <!-- <script language="javascript" src="http://www.uuuv.net/PUBLIC_1.1.2/roc_qj.js"></script> -->
-                        <script>
-                            var area_1, area_2, area_3, currency = init["currency_symbol"];
-                            switch ("NT$") {
-                                case "NT$":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/roc.js");
-                                    break;
-                                case "HK$":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_hk.js");
-                                    break;
-                                case "RM":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_mas.js");
-                                    break;
-                                case "₫":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_vn.js");
-                                    break;
-                                case "Rp":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_id.js");
-                                    break;
-                                case "THB":
-                                case "฿":
-                                    $("#regional_linkage").attr("src", "http://www.uuuv.net/PUBLIC_1.1.2/area_th.js");
-                                    break;
-                                case "SGD":
-                                    var inner_html =
-                                        '<select id="s_province" name="cusprovince" style="width:50%;cursor:not-allowed" disabled="disabled">' +
-                                        '<option value="Singapore" selected="selected">Singapore</option>' +
-                                        '</select>' +
-                                        '<select id="s_city" name="cuscity" style="width:50%">' +
-                                        '<option value="District">District</option>' +
-                                        '<option value="Central Singapore">Central Singapore</option>' +
-                                        '<option value="North East">North East</option>' +
-                                        '<option value="North West">North West</option>' +
-                                        '<option value="South East">South East</option>' +
-                                        '<option value="South West">South West</option>' +
-                                        '</select>';
-                                    document.getElementById("area").innerHTML = inner_html;
-                            }
-                        </script>
                     </dd>
                     <!-- qj改动 -->
                     <dt class="title" id="address">
@@ -1039,10 +997,6 @@
                     <dd>
                         <input type="text" name="addr" placeholder="請填寫收貨人的街道地址" word="表单-详细地址-填写提示">
                     </dd>
-                    <dt class="title" style="display: none;">
-                        <span class="star">*</span><b>
-                        <span word="表单-邮政区号">╮(￣▽￣)╭</span></b>：
-                    </dt>
                     <dd style="display: none;">
                         <input type="text" name="postal" placeholder="╮(￣▽￣)╭" word="表单-邮政区号-填写提示">
                     </dd>
@@ -1074,14 +1028,14 @@
                     word="客户须知1">本產品的實際使用效果根據個人情況決定，不保證每位用戶都能享受到所宣傳的效果。若有疑問請諮詢在線客服或通過電子郵箱聯絡我們，本公司享有最終解釋權。</span></p>
             <span word="客户须知2" class="title">·關於發貨方式</span>
             <p style="text-indent: 2rem;"><span word="客户须知3">支援貨到付款+免郵費+七天無理由退換貨！收到貨有任何疑問請聯繫我們在線客服! 也可隨時聯繫：</span><a
-                    href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a><span
                     word="客户须知4">同時請附上您的姓名及聯繫方式及訂單編號在郵件當中，以便我們能快速的給您及時處理，祝您購物愉快！！！</span></p>
             <span word="客户须知5" class="title">·關於配送時間</span>
             <p style="text-indent: 2rem;"><span
                     word="客户须知6">下訂成功之後，我們會按照下單先後順序進行配貨，配貨週期為3個工作日左右，一般到達時間為7個工作日左右。</span></p>
             <span word="客户须知7" class="title">·如何申請退換貨</span>
             <p style="text-indent: 2rem;"><span word="客户须知8">由於質量原因產生的退換貨：至收到商品之日起7天內，向售後服務中心發送郵件至</span><a
-                    href="mailto:service.maggies@hotmail.com">service.maggies@hotmail.com</a><span
+                    href="mailto:wisinmy@hotmail.com">wisinmy@hotmail.com</a><span
                     word="客户须知9">，客服會在收到郵件後的1-3個工作日內受理您的請求。</span></p>
             <span word="客户须知10" class="title">·退換貨流程：</span>
             <p style="text-indent: 2rem;"><span word="客户须知11">確認收貨—申請退換貨—客服審核通過—用戶寄回商品—倉庫簽收驗貨—退換貨審核—退款/換貨；</span>
@@ -1099,6 +1053,28 @@
                 style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span
                 word="立即抢购">立即搶購</span>
         </button>
+    </div>
+    <div id="pop_up_box">
+        <dl class="box">
+            <dt>
+                <img src="teml1/TB2_WnPcgfH8KJjy1zcXXcTzpXa_!!2445381426.png"
+                     class="close">
+                <img src="teml1/TB2OgOXbwmTBuNjy1XbXXaMrVXa_!!2445381426.png"
+                     class="success">
+                <p><span word="弹出框-购买成功">購買成功！</span></p>
+            </dt>
+            <dd class="info">
+                <div>
+                    <p class="number"><span word="弹出框-编号">編號</span>:<span class="value"></span></p>
+                    <p class="name"><span word="弹出框-姓名">姓名</span>:<span class="value"></span></p>
+                    <p class="product"><span word="弹出框-商品">商品</span>:<span class="value"></span></p>
+                    <p class="price"><span word="弹出框-价格">價格</span>:<span class="value"></span></p>
+                    <p class="moblie"><span word="弹出框-手机号码">手機號碼</span>:<span class="value"></span></p>
+                    <p class="address"><span word="弹出框-详细地址">詳細地址</span><span class="value"></span></p>
+                </div>
+            </dd>
+            <dd class="notify"><span word="弹出框-温馨提示">您訂購的商品將於7到10個工作日內送達！貨到付款！免郵遞費！如有問題可以在正常工作時間聯繫我們！</span></dd>
+        </dl>
     </div>
 </div>
 <script>
@@ -1208,6 +1184,111 @@
         })
     })
     //尺码 end
+    //付款方式
+    $(function () {
+        $("#payment_method button").bind('click',function () {
+            $(this).addClass("selected")
+            $(this).siblings("button").removeClass("selected");
+        })
+    })
+    // 付款方式start
+    $(function () {
+        var currency="NT$";
+        // qj改动
+        if (currency == "NT$") {
+            var init = ["國家/地區", "縣/市", "鎮/鄉/區"];
+            var init2 = ["縣/市", "區/鄉鎮", "門市"];
+            //判断类型
+            function type_tip() {
+                $("[name=addr]").val("");
+                var choose, type = $("#payment_method .selected").attr("method");
+                if (type == "roc") {
+                    choose = init;
+                    $("#address b").text("詳細地址");
+                    $("[name='addr']").val("").removeClass("addr").prop("disabled", false).attr("placeholder", "請填寫收貨人的街道地址");
+                } else {
+                    choose = init2;
+                    $("#address b").text("門市地址");
+                    $("[name='addr']").addClass("addr").prop("disabled", true).attr("placeholder", "");
+                }
+                $("#area select").each(function (idx) {
+                    $(this).html("<option value=" + choose[idx] + ">" + choose[idx] + "</option>");
+                    if (idx == 0) {
+                        switch (type) {
+                            case "roc": roc(); break;
+                            case "roc_711": roc_711(); break;
+                            case "roc_qj": roc_qj(); break;
+                        }
+                        for (var i = 0; i < area_1.length; i++) {
+                            $("<option value=" + area_1[i] + ">" + area_1[i] + "</option>").appendTo($(this));
+                        }
+                    }
+                });
+            }
+            type_tip();
+            //选择付款类型
+            $("#payment_method button").on("click", function () {
+                type_tip();
+            })
+            var idx = [-1, -1, -1];//记录选择的index
+            $("#area select").on("change", function () {
+                //清除内容
+                $("[name=addr]").val("");
+                $(this).nextAll("select").find("option:gt(0)").remove();
+                //记录选择的index
+                $("#area select").each(function (index) {
+                    idx[index] = $(this).find('option:selected').index() - 1;
+                })
+                var current_idx = $(this).index();
+                var area = current_idx < 2 ? eval("area_" + (current_idx + 2)) : [];
+                var arr = area[idx[0]] || [];
+                var type = $("#payment_method .selected").attr("method");
+                if (type != "roc") {
+                    if (current_idx == 1) {
+                        arr = area[idx[0]][idx[1]];
+                    }
+                    if (current_idx == 2) {
+                        arr = area_3[idx[0]][idx[1]][idx[2]];
+                    }
+                } else {
+                    if (current_idx == 1) {
+                        arr = area[idx[1]];
+                    }
+                }
+                if (arr.constructor == Array) {
+                    if (arr[0].constructor == String) {
+                        for (var i = 0; i < arr.length; i++) {
+                            $("<option value=" + arr[i] + ">" + arr[i] + "</option>").appendTo($(this).next());
+                        }
+                    }
+                    else {
+                        for (var j in arr) {
+                            var name = arr[j]["POIName"] || arr[j]["name"];
+                            var addr = arr[j]["Address"] || arr[j]["addr"];
+                            var val = name + "-" + addr;
+                            $("<option value=" + val + ">" + val + "</option>").appendTo($(this).next());
+                        }
+                    }
+                }
+                if (arr.constructor == Object) {
+                    var name = arr["POIName"] || arr["name"];
+                    var addr = arr["Address"] || arr["addr"];
+                    var pid = arr["POIID"] || arr["pkey"];
+                    var tel = arr["Telno"] || arr["tel"];
+                    var val = addr + "，店名：" + name + "，店號：" + pid + "，電話：" + tel;
+                    $("[name=addr]").val(val);
+                }
+            })
+        }
+        // qj改动
+    });
+    // 付款方式end
+    window.onload=function (ev) {
+        //动态改变产品图宽高
+        $(".img_block img").each(function () {
+            $(this).height($(this).width());
+        })
+    }
 </script>
 </body>
 </html>

@@ -66,4 +66,18 @@ public class TemplateController {
         }
         return Result.error();
     }
+
+    /**
+     * 查询所有模板
+     * @return
+     */
+    @RequestMapping("/list/all")
+    public Result listAll(){
+        try {
+            return Result.ok(templateService.listAll());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Result.error();
+    }
 }

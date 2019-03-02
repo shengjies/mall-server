@@ -3,6 +3,7 @@ package com.code.mallservice.mall.mapper;
 import com.code.mallservice.mall.entity.TemplateEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
 
@@ -48,4 +49,7 @@ public interface TemplateMapper {
      */
     List<TemplateEntity> findPage(@Param("t_name")String t_name,
                                   @Param("page")int page,@Param("size")int size);
+
+    @Select("SELECT * FROM mall.tab_template order by id desc;")
+    List<TemplateEntity> listAll();
 }

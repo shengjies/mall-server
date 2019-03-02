@@ -3,6 +3,8 @@ package com.code.mallservice.mall.service;
 import com.code.mallservice.mall.entity.TemplateEntity;
 import com.code.mallservice.mall.utils.Page;
 
+import java.util.List;
+
 /**
  * 模板操作
  */
@@ -29,5 +31,7 @@ public interface ITemplateService {
      * @return
      */
     Page<TemplateEntity> findPage(String t_name,int page,int size);
+
+    List<TemplateEntity> listAll();
 
 }

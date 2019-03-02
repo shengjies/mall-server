@@ -31,4 +31,9 @@ public class TemplateServiceImpl implements ITemplateService {
         List<TemplateEntity> list = templateMapper.findPage(t_name,page*size,size);
         return new Page<>(list,count);
     }
+
+    @Override
+    public List<TemplateEntity> listAll() {
+        return templateMapper.listAll();
+    }
 }
