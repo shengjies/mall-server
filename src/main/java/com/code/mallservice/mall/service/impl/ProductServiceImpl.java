@@ -190,7 +190,18 @@ public class ProductServiceImpl implements IProductService {
         entity.setTypes(typeMapper.findByProductId(entity.getId()));
         //查询对应的策略
         if(entity.getCl_id() == 2){
-            entity.setPolicys(policyMapper.findByProductId(entity.getId()));
+            List<PolicyEntity> policyEntities =policyMapper.findByProductId(entity.getId());
+            if(policyEntities != null){
+                //查询相关的赠品信息
+                for (PolicyEntity policyEntity : policyEntities) {
+                    if(policyEntity.getGir() != null){
+                        for (PolicyGirEntity girEntity : policyEntity.getGir()) {
+
+                        }
+                    }
+                }
+            }
+            entity.setPolicys(policyEntities);
         }
         //查询评论
         entity.setCommentEntityList(commentMapper.findByProduct(entity.getId()));

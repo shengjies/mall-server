@@ -915,7 +915,7 @@
                                 </div>
                             </dd>
                         </dl>
-                        <dl data-size="product_attribute_size" class="product_attribute"
+                    <dl data-size="product_attribute_size" class="product_attribute"
                             th:if="${not #lists.isEmpty(product.sizes)}"
                             style="display: block;">
                             <dt class="title">尺码：</dt>
@@ -924,7 +924,11 @@
                                     <span th:utext="${s.size_value}"></span>
                                 </div>
                             </dd>
-                        </dl>
+                    </dl>
+                </div>
+                <!--赠品-->
+                <div>
+
                 </div>
             </div>
             <!--价格数量提示-->

@@ -10,6 +10,8 @@ public class PolicyGirEntity {
     private int policy_id; //策略编号
     private String c_date;
 
+    private GiftEntity giftEntity;//赠品
+
     public int getId() {
         return id;
     }
@@ -50,15 +52,11 @@ public class PolicyGirEntity {
         this.c_date = c_date;
     }
 
+    public GiftEntity getGiftEntity() {
+        return giftEntity;
+    }
 
-    @Override
-    public String toString() {
-        return "PolicyGirEntity{" +
-                "id=" + id +
-                ", zpnum=" + zpnum +
-                ", zpname=" + zpname +
-                ", policy_id=" + policy_id +
-                ", c_date='" + c_date + '\'' +
-                '}';
+    public void setGiftEntity(GiftEntity giftEntity) {
+        this.giftEntity = giftEntity;
     }
 }
