@@ -32,6 +32,8 @@ public class ClickController {
         ProductEntity productEntity = productService.findAllById(urlEntity.getProduct_id());
         if(productEntity == null) return "404";
         model.addAttribute("product",productEntity);
+        model.addAttribute("url_id",urlEntity.getId());
+        model.addAttribute("product_id",productEntity.getId());
         return productEntity.getTeml_page();
     }
 }

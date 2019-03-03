@@ -914,7 +914,9 @@
                         </dd>
                     </dl>
                 </div>
-                <div  th:if="${not #lists.isEmpty(product.types) || not #lists.isEmpty(product.sizes)}" th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
+                <!--套餐-->
+                <div data-product  th:if="${not #lists.isEmpty(product.types) || not #lists.isEmpty(product.sizes)}"
+                      th:each="tindex:${#numbers.sequence(1,item.tcnum)}">
                     <dl data-type="product_attribute_type" class="product_attribute"
                         th:if="${not #lists.isEmpty(product.types)}"
                         style="display: block;">
@@ -923,7 +925,7 @@
                                 <div th:back_text="${t.type_value}" style="text-align: center;cursor: pointer;" th:class="${tstart.index == 0?'selected':''}" th:each="t,tstart:${product.types}">
                                     <img th:if="${t.imageEntity != null && tindex == 1}" th:src="${t.imageEntity.url}"
                                          style="height: 100px;">
-                                    <img th:if="${t.imageEntity != null && tindex != 0 && item.tcattr}" th:src="${t.imageEntity.url}"
+                                    <img th:if="${t.imageEntity != null && tindex != 1 && item.tcattr}" th:src="${t.imageEntity.url}"
                                          style="height: 100px;">
                                     <span th:utext="${t.type_lable}"></span>
                                 </div>
@@ -942,14 +944,17 @@
                 </div>
 
                 <!--赠品-->
-                <div th:if="${not #lists.isEmpty(item.gir)}" th:each="gir:${item.gir}">
-                    <div th:if="${gir.giftEntity != null &&  #lists.isEmpty(gir.giftEntity.zptypes) &&  #lists.isEmpty(gir.giftEntity.zpsizes)}">
+                <div data-male
+                     th:data-male-sign="${not #lists.isEmpty(gir.giftEntity.zptypes) && not #lists.isEmpty(gir.giftEntity.zpsizes) ? 1 :0}"
+                     th:if="${not #lists.isEmpty(item.gir)}" th:each="gir:${item.gir}">
+                    <div data-male-info th:if="${gir.giftEntity != null &&  #lists.isEmpty(gir.giftEntity.zptypes) &&  #lists.isEmpty(gir.giftEntity.zpsizes)}">
                         <div  style="border-top: 1px solid #ccc;line-height: 40px">
-                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span><span th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
+                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span>
+                            <span data-male-name th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
                         </div>
                         <dl data-type="gir_attribute_type" class="product_attribute">
                             <dd class="img_block type_attr">
-                                <div  style="text-align: center;cursor: pointer;" th:class="selected">
+                                <div  style="text-align: center;cursor: pointer;" th:class="selected" th:gri-num="${gir.zpnum}">
                                     <img th:if="${gir.giftEntity.imageEntity != null}" th:src="${gir.giftEntity.imageEntity.url}"
                                          style="height: 100px;">
                                     <span th:if="${gir.giftEntity.imageEntity == null}" th:utext="${gir.giftEntity.name + ' X ' + gir.zpnum}"></span>
@@ -957,10 +962,11 @@
                             </dd>
                         </dl>
                     </div>
-                    <div th:each="zptindex:${#numbers.sequence(1,gir.zpnum)}"
+                    <div data-male-info th:each="zptindex:${#numbers.sequence(1,gir.zpnum)}"
                          th:if="${gir.giftEntity != null && (not #lists.isEmpty(gir.giftEntity.zptypes) || not #lists.isEmpty(gir.giftEntity.zpsizes))}">
                         <div  style="border-top: 1px solid #ccc;line-height: 40px">
-                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span><span th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
+                            <span style="color: red;font-size: 20px" th:utext="#{label.order.free}"></span>
+                            <span data-male-name th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></span>
                         </div>
                         <dl data-type="gir_attribute_type" class="product_attribute"
                             th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zptypes)}">
@@ -994,7 +1000,7 @@
                 <dt class="title"></dt>
                 <dd class="ordered">
                     <div class="price_blok price_1">
-                        <span th:utext="#{label.click.shuliang }">數量</span>
+                        <span th:utext="#{label.click.shuliang }"></span>
                         <span class="number" id="set_meal_num_1" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcnum:1}"></span>，
                         <span th:utext="#{label.click.heji}"></span><span init="currency_symbol" th:utext="${product.unit}"></span>
                         <span class="price" id="set_meal_price_2" th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></span>
@@ -1004,32 +1010,32 @@
         </dd>
         <!--表单-->
         <dd id="customer_info">
-            <form>
+            <form id="save" onsubmit="return topay()" method="post">
                 <dl>
                     <dt class="title">
                         <span class="star">*</span><b>
                         <span th:utext="#{label.click.pay.method}"></span>:</b>
                     </dt>
-                    <!-- qj改动 -->
+                    <!-- 付款方式 -->
                     <dd id="payment_method">
                         <button type="button" class="selected" method="roc"><span th:utext="#{label.click.delivery_to_payment}"></span></button>
                         <button type="button" method="roc_711" style="display: inline-block;" th:if="${product.country == 'TW'}">711超商取貨</button>
                         <button type="button" method="roc_qj" style="display: inline-block;"  th:if="${product.country == 'TW'}">全家取貨</button>
                     </dd>
-                    <!-- qj改动 -->
+                    <!-- 表单 -->
                     <dt class="title">
                         <span class="star">*</span><b>
                         <span th:utext="#{label.click.name}"></span></b>
                     </dt>
                     <dd>
-                        <input type="text" name="username" th:placeholder="#{label.click.name.msg}" >
+                        <input id="username" type="text" name="username" th:placeholder="#{label.click.name.msg}" >
                     </dd>
                     <dt class="title">
                         <span class="star">*</span><b>
                         <span th:utext="#{label.click.telephone}"></span></b>
                     </dt>
                     <dd>
-                        <input type="text" name="mobile" th:placeholder="#{label.click.telephone.msg}" >
+                        <input type="text" id="mobile" name="mobile" th:placeholder="#{label.click.telephone.msg}" >
                     </dd>
                     <dt class="title">
                         <span class="star">*</span><b>
@@ -1038,18 +1044,18 @@
                     <!-- qj改动 -->
                     <dd id="area">
                         <select id="s_province" name="cusprovince">
-                            <option value="國家/地區">國家/地區</option>
+
                         </select><select id="s_city" name="cuscity">
-                        <option value="縣/市">縣/市</option>
+
                     </select><select id="s_county" name="cusarea">
-                        <option value="鎮/鄉/區">鎮/鄉/區</option>
+
                     </select>
-                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_tw.js"></script>-->
-                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_th.js"></script>-->
-                       <!--<script type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_mlxy.js"></script>-->
-                        <script type="text/javascript" src="teml1/roc.js"></script>
-                        <script type="text/javascript" src="teml1/roc_711.js"></script>
-                        <script type="text/javascript" src="teml1/roc_qj.js"></script>
+
+                       <script th:if="${product.country == 'TH'}" type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_th.js"></script>
+                       <script th:if="${product.country == 'MY'}" type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_mlxy.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc_711.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc_qj.js"></script>
                     </dd>
                     <!-- qj改动 -->
                     <dt class="title" id="address">
@@ -1057,26 +1063,35 @@
                         <b th:utext="#{label.click.address}"></b>：
                     </dt>
                     <dd>
-                        <input type="text" name="addr" th:placeholder="#{label.click.address.msg}">
+                        <input type="text" id="address_text" name="addr" >
                     </dd>
                     <dt class="title"><b><span th:utext="#{label.click.zip }"></span></b>：</dt>
                     <dd >
-                        <input type="text" name="postal"  word="表单-邮政区号-填写提示">
+                        <input type="text"  name="postzip" >
                     </dd>
-                    <dt class="title"><b><span word="表单-E-mail">E-mail</span></b>：</dt>
+                    <dt class="title"><b><span >E-mail</span></b>：</dt>
                     <dd>
                         <input type="text" name="mail"  \>
                     </dd>
                     <dt class="title"><b><span th:utext="#{label.click.msg}"></span></b>：</dt>
                     <dd>
-                        <input type="text" name="remark" >
+                        <input type="text" name="msg" >
                     </dd>
                     <dd>
-                        <button type="button" id="submit"><span th:utext="#{label.click.pay}"></span></button>
+                        <button type="submit" id="submit"><span th:utext="#{label.click.pay}"></span></button>
                     </dd>
                 </dl>
                 <!--表單隱藏域start-->
-                <input type="hidden" name="protype" value="不用動手清洗眼鏡了！視覺疲勞模糊、流淚和異物感統統消除！+200得第三件！">
+                <input type="hidden" name="url_id" th:value="${url_id}">
+                <input type="hidden" name="product_id" th:value="${product_id}" >
+                <input type="hidden" name="totla_num" id="totla_num"
+                       th:value="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcnum:1}" >
+                <input type="hidden" name="money" id="money"
+                       th:value="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}" >
+                <input type="hidden" name="ps" id="ps" value="roc" >
+                <input type="hidden" name="male" id="male">
+                <input type="hidden" name="detal" id="detal">
+                <!--<input type="hidden" name="product_id" >-->
                 <!--表單隱藏域end-->
             </form>
         </dd>
@@ -1104,7 +1119,7 @@
             </p>
             <span><span  class="title" th:utext="#{label.click.to.tnow12}"></span><br>
                 <span  class="title" th:utext="#{label.click.to.tnow13 }"></span></span>
-            <p style="text-indent: 2rem;"><span word="客户须知14" th:utext="#{label.click.to.tnow14}"></span>
+            <p style="text-indent: 2rem;"><span  th:utext="#{label.click.to.tnow14}"></span>
             </p>
         </dd>
     </dl>
@@ -1138,7 +1153,7 @@
         </dl>
     </div>
 </div>
-<script>
+<script th:inline="javascript">
     // 倒计时start
     (function () {
         setInterval(function () {
@@ -1252,6 +1267,16 @@
             $(this).siblings("button").removeClass("selected");
         })
     })
+
+    // 付款方式end
+    window.onload=function (ev) {
+        //动态改变产品图宽高
+        $(".img_block img").each(function () {
+            $(this).height($(this).width());
+        })
+    }
+</script>
+<script th:inline="javascript" th:if="${product.country == 'TW'}">
     // 付款方式start
     $(function () {
         var currency="NT$";
@@ -1266,11 +1291,11 @@
                 if (type == "roc") {
                     choose = init;
                     $("#address b").text("詳細地址");
-                    $("[name='addr']").val("").removeClass("addr").prop("disabled", false).attr("placeholder", "請填寫收貨人的街道地址");
+                    $("[name='addr']").val("").removeClass("addr").prop("readonly", false).attr("placeholder",[[#{label.click.address.msg}]]);
                 } else {
                     choose = init2;
                     $("#address b").text("門市地址");
-                    $("[name='addr']").addClass("addr").prop("disabled", true).attr("placeholder", "");
+                    $("[name='addr']").addClass("addr").prop("readonly", true).attr("placeholder", "");
                 }
                 $("#area select").each(function (idx) {
                     $(this).html("<option value=" + choose[idx] + ">" + choose[idx] + "</option>");
@@ -1343,12 +1368,199 @@
         }
         // qj改动
     });
-    // 付款方式end
-    window.onload=function (ev) {
-        //动态改变产品图宽高
-        $(".img_block img").each(function () {
-            $(this).height($(this).width());
-        })
+</script>
+<script th:inline="javascript">
+    function topay() {
+        var name = $("#username").val();
+        if(name == ""){
+            alert('[[#{label.click.name.msg}]]');
+            $("#username").focus();
+            return false;
+        }
+        var mobile =$("#mobile").val();
+        if(mobile == ""){
+            alert('[[#{label.click.telephone.msg}]]');
+            $("#mobile").focus();
+            return false;
+        }
+        var country = [[${product.country}]];
+        if (country == "MY") {
+            if ($('#s_province').val() == 'County') {
+                alert('[[#{label.click.select.provinces}]]');
+                return false;
+            }
+            if ($('#s_city').val() == 'State') {
+                alert('[[#{label.click.select.city}]]');
+                return false;
+            }
+            if ($('#s_county').val() == 'City') {
+                alert('[[#{label.click.select.area}]]');
+                return false;
+            }
+        } else if (country == "TH") {
+            if ($('#s_province').val() == 'ภูมิภาค') {
+                alert('กรุณาเลือกประเทศ');
+                return false;
+            }
+            if ($('#s_city').val() == 'จังหวัด') {
+                alert('กรุณาเลือกเมือง');
+                return false;
+            }
+            if ($('#s_county').val() == 'เขต/อำเภอ') {
+                alert('กรุณาเลือกพื้นที่');
+                return false;
+            }
+        } else if (country == "TW") {
+            var s_province =$("#s_province").val();
+            if(s_province == "國家/地區" ){
+                alert("請選擇國家/地區")
+                return false;
+            }
+            if( s_province == "縣/市"){
+                alert('請選擇縣/市！');
+                return false;
+            }
+            if ($('#s_city').val() == '縣/市') {
+                alert('請選擇縣/市！');
+                return false;
+            }
+            if ($('#s_city').val() == '區/鄉鎮') {
+                alert('請選擇區/鄉鎮！');
+                return false;
+            }
+
+            if ($('#s_county').val() == '鎮/鄉/區') {
+                alert('請選擇เ鎮/鄉/區！');
+                return false;
+            }
+            if ($('#s_county').val() == '門市') {
+                alert('請選擇門市！');
+                return false;
+            }
+        }
+        var address = $("#address_text").val();
+        if (address == '') {
+            alert('[[#{label.click.address.msg}]]');
+            $("#address_text").focus();
+            return false;
+        }
+        var add = $("#payment_method .selected").attr("method");
+        //地址拼接
+        if (country == "TH") {
+            var address = $("#address_text").val() + "  " + $('#s_county').val() + "  " + $('#s_city').val();
+            $("#address_text").val(address);
+        }else if(country == "MY"){
+            var address = $("#address_text").val() + "  " + $('#s_county').val() + "  " + $('#s_city').val() + "  " + $('#s_province').val();
+            $("#address_text").val(address);
+        }else if(country == "TW" && add == "roc"){
+            var address = $('#s_province').val() + "  "
+                + $('#s_city').val() + "  "
+                + $('#s_county').val() + "  "
+                + $("#address_text").val();
+            $("#address_text").val(address);
+        }
+        //派送方式
+         $("#ps").val($("#payment_method .selected").attr("method"));
+        //产品信息
+        var b = [[${not #lists.isEmpty(product.sizes) || not #lists.isEmpty(product.types)}]];
+        var attr_value = [];
+        if(b){
+            var mela ="";
+            //寻找选择套餐
+            var id = $("#set_meal_btn_block .selected").attr("data-id");
+            var prodcut =$("#policy_meal_"+id).find("div[data-product]");
+            $(prodcut).each(function () {
+                //颜色
+                var c ='';
+                if([[${not #lists.isEmpty(product.types)}]]){
+                    c = $(this).find("dl[data-type='product_attribute_type']")
+                        .find("dd[class='img_block type_attr']")
+                        .find("div[class='selected']").attr("back_text");
+                }
+                //尺码
+                var s = '';
+                if([[${not #lists.isEmpty(product.types)}]]){
+                    s = $(this).find("dl[data-size='product_attribute_size']")
+                        .find("dd[class='img_block size_attr']")
+                        .find("div[class='selected']").attr('back_text');
+                }
+                var item = {
+                    attr_value: c,
+                    attr_size: s,
+                    num: 1,
+                }
+                var e = true;
+                attr_value.forEach(function (i) {
+                    if (i.attr_value == item.attr_value && i.attr_size == item.attr_size) {
+                        i.num += 1;
+                        e = false;
+                    }
+                })
+                if (e) {
+                    attr_value.push(item);
+                }
+            })
+
+
+        }else{
+            var item = {
+                attr_value: '',
+                attr_size: '',
+                num: $("#totla_num").val(),
+            }
+            attr_value.push(item);
+        }
+        $("#detal").val(JSON.stringify(attr_value));
+        //赠品
+        var p = [[${not #lists.isEmpty(product.policys)}]];
+        if(p){
+            var male =$("#policy_meal_"+id).find("div[data-male]");
+            var sign = $(male).attr("data-male-sign");
+            if(sign == 1){
+                var male_info ='';
+                $(male).find("div[data-male-info]").each(function () {
+                    male_info+=$(this).find("span[data-male-name]").text();
+                    var zp_type = $(this).find("dl[data-type='gir_attribute_type']")
+                    if(zp_type != undefined){
+                        male_info+='-'+$(zp_type).find("dd[class='img_block type_attr']").find("div[class='selected']").attr("back_text");
+                    }
+                    var zp_size = $(this).find("dl[data-size='gir_attribute_size']");
+                    if(zp_size != undefined){
+                        male_info+='-'+$(zp_size).find("dd[class='img_block size_attr']").find("div[class='selected']").attr("back_text");
+                    }
+                    male_info+=",";
+                });
+                $("#male").val(male_info);
+            }else{
+                var male_info=$(male).find("div[data-male-info]");
+                var info = $(male_info).find("span[data-male-name]").text();
+                info +="-"+$(male_info).find("dl[data-type='gir_attribute_type']")
+                    .find("dd[class='img_block type_attr']")
+                    .find("div[class='selected']").attr("gri-num");
+                $("#male").val(info);
+            }
+        }
+        $.ajax({
+            url: "/save",
+            type: "POST",
+            data: $("#save").serialize(),
+            beforeSend: function () {
+
+            },
+            success: function (result) {
+                try {
+
+                } catch (e) {
+                }
+                alert(result)
+            },
+            error: function (xhr, status, error) {
+            },
+            complete: function () {
+
+            }
+        });
+        return false;
     }
 </script>
 </body>

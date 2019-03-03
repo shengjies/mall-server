@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.OrderMapper">
+    <!--添加订单信息-->
+    <insert id="add" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO `mall`.`tab_order`(`product_id`,`url_id`,`priview_url`,`username`,`mobile`,`country`,`addr`,`caddres`,`ip`,
+        `totla_num`,`money`,`postzip`,`cpostzip`,`emaill`,`msg`,`male`,`remark`,`ps`,`order_status`,`wl_status`,`cg_status`,
+        `dh_status`,`ip_status`,`ck_status`,`c_date`)
+        VALUES(#{product_id},#{url_id},#{priview_url},#{username},#{mobile},#{country},#{addr},#{caddres},#{ip},#{totla_num},
+        #{money},#{postzip},#{cpostzip},#{emaill},#{msg},#{male},#{remark},#{ps},#{order_status},#{wl_status},#{cg_status},
+        #{dh_status},#{ip_status},#{ck_status},now());
+    </insert>
+</mapper>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.code.mallservice.mall.mapper.OrderAttrMapper">
+    <!--添加订单属性-->
+    <insert id="add">
+      INSERT INTO `mall`.`tab_order_attr`(`attr_value`,`attr_size`,`num`,`cattr_value`,`cattr_size`,`cnum`,`order_id`,`c_date`,`attr_status`)
+    VALUES(#{attr_value},#{attr_size},#{num},#{cattr_value},#{cattr_size},#{cnum},#{order_id},now(),#{attr_status});
+    </insert>
+</mapper>

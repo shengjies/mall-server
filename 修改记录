@@ -110,3 +110,55 @@ CREATE TABLE `tab_comment` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+#=====添加订单数据表
+CREATE TABLE `mall`.`tab_order` (
+  `id` INT NOT NULL ,
+  `product_id` INT NULL,
+  `url_id` VARCHAR(145) NULL,
+  `priview_url` VARCHAR(245) NULL,
+  `username` VARCHAR(245) NULL,
+  `mobile` VARCHAR(85) NULL,
+  `country` VARCHAR(45) NULL,
+  `addr` TEXT NULL,
+  `caddres` TEXT NULL,
+  `ip` VARCHAR(45) NULL,
+  `totla_num` INT NULL,
+  `money` INT NULL,
+  `postzip` VARCHAR(45) NULL,
+  `cpostzip` VARCHAR(45) NULL,
+  `emaill` VARCHAR(145) NULL,
+  `msg` TEXT NULL,
+  `male` VARCHAR(445) NULL,
+  `remark` TEXT NULL,
+  `ps` VARCHAR(45) NULL,
+  `order_status` INT NULL DEFAULT 0,
+  `wl_status` INT NULL DEFAULT 0,
+  `cg_status` INT NULL DEFAULT 0,
+  `dh_status` INT NULL DEFAULT 0,
+  `ip_status` INT NULL DEFAULT 0,
+  `ck_status` INT NULL DEFAULT 0,
+  `up_date` DATETIME NULL,
+  `c_date` DATETIME NULL,
+  PRIMARY KEY (`id`));
+
+
+  CREATE TABLE `mall`.`tab_order_attr` (
+    `id` INT NOT NULL AUTO_INCREMENT,
+    `attr_value` VARCHAR(445) NULL,
+    `attr_size` VARCHAR(445) NULL,
+    `num` INT NULL,
+    `cattr_value` VARCHAR(445) NULL,
+    `cattr_size` VARCHAR(445) NULL,
+    `cnum` INT NULL,
+    `order_id` INT NULL,
+    `c_date` DATETIME NULL,
+    `up_date` DATETIME NULL,
+    PRIMARY KEY (`id`));
+
+    ALTER TABLE `mall`.`attr_status`
+    CHANGE COLUMN `attr_status`  INT(11) NULL DEFAULT '1' ;
+
+
+
+ALTER TABLE `mall`.`tab_order`
+CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
