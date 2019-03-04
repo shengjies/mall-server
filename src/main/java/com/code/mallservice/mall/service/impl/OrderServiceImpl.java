@@ -42,6 +42,7 @@ public class OrderServiceImpl implements IOrderService {
         UrlEntity urlEntity = urlMapper.findById(entity.getUrl_id());
         if(urlEntity != null){
             entity.setPriview_url(urlEntity.getPreview_url());
+            entity.setUser_id(urlEntity.getUser_id());
         }
         orderMapper.add(entity);//保存订单信息
         if(!StringUtils.isEmpty(entity.getDetal())){

@@ -155,10 +155,15 @@ CREATE TABLE `mall`.`tab_order` (
     `up_date` DATETIME NULL,
     PRIMARY KEY (`id`));
 
-    ALTER TABLE `mall`.`attr_status`
-    CHANGE COLUMN `attr_status`  INT(11) NULL DEFAULT '1' ;
-
-
-
+    ALTER TABLE `mall`.`tab_order_attr`
+    ADD COLUMN `attr_status` INT NULL AFTER `up_date`;
+    ALTER TABLE `mall`.`tab_order_attr`
+    CHANGE COLUMN `attr_status` `attr_status` INT(11) NULL DEFAULT 1 ;
 ALTER TABLE `mall`.`tab_order`
 CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
+
+
+#=========2019-03-04
+SELECT * FROM `order`.ip2location_db19_171228 where IP_FROM <= inet_aton(#{ip_address}) order by IP_FROM desc limit 1
+ALTER TABLE `mall`.`tab_order`
+ADD COLUMN `user_id` INT NULL AFTER `c_date`;

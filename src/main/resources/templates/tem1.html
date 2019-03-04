@@ -495,93 +495,7 @@
             cursor: pointer;
         }
 
-        /*弹出框*/
-        #pop_up_box {
-            position: fixed;
-            background: rgba(0, 0, 0, 0.8);
-            top: 0;
-            left: 0;
-            width: 100%;
-            display: none;
-        }
 
-        #pop_up_box .box {
-            background: #FFF;
-            position: absolute;
-            max-width: 600px;
-        }
-
-        #pop_up_box dt {
-            text-align: center;
-        }
-
-        #pop_up_box p {
-            margin: 5px;
-            font-size: 14px;
-        }
-
-        #pop_up_box .close {
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            top: -10px;
-            right: -10px;
-            border-radius: 16px;
-            cursor: pointer;
-        }
-
-        #pop_up_box .success {
-            margin-top: 20px;
-            width: 60px;
-        }
-
-        #pop_up_box .info {
-            width: 85%;
-            margin: 0 auto;
-            padding: 2px;
-            border: 2px solid #333;
-            padding: 3px;
-        }
-
-        #pop_up_box .info div {
-            border: 1px solid #333;
-            padding: 0 10px;
-        }
-
-        #pop_up_box .notify {
-            width: 88%;
-            margin: 5px auto;
-            text-indent: 1rem;
-        }
-
-        #pop_up_box .btn {
-            width: 88%;
-            margin: 0 auto;
-            overflow: hidden;
-        }
-
-        #pop_up_box .btn a {
-            text-align: center;
-            display: inline-block;
-            background-color: #333;
-            width: 48%;
-            line-height: 2;
-            color: #fff;
-            border-radius: 2px;
-            box-shadow: 1px 1px 5px #ccc;
-            padding: 0 2%;
-            box-sizing: border-box;
-            text-decoration: none;
-            margin-bottom: 20px;
-        }
-
-        #pop_up_box .btn a:first-of-type {
-            float: left;
-        }
-
-        #pop_up_box .btn a:last-of-type {
-            float: right;
-        }
 
         /*回到頂部*/
         #to_top {
@@ -758,9 +672,11 @@
         .swiper-container {
             padding: 0 !important;
         }
+
     </style>
     <script type="text/javascript" src="teml1/words.js"></script>
     <script type="text/javascript" src="teml1/jquery.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
     <style type="text/css">
         @font-face {
             font-family: 'rbicon';
@@ -1130,27 +1046,16 @@
                 style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span th:utext="#{label.click.now.buy}"></span>
         </button>
     </div>
-    <div id="pop_up_box">
-        <dl class="box">
-            <dt>
-                <img src="teml1/TB2_WnPcgfH8KJjy1zcXXcTzpXa_!!2445381426.png"
-                     class="close">
-                <img src="teml1/TB2OgOXbwmTBuNjy1XbXXaMrVXa_!!2445381426.png"
-                     class="success">
-                <p><span word="弹出框-购买成功">購買成功！</span></p>
-            </dt>
-            <dd class="info">
-                <div>
-                    <p class="number"><span word="弹出框-编号">編號</span>:<span class="value"></span></p>
-                    <p class="name"><span word="弹出框-姓名">姓名</span>:<span class="value"></span></p>
-                    <p class="product"><span word="弹出框-商品">商品</span>:<span class="value"></span></p>
-                    <p class="price"><span word="弹出框-价格">價格</span>:<span class="value"></span></p>
-                    <p class="moblie"><span word="弹出框-手机号码">手機號碼</span>:<span class="value"></span></p>
-                    <p class="address"><span word="弹出框-详细地址">詳細地址</span><span class="value"></span></p>
-                </div>
-            </dd>
-            <dd class="notify"><span word="弹出框-温馨提示">您訂購的商品將於7到10個工作日內送達！貨到付款！免郵遞費！如有問題可以在正常工作時間聯繫我們！</span></dd>
-        </dl>
+    <div id="ordermsg" class="modal">
+        <div style="margin-top: 1%;text-align: center;">
+            <img src="https://dsaf465859jzs.cloudfront.net/c1/smsred.png" style="width: 60px;margin-top: 5%;">
+            <div style="padding-bottom: 15px;font-size: 22px;color: #48484a;font-weight: bold;"
+                 th:text="#{label.order.success}">Order Confirmed
+            </div>
+            <div style="padding:1%;font-size: 19px" th:text="#{label.order.msg}">Your order has been received and will be
+                contacted at a later date.
+            </div>
+        </div>
     </div>
 </div>
 <script th:inline="javascript">
@@ -1237,6 +1142,8 @@
             $("#set_meal_price_1").text($(this).attr("price"));
             $("#set_meal_price_2").text($(this).attr("price"));
             $("#set_meal_num_1").text($(this).attr("tcnum"));
+            $("#totla_num").val($(this).attr("tcnum"));
+            $("#money").val($(this).attr("price"));
             $("div[data-meal-info]").addClass("show_meat");
             var meal =$("#policy_meal_"+$(this).attr("data-id"));
             $(meal).removeClass("show_meat");
@@ -1549,7 +1456,7 @@
             },
             success: function (result) {
                 try {
-
+                    $('#ordermsg').modal();
                 } catch (e) {
                 }
                 alert(result)

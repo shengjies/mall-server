@@ -22,7 +22,7 @@ public class OrderController {
     @RequestMapping("/save")
     public String save(HttpServletRequest request, OrderEntity entity){
         try {
-            System.out.println(entity);
+            entity.setMale(entity.getMale().equals("-undefined")?null:entity.getMale());
             entity.setIp(request.getRemoteAddr());
             orderService.add(entity);
         }catch (Exception e){

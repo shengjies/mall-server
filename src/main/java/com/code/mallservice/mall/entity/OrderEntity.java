@@ -33,6 +33,7 @@ public class OrderEntity {
     private int ck_status =0;//收款状态 0、未收款 1、已收款
     private String up_date;//修改时间
     private String c_date;//下单时间
+    private int user_id;
 
     private List<OrderAttrEntity> attrs;
 
@@ -270,6 +271,15 @@ public class OrderEntity {
 
     public void setAttrs(List<OrderAttrEntity> attrs) {
         this.attrs = attrs;
+    }
+
+
+    public int getUser_id() {
+        return user_id;
+    }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
     }
 
     @Override

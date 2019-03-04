@@ -15,7 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
 
-@Configuration
+//@Configuration
 public class WebConfig implements WebMvcConfigurer {
     public LocaleChangeInterceptor localeChangeInterceptor(){
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
