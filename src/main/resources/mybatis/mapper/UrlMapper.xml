@@ -43,8 +43,8 @@
         <if test="product_id != -1">
             and product_id = #{product_id}
         </if>
-        <if test="user_id != -1">
-            and user_id = #{user_id}
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
         </if>
           order by c_date desc limit #{page},#{size};
     </select>
@@ -65,8 +65,8 @@
         <if test="product_id != -1">
             and product_id = #{product_id}
         </if>
-        <if test="user_id != -1">
-            and user_id = #{user_id}
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
         </if>
     </select>
 

@@ -30,7 +30,7 @@ public interface IUrlService {
      * @param size
      * @return
      */
-    Page<UrlEntity> findPage(String code,int product_id,int user_id,int page,int size);
+    Page<UrlEntity> findPage(String code,int product_id,String user_id,int page,int size);
 
     /**
      * 按编号查询链接
@@ -38,4 +38,11 @@ public interface IUrlService {
      * @return
      */
     UrlEntity findById(String code);
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    int del(String id);
 }

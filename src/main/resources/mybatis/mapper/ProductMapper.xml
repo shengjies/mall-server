@@ -5,10 +5,10 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `mall`.`tab_product`(`main_image_id`,`name`,`introduction`,`description`,`cl_id`,`price`,
         `o_price`,`country`,`unit`,`sold`,`comment_num`,`max_buy_num`,`facebook`,`comment`,`templ`,
-        `c_date`,`user_id`,`lang`,`purchase_url`,`remark`,`teml_page`,`teml_order`)
+        `c_date`,`user_id`,`lang`,`purchase_url`,`remark`,`teml_page`,`teml_order`,`ps711`,`psqj`,`cg_price`)
         VALUES(#{main_image_id},#{name},#{introduction},#{description},#{cl_id},#{price},#{o_price},#{country},#{unit},
         #{sold},#{comment_num},#{max_buy_num},#{facebook},#{comment},#{templ},now(),#{user_id},#{lang},#{purchase_url},
-        #{remark},#{teml_page},#{teml_order});
+        #{remark},#{teml_page},#{teml_order},#{ps711},#{psqj},#{cg_price});
     </insert>
 
     <!-- 修改产品信息 -->
@@ -34,7 +34,10 @@
         `purchase_url` = #{purchase_url},
         `remark` = #{remark},
         `teml_page` =#{teml_page},
-        `teml_order` =#{teml_order}
+        `teml_order` =#{teml_order},
+        `ps711` =#{ps711},
+        `psqj` =#{psqj},
+        `cg_price` =#{cg_price}
         WHERE `id` = #{id};
     </update>
 
@@ -66,8 +69,8 @@
         <if test="product_name != null and product_name != ''">
             and `name` like '${product_name}%'
         </if>
-        <if test="user_id != -1">
-            and user_id=#{user_id}
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
         </if>
           order by c_date desc limit #{page},#{size};
     </select>
@@ -80,8 +83,8 @@
         <if test="product_name != null and product_name != ''">
             and `name` like '${product_name}%'
         </if>
-        <if test="user_id != -1">
-            and user_id=#{user_id}
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
         </if>
     </select>
 
@@ -119,6 +122,9 @@
         <result column="remark" property="remark"/>
         <result column="teml_page" property="teml_page"/>
         <result column="teml_order" property="teml_order"/>
+        <result column="psqj" property="psqj"/>
+        <result column="ps711" property="ps711"/>
+        <result column="cg_price" property="cg_price"/>
         <association property="mainImage" column="main_image_id" select="selectMainImage">
             <id column="uid" property="uid"/>
             <result column="url" property="url"/>

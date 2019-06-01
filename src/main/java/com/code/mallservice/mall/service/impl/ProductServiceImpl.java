@@ -4,11 +4,14 @@ import com.code.mallservice.mall.entity.*;
 import com.code.mallservice.mall.mapper.*;
 import com.code.mallservice.mall.service.IGiftService;
 import com.code.mallservice.mall.service.IProductService;
+import com.code.mallservice.mall.service.IUrlService;
 import com.code.mallservice.mall.utils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品信息
@@ -42,6 +45,9 @@ public class ProductServiceImpl implements IProductService {
 
     @Autowired
     private IGiftService giftService;
+
+    @Autowired
+    private UrlMapper urlMapper;
 
     /**
      * 添加产品
@@ -97,6 +103,7 @@ public class ProductServiceImpl implements IProductService {
                 typeMapper.add(type);
             }
         }
+
         return 0;
     }
 
@@ -176,11 +183,20 @@ public class ProductServiceImpl implements IProductService {
                 typeMapper.add(type);
             }
         }
+        List<UrlEntity> urlList = urlMapper.findByProduct(entity.getId());
+        String lang = entity.getLang();
+        if(urlList != null){
+            for (UrlEntity urlEntity : urlList) {
+               int index = urlEntity.getPreview_url().indexOf("?lang=");
+               String preview = urlEntity.getPreview_url().substring(0,index)+"?lang="+lang;
+               urlMapper.editUrl(preview,urlEntity.getId());
+            }
+        }
         return 0;
     }
 
     @Override
-    public Page<ProductEntity> findPage(int id, String product_name, int user_id, int page, int size) {
+    public Page<ProductEntity> findPage(int id, String product_name, String user_id, int page, int size) {
         long count = productMapper.findCount(id, product_name, user_id);
         List<ProductEntity> list = productMapper.findPage(id, product_name, user_id, page * size, size);
         return new Page<>(list, count);
@@ -277,5 +293,24 @@ public class ProductServiceImpl implements IProductService {
             }
 
         }
+    }
+    /**
+     * 根据产品编号查询对应的属性
+     * @param product_id
+     * @return
+     */
+    @Override
+    public Map<String, Object> findAttrByProductId(int product_id) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("type",typeMapper.findTypeByProductId(product_id));
+        map.put("size",sizeMapper.findSizeByProductId(product_id));
+        return map;
+    }
+
+    @Override
+    public int del(int id) {
+        typeMapper.del(id);
+        sizeMapper.del(id);
+        return productMapper.del(id);
     }
 }

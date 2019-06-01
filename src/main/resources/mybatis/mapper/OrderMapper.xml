@@ -5,9 +5,215 @@
     <insert id="add" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO `mall`.`tab_order`(`product_id`,`url_id`,`priview_url`,`username`,`mobile`,`country`,`addr`,`caddres`,`ip`,
         `totla_num`,`money`,`postzip`,`cpostzip`,`emaill`,`msg`,`male`,`remark`,`ps`,`order_status`,`wl_status`,`cg_status`,
-        `dh_status`,`ip_status`,`ck_status`,`c_date`,`user_id`)
+        `dh_status`,`ip_status`,`ck_status`,`c_date`,`user_id`,`unit`)
         VALUES(#{product_id},#{url_id},#{priview_url},#{username},#{mobile},#{country},#{addr},#{caddres},#{ip},#{totla_num},
         #{money},#{postzip},#{cpostzip},#{emaill},#{msg},#{male},#{remark},#{ps},#{order_status},#{wl_status},#{cg_status},
-        #{dh_status},#{ip_status},#{ck_status},now(),#{user_id});
+        #{dh_status},#{ip_status},#{ck_status},now(),#{user_id},#{unit});
     </insert>
+
+    <resultMap id="selectOrderMap" type="com.code.mallservice.mall.entity.OrderEntity">
+        <id column="id" property="id"/>
+        <result column="product_id" property="product_id"/>
+        <result column="url_id" property="url_id"/>
+        <result column="priview_url" property="priview_url"/>
+        <result column="username" property="username"/>
+        <result column="mobile" property="mobile"/>
+        <result column="country" property="country"/>
+        <result column="addr" property="addr"/>
+        <result column="ip" property="ip"/>
+        <result column="totla_num" property="totla_num"/>
+        <result column="money" property="money"/>
+        <result column="postzip" property="postzip"/>
+        <result column="cpostzip" property="cpostzip"/>
+        <result column="emaill" property="emaill"/>
+        <result column="msg" property="msg"/>
+        <result column="male" property="male"/>
+        <result column="remark" property="remark"/>
+        <result column="ps" property="ps"/>
+        <result column="order_status" property="order_status"/>
+        <result column="wl_status" property="wl_status"/>
+        <result column="cg_status" property="cg_status"/>
+        <result column="dh_status" property="dh_status"/>
+        <result column="ip_status" property="ip_status"/>
+        <result column="ck_status" property="ck_status"/>
+        <result column="up_date" property="up_date"/>
+        <result column="c_date" property="c_date"/>
+        <result column="user_id" property="user_id"/>
+        <result column="detal" property="detal"/>
+        <result column="tracking_number" property="tracking_number"/>
+        <result column="wl_uptime" property="wl_uptime"/>
+        <association property="userEntity" column="user_id" select="selectOrderUser">
+            <id column="id" property="id"/>
+            <result column="username" property="username"/>
+        </association>
+        <association property="productEntity" column="product_id" select="selectOrderProduct">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+        <collection property="attrs" column="id" select="selectOrderAttr">
+            <id column="id" property="id"/>
+            <result column="attr_value" property="attr_value"/>
+            <result column="attr_size" property="attr_size"/>
+            <result column="num" property="num"/>
+            <result column="cattr_value" property="cattr_value"/>
+            <result column="cattr_size" property="cattr_size"/>
+            <result column="cnum" property="cnum"/>
+            <result column="order_id" property="order_id"/>
+            <result column="attr_status" property="attr_status"/>
+            <result column="up_date" property="up_date"/>
+            <result column="c_date" property="c_date"/>
+        </collection>
+    </resultMap>
+
+    <select id="findById" resultMap="selectOrderMap">
+        SELECT * FROM mall.tab_order where id = #{id};
+    </select>
+    <select id="selectOrderUser" resultType="com.code.mallservice.mall.entity.UserEntity">
+        SELECT id,username FROM mall.tab_user where id =#{user_id};
+    </select>
+    <select id="selectOrderProduct" resultType="com.code.mallservice.mall.entity.ProductEntity">
+        SELECT id,`name` FROM mall.tab_product where id = #{product_id};
+    </select>
+    <select id="selectOrderAttr" resultType="com.code.mallservice.mall.entity.OrderAttrEntity">
+        SELECT * FROM mall.tab_order_attr where order_id = #{id} and attr_status = 1;
+    </select>
+
+    <!--分页查询-->
+    <select id="countFind" resultType="_long">
+        SELECT count(*) FROM mall.tab_order where 1=1
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
+        </if>
+        <if test="id != -1 or (username != null and username !='') or (mobile != '' and mobile != null)">
+            <if test="id != -1">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username like '${username}%'
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile =#{mobile}
+            </if>
+        </if>
+        <if test="id == -1 and (username == null or username =='') and (mobile == '' or mobile == null)">
+            <if test="order_status != -1">
+                and order_status =#{order_status}
+            </if>
+            <if test="cg_status  != -1">
+                and cg_status =#{cg_status}
+            </if>
+            <if test="wl_status != -1">
+                and wl_status =#{wl_status}
+            </if>
+            <if test="country != '' and country != null">
+                and country =#{country}
+            </if>
+            <if test="ck_status != -1">
+                and ck_status = #{ck_status}
+            </if>
+            and c_date between #{bTime} and #{eTime}
+        </if>
+    </select>
+
+    <select id="findPage" resultMap="selectOrderMap">
+        SELECT a.*,b.wl,b.tracking_number as trackingnumber,b.u_date,b.msg as track_msg
+        FROM mall.tab_order as a left join tab_wl as b on a.id = b.order_id
+        where 1=1
+        <if test="user_id != null and user_id != ''">
+            and a.user_id in(${user_id})
+        </if>
+         <if test="id != -1 or (username != null and username !='') or (mobile != '' and mobile != null)">
+             <if test="id != -1">
+                 and a.id = #{id}
+             </if>
+             <if test="username != null and username != ''">
+                 and a.username like '${username}%'
+             </if>
+             <if test="mobile != null and mobile != ''">
+                 and a.mobile =#{mobile}
+             </if>
+         </if>
+        <if test="id == -1 and (username == null or username =='') and (mobile == '' or mobile == null)">
+            <if test="order_status != -1">
+                and a.order_status =#{order_status}
+            </if>
+            <if test="cg_status  != -1">
+                and a.cg_status =#{cg_status}
+            </if>
+            <if test="wl_status != -1">
+                and a.wl_status =#{wl_status}
+            </if>
+            <if test="country != '' and country != null">
+                and a.country =#{country}
+            </if>
+            <if test="ck_status != -1">
+                and a.ck_status = #{ck_status}
+            </if>
+            and a.c_date between #{bTime} and #{eTime}
+        </if>
+        order by a.id desc  limit #{page},#{size};
+    </select>
+
+    <!--报表导出-->
+    <select id="findExcel" resultMap="selectOrderMap">
+        SELECT * FROM mall.tab_order where 1=1
+        <if test="user_id != null and user_id != ''">
+            and user_id in(${user_id})
+        </if>
+        <if test="id != -1 or (username != null and username !='') or (mobile != '' and mobile != null)">
+            <if test="id != -1">
+                and id = #{id}
+            </if>
+            <if test="username != null and username != ''">
+                and username like '${username}%'
+            </if>
+            <if test="mobile != null and mobile != ''">
+                and mobile =#{mobile}
+            </if>
+        </if>
+        <if test="id == -1 and (username == null or username =='') and (mobile == '' or mobile == null)">
+            <if test="order_status != -1">
+                and order_status =#{order_status}
+            </if>
+            <if test="cg_status  != -1">
+                and cg_status =#{cg_status}
+            </if>
+            <if test="wl_status != -1">
+                and wl_status =#{wl_status}
+            </if>
+            <if test="country != '' and country != null">
+                and country =#{country}
+            </if>
+            <if test="ck_status != -1">
+                and ck_status = #{ck_status}
+            </if>
+            and c_date between #{bTime} and #{eTime}
+        </if>
+        order by id desc;
+    </select>
+
+
+    <resultMap id="selectOrderCfList" type="com.code.mallservice.mall.entity.OrderEntity">
+        <id column="id" property="id"/>
+        <result column="product_id" property="product_id"/>
+        <result column="username" property="username"/>
+        <result column="mobile" property="mobile"/>
+        <result column="ip" property="ip"/>
+        <result column="c_date" property="c_date"/>
+        <association property="productEntity" column="product_id" select="selectOrderProduct">
+            <id column="id" property="id"/>
+            <result column="name" property="name"/>
+        </association>
+    </resultMap>
+
+    <select id="findMobileOrIpList" resultMap="selectOrderCfList">
+      SELECT id,product_id,username,mobile,ip,c_date FROM mall.tab_order where 1=1
+      <if test="mobile != null and mobile !=''">
+          and mobile =#{mobile}
+      </if>
+      <if test="ip != null and ip !=''">
+          and ip = #{ip}
+      </if>
+        order by c_date desc limit 5
+    </select>
 </mapper>

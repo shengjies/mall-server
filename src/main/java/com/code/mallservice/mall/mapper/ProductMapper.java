@@ -1,6 +1,7 @@
 package com.code.mallservice.mall.mapper;
 
 import com.code.mallservice.mall.entity.ProductEntity;
+import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -32,7 +33,7 @@ public interface ProductMapper {
      * @return
      */
     List<ProductEntity> findPage(@Param("product_id")int product_id, @Param("product_name")String product_name,
-                   @Param("user_id")int user_id, @Param("page")int page, @Param("size")int size);
+                   @Param("user_id")String user_id, @Param("page")int page, @Param("size")int size);
 
     /**
      * 分页统计
@@ -42,7 +43,7 @@ public interface ProductMapper {
      * @return
      */
     Long findCount(@Param("product_id")int product_id, @Param("product_name")String product_name,
-                                 @Param("user_id")int user_id);
+                                 @Param("user_id")String user_id);
 
     /**
      * 按照编号查询产品所有信息
@@ -63,4 +64,12 @@ public interface ProductMapper {
      * @return
      */
     List<ProductEntity> listAll(@Param("user_id")int user_id);
+
+    /**
+     * 删除产品
+     * @param id
+     * @return
+     */
+    @Delete("delete from tab_product where id = #{id}")
+    int del(@Param("id")int id);
 }

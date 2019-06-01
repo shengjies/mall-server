@@ -31,9 +31,33 @@ public class ClickController {
         model.addAttribute("title",urlEntity.getTitle());
         ProductEntity productEntity = productService.findAllById(urlEntity.getProduct_id());
         if(productEntity == null) return "404";
+        if(!StringUtils.isEmpty(productEntity.getFacebook())){
+            String fbs[]  = productEntity.getFacebook().split(",");
+            model.addAttribute("fbs",fbs);
+        }
         model.addAttribute("product",productEntity);
         model.addAttribute("url_id",urlEntity.getId());
         model.addAttribute("product_id",productEntity.getId());
+        model.addAttribute("lang",lang);
         return productEntity.getTeml_page();
+    }
+
+    @RequestMapping("/pay")
+    public String order(String code,String lang,Model model){
+        if(StringUtils.isEmpty(code))return "404";
+        UrlEntity urlEntity = urlService.findById(code);
+        if(urlEntity == null)return "404";
+        model.addAttribute("title",urlEntity.getTitle());
+        ProductEntity productEntity = productService.findAllById(urlEntity.getProduct_id());
+        if(productEntity == null) return "404";
+        if(!StringUtils.isEmpty(productEntity.getFacebook())){
+            String fbs[]  = productEntity.getFacebook().split(",");
+            model.addAttribute("fbs",fbs);
+        }
+        model.addAttribute("product",productEntity);
+        model.addAttribute("url_id",urlEntity.getId());
+        model.addAttribute("product_id",productEntity.getId());
+        model.addAttribute("lang",lang);
+        return productEntity.getTeml_order();
     }
 }

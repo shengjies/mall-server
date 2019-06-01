@@ -3,6 +3,9 @@ package com.code.mallservice.mall.service;
 import com.code.mallservice.mall.entity.UserEntity;
 import com.code.mallservice.mall.utils.Page;
 
+import java.util.List;
+import java.util.Map;
+
 /**
  * 用户信息
  */
@@ -28,7 +31,7 @@ public interface IUserService {
      * @param size 页数大小
      * @return
      */
-    Page<UserEntity> findPage(String username,int page,int size);
+    Map<String,Object> findPage(String username,String role_code, int page, int size);
 
     /**
      * 用户登录
@@ -37,4 +40,26 @@ public interface IUserService {
      * @return
      */
     UserEntity findByUserNameAndPwd(String username,String password);
+
+    /**
+     * 分配组员
+     * @param id
+     * @param sales
+     * @throws Exception
+     */
+    void  groupSalesman(int id,String sales) throws Exception;
+
+    /**
+     * 查询用户下拉列表
+     * @param entity
+     * @return
+     */
+    List<UserEntity> findAll(UserEntity entity);
+
+    /**
+     * 根据组长查询对应的信息
+     * @param id
+     * @return
+     */
+    List<String> groupId(int id);
 }

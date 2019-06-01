@@ -1,10 +1,7 @@
 package com.code.mallservice.mall.mapper;
 
 import com.code.mallservice.mall.entity.TypeEntity;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -36,4 +33,11 @@ public interface TypeMapper {
      * @return
      */
     List<TypeEntity> findByProductId(@Param("product_id")int product_id);
+
+    /**
+     * 根据产品编号查询对应的产品的类型
+     * @param product_id
+     * @return
+     */
+    List<TypeEntity> findTypeByProductId(@Param("product_id")int product_id);
 }

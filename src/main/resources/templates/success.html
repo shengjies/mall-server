@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>content="success"</title>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type">
+    <meta content="width=device-width, initial-scale=1.0, user-scalable=yes" id="viewport" name="viewport">
+    <title>productname</title>
+    <meta content="success" property="og:title">
+</head>
+<body>
+
+<style>
+    .container-mobile {
+        padding-top: 34px;
+        margin: 0 auto;
+        width: 50%;
+        margin-top: 5%;
+        border: 1px solid #cccccc;
+        box-shadow: 0px 0px 3px rgba(99, 98, 98, 0.15);
+        height: 60%;
+    }
+    body,html{
+        padding: 0px;
+        height: 100%;
+        margin: 0px;
+    }
+</style>
+
+<div class="container-mobile" style="background-color: #fbfbfb">
+    <div style="margin-top: 1%;text-align: center;">
+        <div style="
+    padding-bottom: 15px;
+    border-bottom: 1px dashed gray;
+    font-size: 22px;
+    color: #48484a;
+    font-weight: bold;
+    text-shadow: 1px 1px 1px white;" th:text="#{label.order.success}">訂單已成功</div>
+        <img src="http://thdtop.fun/res/img/1.png"style="width: 60px;margin-top: 5%;"/>
+        <!--<div style="padding:3%;font-size: 19px;color: #48484a;" th:text="#{label.order.msg}">您的訂單我們已經收到，將在稍後聯系您</div>-->
+        <div style="padding:3%;font-size: 19px;color: #48484a;" th:text="#{label.order.msg}" >您的訂單我們已經收到，將在稍後聯系您</div>
+        <div style="font-size: 16px;color: #717171;" >
+            <span th:text="#{label.order.orderid}">訂單編號:</span><span th:text="${orderId}" >10001</span>
+            <span th:text="${unit}">NT$</span><span th:text="${pay}">5645</span></div>
+    </div>
+</div>
+</body>

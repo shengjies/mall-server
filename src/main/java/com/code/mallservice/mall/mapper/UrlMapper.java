@@ -1,8 +1,7 @@
 package com.code.mallservice.mall.mapper;
 
 import com.code.mallservice.mall.entity.UrlEntity;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -32,7 +31,8 @@ public interface UrlMapper {
      * @param user_id
      * @return
      */
-    Long findCount(@Param("code") String code,@Param("product_id") int product_id,@Param("user_id") int user_id);
+    Long findCount(@Param("code") String code,@Param("product_id") int product_id,
+                   @Param("user_id") String user_id);
 
     /**
      * 分页查询
@@ -43,7 +43,8 @@ public interface UrlMapper {
      * @param size
      * @return
      */
-    List<UrlEntity> findPage(@Param("code") String code,@Param("product_id") int product_id,@Param("user_id") int user_id,
+    List<UrlEntity> findPage(@Param("code") String code,@Param("product_id") int product_id,
+                             @Param("user_id") String user_id,
                              @Param("page")int page,@Param("size")int size);
 
     /**
@@ -52,4 +53,23 @@ public interface UrlMapper {
      * @return
      */
     UrlEntity findById(@Param("id")String id);
+
+    /**
+     * 删除链接
+     * @param id
+     * @return
+     */
+    @Delete("delete from tab_url_info where id = #{id}")
+    int del(@Param("id")String id);
+
+    /**
+     * 查询产品所以的链接
+     * @param product_id
+     * @return
+     */
+    @Select("SELECT * FROM mall.tab_url_info where product_id = #{product_id}")
+    List<UrlEntity> findByProduct(@Param("product_id") int product_id);
+
+    @Update("update tab_url_info set preview_url =#{preview_url} where id=#{id}")
+    int editUrl(@Param("preview_url")String preview_url,@Param("id")String id);
 }

@@ -29,7 +29,7 @@
         }
 
         body {
-            background: url(https://img.alicdn.com/imgextra/i2/2445381426/TB2eKTbdQfb_uJkSnfoXXb_epXa_!!2445381426.jpg) no-repeat fixed;
+            background: url(http://thdtop.fun/res/img/bk.jpg) no-repeat fixed;
             background-size: 100% 100%;
         }
 
@@ -521,7 +521,7 @@
 
         /*--------------评论--------------*/
         .touxiang {
-            background: url(https://img.alicdn.com/imgextra/i1/1048010507/O1CN011FcFFXTu088cfGs_!!1048010507.png);
+            background: url(http://thdtop.fun/res/img/pl1.png);
             background-size: 40px 40px;
             width: 40px;
             height: 40px;
@@ -567,7 +567,7 @@
             height: 20px;
             width: 20px;
             left: -20px;
-            background: url(https://img.alicdn.com/imgextra/i3/1048010507/O1CN011FcFFXTu07yEsbC_!!1048010507.png) no-repeat;
+            background: url(http://thdtop.fun/res/img/pl2.png) no-repeat;
             transform: rotate(180deg);
             -ms-transform: rotate(180deg);
             -moz-transform: rotate(180deg);
@@ -587,7 +587,7 @@
             height: 20px;
             width: 20px;
             left: -20px;
-            background: url(https://img.alicdn.com/imgextra/i2/1048010507/O1CN011FcFFXeswzK9b45_!!1048010507.png) no-repeat;
+            background: url(http://thdtop.fun/res/img/pl3.png) no-repeat;
 
         }
 
@@ -674,9 +674,9 @@
         }
 
     </style>
-    <script type="text/javascript" src="teml1/words.js"></script>
-    <script type="text/javascript" src="teml1/jquery.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css"/>
+    <link rel="shortcut icon" href="http://thdtop.fun/res/img/favicon.jpg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/css/swiper.min.css">
+    <link rel="stylesheet" href="http://thdtop.fun/res/c1/jquery.modal.min.css"/>
     <style type="text/css">
         @font-face {
             font-family: 'rbicon';
@@ -687,7 +687,37 @@
         .show_meat{
             display:none;
         }
+        .container-mobile{
+            width: 100% !important;
+        }
     </style>
+    <script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+    </script>
+    <script th:each="fb : ${fbs}">
+        fbq('init', '[[${fb}]]');
+    </script>
+    <script>
+        fbq('track', 'PageView');
+    </script>
 </head>
 <body>
 <div id="content_box">
@@ -697,21 +727,14 @@
     <!--图片轮播-->
     <dl class="section" id="commodity_images"
         style="border-radius: 0; margin-top:20px;background:#FFF;border-radius:8px 8px 0 0;overflow:hidden;">
-        <dt class="notes" style="display: none;">商品圖片</dt>
+        <dt class="notes" style="display: none;"></dt>
         <dd id="product_first_image"  class="swiper-container">
-            <div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}"  th:each="item :${product.roundImageList}"
-                 style="transform: translate3d(-1240px, 0px, 0px); transition-duration: 0ms; height: 100%">
-                <img class="swiper-slide swiper-slide-prev swiper-slide-duplicate-next" th:src="${item.url}" width="100%"
-                    data-swiper-slide-index="0" style="width: 620px;">
-            </div>
-            <link rel="stylesheet" href="teml1/swiper.css">
-            <script type="text/javascript" src="teml1/swiper.js"></script>
-            <script>
-                var mySwiper = new Swiper('.swiper-container', {
-                        autoplay: 2000,
-                        loop: true,
-                    });
-            </script>
+                <div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}">
+                    <div class="swiper-slide" th:each="item :${product.roundImageList}">
+                        <img th:src="${item.url}" alt=""/>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
         </dd>
     </dl>
     <!--限時折扣 -->
@@ -852,8 +875,8 @@
                             style="display: block;">
                             <dt class="title" th:utext="#{label.click.chima}"></dt>
                             <dd class="img_block size_attr">
-                                <div th:back_text="${s.size_label}" style="text-align: center;cursor: pointer" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
-                                    <span th:utext="${s.size_value}"></span>
+                                <div th:back_text="${s.size_value}" style="text-align: center;cursor: pointer" th:class="${sstart.index == 0?'selected':''}" th:each="s,sstart:${product.sizes}">
+                                    <span th:utext="${s.size_label}"></span>
                                 </div>
                             </dd>
                     </dl>
@@ -861,7 +884,7 @@
 
                 <!--赠品-->
                 <div data-male
-                     th:data-male-sign="${not #lists.isEmpty(gir.giftEntity.zptypes) && not #lists.isEmpty(gir.giftEntity.zpsizes) ? 1 :0}"
+                     th:data-male-sign="${not #lists.isEmpty(gir.giftEntity.zptypes) || not #lists.isEmpty(gir.giftEntity.zpsizes) ? 1 :0}"
                      th:if="${not #lists.isEmpty(item.gir)}" th:each="gir:${item.gir}">
                     <div data-male-info th:if="${gir.giftEntity != null &&  #lists.isEmpty(gir.giftEntity.zptypes) &&  #lists.isEmpty(gir.giftEntity.zpsizes)}">
                         <div  style="border-top: 1px solid #ccc;line-height: 40px">
@@ -935,8 +958,8 @@
                     <!-- 付款方式 -->
                     <dd id="payment_method">
                         <button type="button" class="selected" method="roc"><span th:utext="#{label.click.delivery_to_payment}"></span></button>
-                        <button type="button" method="roc_711" style="display: inline-block;" th:if="${product.country == 'TW'}">711超商取貨</button>
-                        <button type="button" method="roc_qj" style="display: inline-block;"  th:if="${product.country == 'TW'}">全家取貨</button>
+                        <button type="button" method="roc_711" style="display: inline-block;" th:if="${product.country == 'TW' && product.ps711}">711超商取貨</button>
+                        <button type="button" method="roc_qj" style="display: inline-block;"  th:if="${product.country == 'TW' && product.psqj}">全家取貨</button>
                     </dd>
                     <!-- 表单 -->
                     <dt class="title">
@@ -967,11 +990,11 @@
 
                     </select>
 
-                       <script th:if="${product.country == 'TH'}" type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_th.js"></script>
-                       <script th:if="${product.country == 'MY'}" type="text/javascript" src="https://dsaf465859jzs.cloudfront.net/c1/area_mlxy.js"></script>
-                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc.js"></script>
-                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc_711.js"></script>
-                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="teml1/roc_qj.js"></script>
+                       <script th:if="${product.country == 'TH'}" type="text/javascript" src="http://thdtop.fun/res/c1/th.js"></script>
+                       <script th:if="${product.country == 'MY'}" type="text/javascript" src="http://thdtop.fun/res/c1/my.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc_711.js"></script>
+                        <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc_qj.js"></script>
                     </dd>
                     <!-- qj改动 -->
                     <dt class="title" id="address">
@@ -1007,6 +1030,7 @@
                 <input type="hidden" name="ps" id="ps" value="roc" >
                 <input type="hidden" name="male" id="male">
                 <input type="hidden" name="detal" id="detal">
+                <input type="hidden" name="unit" th:value="${product.unit}">
                 <!--<input type="hidden" name="product_id" >-->
                 <!--表單隱藏域end-->
             </form>
@@ -1046,19 +1070,15 @@
                 style="background-color: rgb(212, 46, 34); width: 620px; display: inline-block;"><span th:utext="#{label.click.now.buy}"></span>
         </button>
     </div>
-    <div id="ordermsg" class="modal">
-        <div style="margin-top: 1%;text-align: center;">
-            <img src="https://dsaf465859jzs.cloudfront.net/c1/smsred.png" style="width: 60px;margin-top: 5%;">
-            <div style="padding-bottom: 15px;font-size: 22px;color: #48484a;font-weight: bold;"
-                 th:text="#{label.order.success}">Order Confirmed
-            </div>
-            <div style="padding:1%;font-size: 19px" th:text="#{label.order.msg}">Your order has been received and will be
-                contacted at a later date.
-            </div>
-        </div>
-    </div>
 </div>
+<script type="text/javascript" src="http://thdtop.fun/res/c1/jquery.js"></script>
+<script src="http://thdtop.fun/res/c1/jquery.modal.min.js"></script>
+<script type="text/javascript" src="http://thdtop.fun/res/c1/words.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/4.3.5/js/swiper.min.js"></script>
 <script th:inline="javascript">
+    var facebook_viewcontent = true;
+    var facebook_lead = true;
+    var facebook_addcart = true;
     // 倒计时start
     (function () {
         setInterval(function () {
@@ -1092,16 +1112,35 @@
     // 页面滚动监听事件start
     (function () {
         $(document, window).on("scroll", function (e) {
-            var flag = $("html,body").scrollTop() + $(window).height();
+            var flag = $(window).scrollTop();
             if ($("#beli_sekarang").offset().top < flag) {
                 $(".bottom button").hide();
             } else {
                 $(".bottom button").show();
             }
+            if (facebook_viewcontent) {
+                facebook_viewcontent = false;
+                try {
+                    fbq('track', 'ViewContent');
+                } catch (e) {
+                }
+            }
+            if (isInView('#beli_sekarang') && facebook_lead) {
+                facebook_lead = false;
+                try {
+                    fbq('track', 'Lead');
+                } catch (e) {
+                }
+            }
         });
     })();
     // 页面滚动监听事件end
-
+    function isInView(elem) {
+        var docViewTop = $(window).scrollTop();
+        var docViewBottom = docViewTop + $(window).height();
+        var elemTop = $(elem).offset().top;
+        return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+    }
     // 底部立即下单点击事件start
     (function () {
         $(".bottom button").on("click", function () {
@@ -1278,6 +1317,13 @@
 </script>
 <script th:inline="javascript">
     function topay() {
+        if(facebook_addcart){
+            facebook_addcart=false;
+            try {
+                fbq('track', 'AddToCart');
+            }catch (e) {
+            }
+        }
         var name = $("#username").val();
         if(name == ""){
             alert('[[#{label.click.name.msg}]]');
@@ -1386,7 +1432,7 @@
                 }
                 //尺码
                 var s = '';
-                if([[${not #lists.isEmpty(product.types)}]]){
+                if([[${not #lists.isEmpty(product.sizes)}]]){
                     s = $(this).find("dl[data-size='product_attribute_size']")
                         .find("dd[class='img_block size_attr']")
                         .find("div[class='selected']").attr('back_text');
@@ -1421,54 +1467,110 @@
         //赠品
         var p = [[${not #lists.isEmpty(product.policys)}]];
         if(p){
+            var id = $("#set_meal_btn_block .selected").attr("data-id");
             var male =$("#policy_meal_"+id).find("div[data-male]");
-            var sign = $(male).attr("data-male-sign");
-            if(sign == 1){
-                var male_info ='';
-                $(male).find("div[data-male-info]").each(function () {
-                    male_info+=$(this).find("span[data-male-name]").text();
-                    var zp_type = $(this).find("dl[data-type='gir_attribute_type']")
-                    if(zp_type != undefined){
-                        male_info+='-'+$(zp_type).find("dd[class='img_block type_attr']").find("div[class='selected']").attr("back_text");
-                    }
-                    var zp_size = $(this).find("dl[data-size='gir_attribute_size']");
-                    if(zp_size != undefined){
-                        male_info+='-'+$(zp_size).find("dd[class='img_block size_attr']").find("div[class='selected']").attr("back_text");
-                    }
-                    male_info+=",";
-                });
-                $("#male").val(male_info);
-            }else{
-                var male_info=$(male).find("div[data-male-info]");
-                var info = $(male_info).find("span[data-male-name]").text();
-                info +="-"+$(male_info).find("dl[data-type='gir_attribute_type']")
-                    .find("dd[class='img_block type_attr']")
-                    .find("div[class='selected']").attr("gri-num");
-                $("#male").val(info);
-            }
+            var m ="";
+            $(male).each(function () {
+                var sign = $(this).attr("data-male-sign");
+                if(sign == 1){
+                    $(this).find("div[data-male-info]").each(function () {
+                        m+=$(this).find("span[data-male-name]").text();
+                        var zp_type = $(this).find("dl[data-type='gir_attribute_type']");
+                        if(zp_type != undefined){
+                            var types = $(zp_type).find("dd[class='img_block type_attr']").find("div[class='selected']").attr("back_text");
+                            if(types){
+                                m+='-'+types;
+                            }
+                        }
+                        var zp_size = $(this).find("dl[data-size='gir_attribute_size']");
+                        if(zp_size){
+                            var size = $(zp_size).find("dd[class='img_block size_attr']").find("div[class='selected']").attr("back_text");
+                            if(size){
+                                m+='-'+size;
+                            }
+                        }
+                        m+=",";
+                    });
+                }else{
+                    var male_info=$(this).find("div[data-male-info]");
+                    m += $(male_info).find("span[data-male-name]").text();
+                    m +="-"+$(male_info).find("dl[data-type='gir_attribute_type']")
+                        .find("dd[class='img_block type_attr']")
+                        .find("div[class='selected']").attr("gri-num");
+                    m+=",";
+
+                }
+            });
+            $("#male").val(m);
+
         }
         $.ajax({
             url: "/save",
             type: "POST",
             data: $("#save").serialize(),
             beforeSend: function () {
-
+                showSpinner();
             },
             success: function (result) {
                 try {
-                    $('#ordermsg').modal();
+                    fbq('track', 'Purchase', {
+                        value: '' + $('#money').val(),
+                        currency: '[[${product.unit}]]'
+                    });
                 } catch (e) {
                 }
-                alert(result)
+                $('#save')[0].reset();
+                $('#ordermsg').html(result);
+                $('#ordermsg').modal();
             },
             error: function (xhr, status, error) {
             },
             complete: function () {
-
+                hideSpinner()
             }
         });
         return false;
     }
 </script>
+<script type="text/javascript">
+    $(function () {
+        var mySwiper = new Swiper('.swiper-container', {
+            loop: false,
+            autoplay: {
+                stopOnLastSlide: false
+            },
+            pagination: {
+                el: '.swiper-pagination'
+            }
+        });
+    })
+    function showSpinner() {
+        $("#spinner").show();
+        $("#submit").prop('disabled', true);
+    }
+    function hideSpinner() {
+        $("#spinner").hide();
+        $("#submit").prop('disabled', false);
+    }
+</script>
+<div class="modal-spinner" id="spinner">
+    <div class="rect1"></div>
+    <div class="rect2"></div>
+    <div class="rect3"></div>
+    <div class="rect4"></div>
+    <div class="rect5"></div>
+    <div class="rect6"></div>
+</div>
+<div id="ordermsg" class="modal">
+    <div style="margin-top: 1%;text-align: center;">
+        <img src="http://thdtop.fun/res/img/1.png" style="width: 60px;margin-top: 5%;">
+        <div style="padding-bottom: 15px;font-size: 22px;color: #48484a;font-weight: bold;"
+             th:text="#{label.order.success}">Order Confirmed
+        </div>
+        <div style="padding:1%;font-size: 19px" th:text="#{label.order.msg}">Your order has been received and will be
+            contacted at a later date.
+        </div>
+    </div>
+</div>
 </body>
 </html>

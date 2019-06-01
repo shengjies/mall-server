@@ -26,4 +26,9 @@
     <select id="selectTypeImage" resultType="com.code.mallservice.mall.entity.ImageEntity">
         SELECT * FROM mall.tab_imags where uid = #{img_id};
     </select>
+
+    <!--根据产品编号查询对应的产品的类型-->
+    <select id="findTypeByProductId" resultType="com.code.mallservice.mall.entity.TypeEntity">
+        SELECT * FROM mall.tab_type_info where product_id=#{product_id} order by id desc;
+    </select>
 </mapper>

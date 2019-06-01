@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="http://thdtop.fun/res/img/favicon.jpg" type="image/x-icon" rel="icon">
+    <title th:utext="${title}"></title>
+    <link href="http://thdtop.fun/res/tem2/style.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="http://thdtop.fun/res/c1/jquery.modal.min.css"/>
+    <style>
+        .wfwrapbox {
+            padding: 5px;
+        }
+
+        .wfform-opt,
+        .wfform-pro {
+            margin-left: 83px;
+        }
+
+        .wfform-label {
+            width: 70px;
+        }
+
+        .wfform-label {
+            font-size: 13px;
+        }
+
+        .layui-form-danger {
+            border: 2px solid #f00 !important;
+        }
+
+        input:disabled,
+        textarea:diabled {
+            -webkit-text-fill-color: #000;
+            -webkit-opacity: 1;
+            color: #000;
+        }
+
+        .bordergrey {
+            border: 1px solid #ccc;
+        }
+
+        .borderred {
+            border: 2px solid #f00;
+        }
+
+        .wfsendctrl,
+        .wfsendtime {
+            width: 36%;
+            margin-right: 2%;
+        }
+
+        .wfsendday {
+            width: 24%;
+        }
+
+        @media screen and (max-width: 451px) {
+
+            .wfsendctrl,
+            .wfsendtime,
+            .wfsendday {
+                width: 100%;
+                margin-right: 0;
+            }
+
+            .wfsendctrl,
+            .wfsendtime {
+                margin-bottom: 4%;
+            }
+        }
+    </style>
+    <style type="text/css">
+        .wforder {
+            max-width: 950px;
+        }
+
+        .wftitle {
+            background: #FF9900;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+            background-color: #F00;
+            background-image: -webkit-linear-gradient(#DE2327, #DE2327 36px, rgba(245, 245, 245, 1) 0%)
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            background: rgba(222, 35, 39, 0.0);
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background-color: #F90;
+            border-radius: 10px;
+            background-image: -webkit-linear-gradient(45deg,
+                rgba(255, 255, 255, .5) 25%,
+                transparent 25%,
+                transparent 50%,
+                rgba(255, 255, 255, .5) 50%,
+                rgba(255, 255, 255, .5) 75%,
+                transparent 75%,
+                transparent)
+        }
+
+        ::-webkit-scrollbar-thumb:window-inactive {
+            background: rgba(144, 24, 53, 0.8);
+        }
+    </style>
+    <style>
+        .hide_product{
+            display: none;
+        }
+        .wfform-opt, .wfform-pro{
+            margin-left: 85px;
+        }
+        .container-mobile{
+            width: 100% !important;
+        }
+    </style>
+    <script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+    <script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+    </script>
+    <script th:each="fb : ${fbs}">
+        fbq('init', '[[${fb}]]');
+    </script>
+    <script>
+        fbq('track', 'PageView');
+        fbq('track', 'AddToCart');
+    </script>
+</head>
+
+<body>
+    <div style="position:fixed; top:5px; z-index:12512; left:5px; text-align:center;">
+        <a onclick="history.go(-1)">
+            <img
+                border="0" width="25" src="http://thdtop.fun/res/img/back.png">
+            <span style="color:#ffffff;font-size: 15px;position: relative;top: 2px;left: -3px;"
+                  th:utext="#{label.click.to.back}"></span>
+        </a>
+    </div>
+    <div class="wforder">
+        <div class="wftitle" th:utext="#{label.click.on.line}"
+            style="position:fixed; top:0; overflow:hidden; width:100%; margin:0 auto; z-index:12509; left:0;height: 36px;line-height: 36px;background-color: rgba(222, 35, 39, 1); text-align:center; ">
+
+        </div>
+        <br><br>
+        <form id="save" name="wfform" method="post" class="wfform" >
+
+            <!--產品-->
+            <div class="wfwrap">
+                <div class="wfwrapbox" style="margin-bottom: 20px;">
+                    <div class="wfform-box">
+                        <img th:if="${product.mainImage != null}" th:src="${product.mainImage.url}" style="width:100%;">
+                        <div class="wfproimg" style="height: auto;">
+                            <p>
+                                <span style="font-size:18px;" th:utext="${title}"></span><br>
+                                <span style="font-size:13px;font-weight:100;color:#333;" th:utext="${product.introduction}"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <!---------- 产品套餐 ---------->
+                    <div class="wfform-box" th:if="${product.cl_id == 2 }">
+                        <label class="wfform-label" th:utext="#{label.click.choice.meal}"></label>
+                        <div class="wfform-pro radio" id="radio" th:if="${not #lists.isEmpty(product.policys)}">
+                            <span style="margin-bottom: 5px;" th:tcnum="${item.tcnum}" th:price="${item.tcmoney}"
+                                  th:data-id="${item.id}" class="down" th:each="item,start :${product.policys}">
+                                <input style="display: none;" type="radio" name="wfproduct"
+                                       th:id="${'wfproduct'+start.index}" checked="" th:value="${item.id}"
+                                    class="input-radio">
+                                <label style="display: inline-block;padding: 5px;border-radius: 3px;"
+                                       th:class="${start.index ==0?'borderred':'bordergrey'}"
+                                       th:data-id="${item.id}"
+                                    th:for="${'wfproduct'+start.index}"  th:utext="${item.tcname}"></label>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="wfform-box">
+                        <label class="wfform-label"></label>
+                        <div class="wfform-opt wfnums">
+                            <strong style="float:left;">
+                                <em class="rmb" th:utext="${product.unit}"></em>
+                                <em id="showprice"  th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></em>
+                                <em style="color:#ccc;font-size: 12px;text-decoration:line-through;font-style: italic;" ><span th:utext="${product.unit}"></span>
+                                    <em id="showoldprice"  th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney + 800:product.price+800}"></em>
+                                </em>
+                            </strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="wftitle" id="wfattr" th:utext="#{label.click.specifications}"
+                    style="box-shadow: 0 1px 2px 2px #E4E4E4;background-color: #FCF8E3;border-color: #FBEED5; color: #C09853;padding: 1px;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);border: 1px solid #fbeed5;border-radius: 5px;margin-bottom: 15px;font-size:14px;margin-top: -5px;">
+                    </div>
+                <div id="product" th:if="${product.cl_id == 2 }" >
+                    <div class="continer" th:if="${not #lists.isEmpty(product.policys)}">
+                        <!--主产品-->
+                        <div th:id="${'product_'+item.id}" data-product-attr
+                             th:class="${start.index == 0?'':'hide_product'}"
+                             th:each="item,start :${product.policys}">
+                            <!--產品無屬性-->
+                            <div data-product class="wfwrapbox" style="margin-top: 10px;"
+
+                                 th:if="${#lists.isEmpty(product.types) &&  #lists.isEmpty(product.sizes)}">
+                                <div style="font-size: 1.3rem;margin-bottom: 10px;" th:utext="${product.name}"></div>
+
+                                <div data-type class="wfform-box" >
+                                    <div style="margin-left:5px;" class="wfform-pro frame">
+                                        <ul class="colour type_attr" >
+                                            <li data-tc-type >
+                                                <a style="width:87px;word-wrap:break-word;vertical-align: top;"
+                                                   href="javascript:void(0);" class="curcolour">
+                                                    <img th:if="${product.mainImage != null }" style="width:87px;height:87px;"
+                                                         th:src="${product.mainImage.url}" th:alt="${product.name}"
+                                                         th:title="${product.name}">
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--主体结束-->
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!--產品有屬性-->
+                            <div data-product class="wfwrapbox" style="margin-top: 10px;"
+                                 th:each="tindex:${#numbers.sequence(1,item.tcnum)}"
+                                 th:if="${not #lists.isEmpty(product.types) || not #lists.isEmpty(product.sizes)}">
+                                <div style="font-size: 1.3rem;margin-bottom: 10px;" th:utext="${product.name}"></div>
+
+                                <div style="margin-bottom:5px;margin-left: 5px;"
+                                     th:if="${not #lists.isEmpty(product.types)}"
+                                     th:utext="#{label.click.yanse}"></div>
+                                <!--有属性-->
+                                <div data-type class="wfform-box" th:if="${not #lists.isEmpty(product.types)}">
+                                    <div style="margin-left:5px;" class="wfform-pro frame">
+                                        <ul class="colour type_attr" >
+                                            <li data-tc-type th:each="t,tstart:${product.types}">
+                                                <a style="width:87px;word-wrap:break-word;vertical-align: top;"
+                                                    href="javascript:void(0);" th:class="${tstart.index == 0?'curcolour':''}"
+                                                    th:data-colour="${t.type_value}">
+                                                    <img th:if="${t.imageEntity != null && tindex == 1}" style="width:87px;height:87px;"
+                                                         th:src="${t.imageEntity.url}" th:alt="${t.type_lable}"
+                                                        th:title="${t.type_lable}">
+                                                    <img th:if="${t.imageEntity != null && tindex != 1 && item.tcattr}" style="width:87px;height:87px;"
+                                                         th:src="${t.imageEntity.url}" th:alt="${t.type_lable}"
+                                                         th:title="${t.type_lable}">
+                                                    <br>
+                                                    <span th:utext="${t.type_lable}"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--主体结束-->
+
+                                    </div>
+                                </div>
+                                <!--有尺码-->
+                                <div style="margin-bottom:5px;margin-left: 5px;" th:if="${not #lists.isEmpty(product.sizes)}"
+                                     th:utext="#{label.click.chima}"></div>
+                                <div data-size class="wfform-box" th:if="${not #lists.isEmpty(product.sizes)}">
+                                    <div style="margin-left:5px;" class="wfform-pro frame">
+                                        <ul class="colour size_attr" >
+                                            <li data-tc-size th:each="s,sstart:${product.sizes}" >
+                                                <a style="word-wrap:break-word;vertical-align: top;"
+                                                    href="javascript:void(0);"
+                                                   th:class="${sstart.index == 0?'curcolour':''}"
+                                                    th:data-colour="${s.size_value}">
+                                                    <span th:utext="${s.size_label}"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <!--主体结束-->
+                                    </div>
+                                </div>
+                            </div>
+                            <!--赠品-->
+                            <div class="wftitle" th:if="${not #lists.isEmpty(item.gir)}"  th:utext="#{label.order.free}"
+                                 style="box-shadow: 0 1px 2px 2px #E4E4E4;background-color: #FCF8E3;border-color: #FBEED5; color: #C09853;padding: 1px;text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);border: 1px solid #fbeed5;border-radius: 5px;font-size:14px;margin-top: 8px;">
+                            </div>
+                            <div data-male th:data-male-sign="${not #lists.isEmpty(gir.giftEntity.zptypes) || not #lists.isEmpty(gir.giftEntity.zpsizes) ? 1 :0}"
+                                 th:if="${not #lists.isEmpty(item.gir)}" th:each="gir:${item.gir}">
+                                <!--無屬性-->
+                                <div class="wfwrapbox" data-male-info style="margin-top: 10px;"
+                                     th:if="${gir.giftEntity != null && #lists.isEmpty(gir.giftEntity.zptypes) &&  #lists.isEmpty(gir.giftEntity.zpsizes)}">
+                                    <div style="font-size: 1.3rem;margin-bottom: 10px;" data-male-name
+                                         th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></div>
+
+                                    <div data-type class="wfform-box" th:if="${gir.giftEntity != null }">
+                                        <div style="margin-left:5px;" class="wfform-pro frame">
+                                            <ul class="colour type_attr" >
+                                                <li data-tc-type >
+                                                    <a style="width:87px;word-wrap:break-word;vertical-align: top;"
+                                                       href="javascript:void(0);" class="curcolour" th:gri-num="${gir.zpnum}">
+                                                        <img th:if="${gir.giftEntity.imageEntity != null }" style="width:87px;height:87px;"
+                                                             th:src="${gir.giftEntity.imageEntity.url}" >
+                                                        <br>
+                                                        <span th:if="${gir.giftEntity.imageEntity != null}" th:utext="${' X ' + gir.zpnum}"></span>
+                                                        <span th:if="${gir.giftEntity.imageEntity == null}" th:utext="${gir.giftEntity.name + ' X ' + gir.zpnum}"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--主体结束-->
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--有屬性-->
+                                <div class="wfwrapbox" data-male-info
+                                     th:each="zptindex:${#numbers.sequence(1,gir.zpnum)}" style="margin-top: 10px;"
+                                     th:if="${gir.giftEntity != null && (not #lists.isEmpty(gir.giftEntity.zptypes) || not #lists.isEmpty(gir.giftEntity.zpsizes))}">
+                                    <div style="font-size: 1.3rem;margin-bottom: 10px;" data-male-name
+                                         th:utext="${gir.giftEntity != null?gir.giftEntity.name:''}"></div>
+                                    <!--有属性-->
+                                    <div style="margin-bottom:5px;margin-left: 5px;"
+                                         th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zptypes)}"
+                                         th:utext="#{label.click.yanse}"></div>
+
+                                    <div data-type class="wfform-box" th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zptypes)}">
+                                        <div style="margin-left:5px;" class="wfform-pro frame">
+                                            <ul class="colour type_attr" >
+                                                <li data-tc-type th:each="zpt,zptstart:${gir.giftEntity.zptypes}">
+                                                    <a style="width:87px;word-wrap:break-word;vertical-align: top;"
+                                                       href="javascript:void(0);" th:class="${zptstart.index == 0?'curcolour':''}"
+                                                       th:data-colour="${zpt.zptvalue}">
+                                                        <img th:if="${zpt.imageEntity != null && zptindex == 1}" style="width:87px;height:87px;"
+                                                             th:src="${zpt.imageEntity.url}" th:alt="${zpt.zptlable}"
+                                                             th:title="${zpt.zptlable}">
+                                                        <img th:if="${zpt.imageEntity != null && zptindex != 1 && item.tcattr}" style="width:87px;height:87px;"
+                                                             th:src="${zpt.imageEntity.url}" th:alt="${zpt.zptlable}"
+                                                             th:title="${zpt.zptlable}">
+                                                        <br>
+                                                        <span th:utext="${zpt.zptlable}"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--主体结束-->
+
+                                        </div>
+                                    </div>
+                                    <!--有尺码-->
+                                    <div style="margin-bottom:5px;margin-left: 5px;" th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zpsizes)}"
+                                         th:utext="#{label.click.chima}"></div>
+                                    <div data-size class="wfform-box" th:if="${gir.giftEntity != null && not #lists.isEmpty(gir.giftEntity.zpsizes)}">
+                                        <div style="margin-left:5px;" class="wfform-pro frame">
+                                            <ul class="colour size_attr" >
+                                                <li data-tc-size  th:each="zps,zpsstart:${gir.giftEntity.zpsizes}" >
+                                                    <a style="word-wrap:break-word;vertical-align: top;"
+                                                       href="javascript:void(0);"
+                                                       th:class="${zpsstart.index == 0?'curcolour':''}"
+                                                       th:data-colour="${zps.zpzvalue}">
+                                                        <span th:utext="${zps.zpzlable}"></span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--主体结束-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="wfwrap">
+                <div class="wfwrapbox pt15">
+                    <!---------- 付款方式 ---------->
+                    <div class="wfform-box">
+                        <label class="wfform-label">
+                            <em style="color:red;">*</em>
+                            <span th:utext="#{label.click.pay.method}"></span>
+                        </label>
+                        <div id="payment_method" class="wfform-pro radio">
+                            <span class="auto">
+                                <input type="radio" checked="" name="wfpayment" id="wfpayment1"
+                                    onclick="" method="roc" value="roc" class="input-radio">
+                                <label
+                                    style="font-size: 17px;font-weight: bold;position: relative;top: -4px;"
+                                    for="wfpayment1" th:utext="#{label.click.delivery_to_payment}"></label>
+                            </span>
+                            <span class="auto" th:if="${product.country == 'TW' && product.ps711}">
+                                <input type="radio" name="wfpayment" id="wfpayment7"
+                                    onclick="" method="roc_711" value="roc_711" class="input-radio">
+                                <label
+                                    style="font-size: 17px;font-weight: bold;position: relative;top: -4px;"
+                                    for="wfpayment7">711超商取貨</label>
+                            </span>
+                            <span class="auto" th:if="${product.country == 'TW' && product.psqj}">
+                                <input type="radio" name="wfpayment" id="wfpaymentqj"
+                                       onclick="" method="roc_qj" value="roc_qj" class="input-radio">
+                                <label
+                                        style="font-size: 17px;font-weight: bold;position: relative;top: -4px;"
+                                        for="wfpaymentqj">全家取貨</label>
+                            </span>
+                        </div>
+                    </div>
+                    <!---------- 表单选项 ---------->
+                    <div  >
+                        <div class="wfform-box">
+                            <label class="wfform-label">
+                                <em style="color:red;">*</em>
+                                <span th:utext="#{label.click.name}"></span>
+                            </label>
+                            <div class="wfform-opt">
+                                <input type="text" id="username" name="username" th:placeholder="#{label.click.name.msg}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">
+                                <em style="color:red;">*</em>
+                                <span th:utext="#{label.click.telephone}"></span>
+                            </label>
+                            <div class="wfform-opt">
+                                <input type="text" name="mobile" id="mobile" th:placeholder="#{label.click.telephone.msg}" class="input-text">
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">
+                                <em style="color:red;">*</em>
+                                <span th:utext="#{label.click.area}"></span>
+                            </label>
+                            <div id="area" class="wfform-opt area">
+
+                                    <select id="s_province" class="select wfprovince" name="cusprovince">
+
+                                    </select><select id="s_city" class="select wfcity"  name="cuscity">
+
+                                    </select><select id="s_county" class="select wfarea" name="cusarea"> </select>
+
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label"><em style="color:red;">*</em>
+                            <span id="address" th:utext="#{label.click.address}"></span>
+                            </label>
+                            <div class="wfform-opt">
+                                <input type="text"  class="input-text" id="address_text" name="addr" >
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">
+                                <span th:utext="#{label.click.zip }"></span>
+                            </label>
+                            <div class="wfform-opt">
+                                <input type="text" name="postzip"  class="input-text">
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">E-mail</label>
+                            <div class="wfform-opt">
+                                <input type="text" id="email"  name="emaill"  class="input-text">
+                            </div>
+                        </div>
+                        <div class="wfform-box">
+                            <label class="wfform-label">
+                                <span th:utext="#{label.click.msg}"></span>
+                            </label>
+                            <div class="wfform-opt">
+                                <textarea id="guest" name="msg"
+                                    class="textarea"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!--下單-->
+            <div style="position: fixed;bottom: 0;left: 0;width: 100%;">
+                <div style="height: 50px;line-height: 50px;background: #333333;color:#fff;">
+                    <button id="wfsubmit" onclick="return topay()"
+                        style="border: 0;background: #333333;height: 50px;width: 100%;border-radius: 0;float: right;color: #fff;font-size: 15px;"
+                        lay-submit="" lay-filter="wfsubmit">
+                        <span style="height: 50px;line-height: 50px;width: 100px;float: right;background: rgba(222, 35, 39, 1);display: inline-block;font-weight: bold;" th:utext="#{label.click.pay}"></span>
+                        <div style="float:left;margin-left: 10px;line-height: 50px;font-size: 12px;"><span
+                                id="youhui"></span></div>
+                        <div style="float:right;font-size: 15px;line-height: 50px;">
+                            <span style="font-weight: bold;font-size: 16px;" th:utext="#{label.click.heji}"></span>
+                            <span th:utext="${product.unit}"></span>
+                            <em id="showprice_total" style="padding-right: 5px;font-weight: bold;"
+                                th:utext="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}"></em>
+                        </div>
+                    </button>
+                </div>
+            </div>
+            <!--表單隱藏域start-->
+            <input type="hidden" name="url_id" th:value="${url_id}">
+            <input type="hidden" name="product_id" th:value="${product_id}" >
+            <input type="hidden" name="totla_num" id="totla_num"
+                   th:value="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcnum:1}" >
+            <input type="hidden" name="money" id="money"
+                   th:value="${product.cl_id == 2 && not #lists.isEmpty(product.policys)?product.policys[0].tcmoney:product.price}" >
+            <input type="hidden" name="ps" id="ps" value="roc" >
+            <input type="hidden" name="male" id="male">
+            <input type="hidden" name="detal" id="detal">
+            <input type="hidden" name="unit" th:value="${product.unit}">
+            <!--<input type="hidden" name="product_id" >-->
+            <!--表單隱藏域end-->
+        </form>
+        <div style="height:58px;"></div>
+
+    </div>
+    <script src="http://thdtop.fun/res/c1/jquery.js"></script>
+    <script src="http://thdtop.fun/res/c1/jquery.modal.min.js"></script>
+    <script th:if="${product.country == 'TH'}" type="text/javascript" src="http://thdtop.fun/res/c1/th.js"></script>
+    <script th:if="${product.country == 'MY'}" type="text/javascript" src="http://thdtop.fun/res/c1/my.js"></script>
+    <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc.js"></script>
+    <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc_711.js"></script>
+    <script type="text/javascript" th:if="${product.country == 'TW'}" src="http://thdtop.fun/res/c1/roc_qj.js"></script>
+    <script th:inline="javascript" th:if="${product.country == 'TW'}">
+        // 付款方式start
+        $(function () {
+            var currency="NT$";
+            // qj改动
+            if (currency == "NT$") {
+                var init = ["國家/地區", "縣/市", "鎮/鄉/區"];
+                var init2 = ["縣/市", "區/鄉鎮", "門市"];
+                //判断类型
+                function type_tip() {
+                    $("[name=addr]").val("");
+                    var choose, type = $("#payment_method input[name='wfpayment']:checked").attr("method");
+                    if (type == "roc") {
+                        choose = init;
+                        $("#address").text("詳細地址");
+                        $("[name='addr']").val("").removeClass("addr").prop("readonly", false).attr("placeholder",[[#{label.click.address.msg}]]);
+                    } else {
+                        choose = init2;
+                        $("#address").text("門市地址");
+                        $("[name='addr']").addClass("addr").prop("readonly", true).attr("placeholder", "");
+                    }
+                    $("#area select").each(function (idx) {
+                        $(this).html("<option value=" + choose[idx] + ">" + choose[idx] + "</option>");
+                        if (idx == 0) {
+                            switch (type) {
+                                case "roc": roc(); break;
+                                case "roc_711": roc_711(); break;
+                                case "roc_qj": roc_qj(); break;
+                            }
+                            for (var i = 0; i < area_1.length; i++) {
+                                $("<option value=" + area_1[i] + ">" + area_1[i] + "</option>").appendTo($(this));
+                            }
+                        }
+                    });
+                }
+                type_tip();
+                //选择付款类型
+                $("#payment_method span").on("click", function () {
+                    type_tip();
+                    $("#ps").val($(this).find("input").attr("method"))
+                })
+                var idx = [-1, -1, -1];//记录选择的index
+                $("#area  select").on("change", function () {
+                    //清除内容
+                    $("[name=addr]").val("");
+                    $(this).parent("span").siblings("span").find("select").find("option:gt(0)").remove();
+                    //记录选择的index
+                    $("#area  select").each(function (index) {
+                        idx[index] = $(this).find('option:selected').index() - 1;
+                    })
+                    var current_idx = $(this).index();
+                    var area = current_idx < 2 ? eval("area_" + (current_idx + 2)) : [];
+                    var arr = area[idx[0]] || [];
+                    var type = $("#payment_method input[name='wfpayment']:checked").attr("method");
+                    if (type != "roc") {
+                        if (current_idx == 1) {
+                            arr = area[idx[0]][idx[1]];
+                        }
+                        if (current_idx == 2) {
+                            arr = area_3[idx[0]][idx[1]][idx[2]];
+                        }
+                    } else {
+                        if (current_idx == 1) {
+                            arr = area[idx[1]];
+                        }
+                    }
+                    if (arr.constructor && arr.constructor == Array) {
+                        if (arr[0].constructor == String) {
+                            for (var i = 0; i < arr.length; i++) {
+                                $("<option value=" + arr[i] + ">" + arr[i] + "</option>").appendTo($(this).next());
+                            }
+                        }
+                        else {
+                            for (var j in arr) {
+                                var name = arr[j]["POIName"] || arr[j]["name"];
+                                var addr = arr[j]["Address"] || arr[j]["addr"];
+                                var val = name + "-" + addr;
+                                $("<option value=" + val + ">" + val + "</option>").appendTo($(this).next());
+                            }
+                        }
+                    }
+                    if (arr.constructor == Object) {
+                        var name = arr["POIName"] || arr["name"];
+                        var addr = arr["Address"] || arr["addr"];
+                        var pid = arr["POIID"] || arr["pkey"];
+                        var tel = arr["Telno"] || arr["tel"];
+                        var val = addr + "，店名：" + name + "，店號：" + pid + "，電話：" + tel;
+                        $("[name=addr]").val(val);
+                    }
+                })
+            }
+            // qj改动
+        });
+    </script>
+
+    <script type="text/javascript">
+        //套餐选择
+        $(function () {
+            $("#radio span").click(function () {
+                var index = $(this).index();
+                $(this).find("label").attr('class', 'borderred').siblings().parent().parent().find("span").eq(index).siblings().find("label").attr('class', 'bordergrey');
+
+                var money = $(this).attr("price");
+                $("#showprice").text(money);
+                $("#showoldprice").text(parseInt(money)+800);
+                $("#showprice_total").text(money);
+                $("#product").find("div[data-product-attr]").addClass("hide_product");
+                var id = $(this).attr("data-id");
+               $("#product_"+id).removeClass("hide_product");
+               $("#totla_num").val($(this).attr("tcnum"));
+               $("#money").val(money);
+            });
+        })
+        //颜色选择
+        $(function () {
+            $("li[data-tc-type]").click(function () {
+                $(this).find("a").addClass("curcolour");
+                $(this).siblings("li").find("a").removeClass("curcolour");
+            })
+        })
+        //尺码选择
+        $(function () {
+            $("li[data-tc-size]").click(function () {
+                $(this).find("a").addClass("curcolour");
+                $(this).siblings("li").find("a").removeClass("curcolour");
+            })
+        })
+    </script>
+    <script th:inline="javascript">
+        function topay() {
+            var name = $("#username").val();
+            if(name == ""){
+                alert('[[#{label.click.name.msg}]]');
+                $("#username").focus();
+                return false;
+            }
+            var mobile =$("#mobile").val();
+            if(mobile == ""){
+                alert('[[#{label.click.telephone.msg}]]');
+                $("#mobile").focus();
+                return false;
+            }
+            var country = [[${product.country}]];
+            if (country == "MY") {
+                if ($('#s_province').val() == 'County') {
+                    alert('[[#{label.click.select.provinces}]]');
+                    return false;
+                }
+                if ($('#s_city').val() == 'State') {
+                    alert('[[#{label.click.select.city}]]');
+                    return false;
+                }
+                if ($('#s_county').val() == 'City') {
+                    alert('[[#{label.click.select.area}]]');
+                    return false;
+                }
+            } else if (country == "TH") {
+                if ($('#s_province').val() == 'ภูมิภาค') {
+                    alert('กรุณาเลือกประเทศ');
+                    return false;
+                }
+                if ($('#s_city').val() == 'จังหวัด') {
+                    alert('กรุณาเลือกเมือง');
+                    return false;
+                }
+                if ($('#s_county').val() == 'เขต/อำเภอ') {
+                    alert('กรุณาเลือกพื้นที่');
+                    return false;
+                }
+            } else if (country == "TW") {
+                var s_province =$("#s_province").val();
+                if(s_province == "國家/地區" ){
+                    alert("請選擇國家/地區")
+                    return false;
+                }
+                if( s_province == "縣/市"){
+                    alert('請選擇縣/市！');
+                    return false;
+                }
+                if ($('#s_city').val() == '縣/市') {
+                    alert('請選擇縣/市！');
+                    return false;
+                }
+                if ($('#s_city').val() == '區/鄉鎮') {
+                    alert('請選擇區/鄉鎮！');
+                    return false;
+                }
+
+                if ($('#s_county').val() == '鎮/鄉/區') {
+                    alert('請選擇เ鎮/鄉/區！');
+                    return false;
+                }
+                if ($('#s_county').val() == '門市') {
+                    alert('請選擇門市！');
+                    return false;
+                }
+            }
+            var address = $("#address_text").val();
+            if (address == '') {
+                alert('[[#{label.click.address.msg}]]');
+                $("#address_text").focus();
+                return false;
+            }
+            var add = $("#payment_method input[name='wfpayment']:checked").attr("method");
+            //地址拼接
+            if (country == "TH") {
+                var address = $("#address_text").val() + "  " + $('#s_county').val() + "  " + $('#s_city').val();
+                $("#address_text").val(address);
+            }else if(country == "MY"){
+                var address = $("#address_text").val() + "  " + $('#s_county').val() + "  " + $('#s_city').val() + "  " + $('#s_province').val();
+                $("#address_text").val(address);
+            }else if(country == "TW" && add == "roc"){
+                var address = $('#s_province').val() + "  "
+                    + $('#s_city').val() + "  "
+                    + $('#s_county').val() + "  "
+                    + $("#address_text").val();
+                $("#address_text").val(address);
+            }
+            //派送方式
+            $("#ps").val($("#payment_method input[name='wfpayment']:checked").attr("method"));
+            // //产品信息
+            var b = [[${not #lists.isEmpty(product.sizes) || not #lists.isEmpty(product.types)}]];
+            var attr_value = [];
+            if(b){
+                var mela ="";
+                //寻找选择套餐
+                var id = $("#radio span .borderred").attr("data-id");
+                var prodcut =$("#product_"+id).find("div[data-product]");
+                $(prodcut).each(function () {
+                    //颜色
+                    var c ='';
+                    if([[${not #lists.isEmpty(product.types)}]]){
+                        c = $(this).find("div[data-type]")
+                            .find("ul[class='colour type_attr']")
+                            .find("li a[class='curcolour']").attr("data-colour");
+                    }
+                    //尺码
+                    var s = '';
+                    if([[${not #lists.isEmpty(product.sizes)}]]){
+                        s = $(this).find("div[data-size]")
+                            .find("ul[class='colour size_attr']")
+                            .find("li a[class='curcolour']").attr("data-colour");
+                    }
+                    var item = {
+                        attr_value: c,
+                        attr_size: s,
+                        num: 1,
+                    }
+                    var e = true;
+                    attr_value.forEach(function (i) {
+                        if (i.attr_value == item.attr_value && i.attr_size == item.attr_size) {
+                            i.num += 1;
+                            e = false;
+                        }
+                    })
+                    if (e) {
+                        attr_value.push(item);
+                    }
+                })
+
+
+            }else{
+                var item = {
+                    attr_value: '',
+                    attr_size: '',
+                    num: $("#totla_num").val(),
+                }
+                attr_value.push(item);
+            }
+            $("#detal").val(JSON.stringify(attr_value));
+            // //赠品
+            var p = [[${not #lists.isEmpty(product.policys)}]];
+            if(p){
+                var id = $("#radio span .borderred").attr("data-id");
+                var male =$("#product_"+id).find("div[data-male]");
+                var maleinfo ='';
+                $(male).each(function () {
+                    var sign = $(this).attr("data-male-sign");
+                    if(sign == 1){
+
+                        $(this).find("div[data-male-info]").each(function () {
+                            maleinfo+=$(this).find("div[data-male-name]").text();
+                            var zp_type = $(this).find("div[data-type]");
+                            if(zp_type != undefined){
+                                var types = $(zp_type).find("ul[class='colour type_attr']").find("li a[class='curcolour']").attr("data-colour");
+                                if(types){
+                                    maleinfo+='-'+types;
+                                }
+                            }
+                            var zp_size = $(this).find("div[data-size]");
+                            if(zp_size){
+                                var size = $(zp_size).find("ul[class='colour size_attr']")
+                                    .find("li a[class='curcolour']").attr("data-colour");
+                                if(size){
+                                    maleinfo+='-'+size;
+                                }
+                            }
+                            maleinfo+=",";
+                        });
+
+                    }else{
+                        var m=$(this).find("div[data-male-info]");
+                        maleinfo += $(m).find("div[data-male-name]").text();
+                        maleinfo +="-"+$(m).find("div[data-type]")
+                            .find("ul[class='colour type_attr']")
+                            .find("li a[class='curcolour']").attr("gri-num");
+
+                    }
+                    maleinfo+=",";
+                })
+                $("#male").val(maleinfo);
+
+            }
+            $.ajax({
+                url: "/save",
+                type: "POST",
+                data: $("#save").serialize(),
+                beforeSend: function () {
+                    showSpinner();
+                },
+                success: function (result) {
+                    try {
+                        fbq('track', 'Purchase', {
+                            value: '' + $('#money').val(),
+                            currency: '[[${product.unit}]]'
+                        });
+                    } catch (e) {
+                    }
+                    $('#save')[0].reset();
+                    $('#ordermsg').html(result);
+                    $('#ordermsg').modal();
+                },
+                error: function (xhr, status, error) {
+                },
+                complete: function () {
+                    hideSpinner()
+                }
+            });
+            return false;
+        }
+        function showSpinner() {
+            $("#spinner").show();
+            $("#submit").prop('disabled', true);
+        }
+        function hideSpinner() {
+            $("#spinner").hide();
+            $("#submit").prop('disabled', false);
+        }
+    </script>
+    <div class="modal-spinner" id="spinner">
+        <div class="rect1"></div>
+        <div class="rect2"></div>
+        <div class="rect3"></div>
+        <div class="rect4"></div>
+        <div class="rect5"></div>
+        <div class="rect6"></div>
+    </div>
+    <div id="ordermsg" class="modal">
+        <div style="margin-top: 1%;text-align: center;">
+            <img src="http://thdtop.fun/res/img/1.png" style="width: 60px;margin-top: 5%;">
+            <div style="padding-bottom: 15px;font-size: 22px;color: #48484a;font-weight: bold;"
+                 th:text="#{label.order.success}">Order Confirmed
+            </div>
+            <div style="padding:1%;font-size: 19px" th:text="#{label.order.msg}">Your order has been received and will be
+                contacted at a later date.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

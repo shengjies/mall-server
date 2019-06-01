@@ -26,6 +26,10 @@ public class Result {
      */
     public static final int STATUS_FILE_EXIST = 501;
     /**
+     * 文件上传错误
+     */
+    public static final int STATUS_FLIE_UPLOAD_ERROR = 508;
+    /**
      * 登录超商或者登出
      */
     public static final int STATUS_LOGIN_OUT =203;
@@ -93,7 +97,11 @@ public class Result {
         return result;
     }
 
-
+    public static Result uploadError(){
+        Result result = new Result();
+        result.setStatus(STATUS_FLIE_UPLOAD_ERROR);
+        return result;
+    }
     public int getStatus() {
         return status;
     }

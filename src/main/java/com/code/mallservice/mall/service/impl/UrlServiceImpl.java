@@ -31,9 +31,8 @@ public class UrlServiceImpl implements IUrlService {
         if(productEntity != null){
             lang = productEntity.getLang();
         }
-        String url = entity.getDomaim()+"/"+entity.getId()+"?lang="+lang;
+        String url = "http://"+entity.getDomaim()+":89/"+entity.getId()+"?lang="+lang;
         entity.setPreview_url(url);
-        entity.setUser_id(1);
         return urlMapper.add(entity);
     }
 
@@ -43,7 +42,7 @@ public class UrlServiceImpl implements IUrlService {
     }
 
     @Override
-    public Page<UrlEntity> findPage(String code, int product_id, int user_id, int page, int size) {
+    public Page<UrlEntity> findPage(String code, int product_id, String user_id, int page, int size) {
         long count = urlMapper.findCount(code,product_id,user_id);
         List<UrlEntity> list = urlMapper.findPage(code,product_id,user_id,page *size,size);
         return new Page<>(list,count);
@@ -52,5 +51,15 @@ public class UrlServiceImpl implements IUrlService {
     @Override
     public UrlEntity findById(String code) {
         return urlMapper.findById(code);
+    }
+
+    /**
+     * 删除
+     * @param id
+     * @return
+     */
+    @Override
+    public int del(String id) {
+        return urlMapper.del(id);
     }
 }

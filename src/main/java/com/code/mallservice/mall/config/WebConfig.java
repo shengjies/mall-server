@@ -15,7 +15,7 @@ import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 import javax.servlet.MultipartConfigElement;
 import java.util.Locale;
 
-//@Configuration
+@Configuration
 public class WebConfig implements WebMvcConfigurer {
     public LocaleChangeInterceptor localeChangeInterceptor(){
         LocaleChangeInterceptor lci = new LocaleChangeInterceptor();
@@ -32,11 +32,12 @@ public class WebConfig implements WebMvcConfigurer {
         loginRegistry.addPathPatterns("/**");
         loginRegistry.excludePathPatterns("/");
         loginRegistry.excludePathPatterns("/static/**");
-        loginRegistry.excludePathPatterns("/login");
-        loginRegistry.excludePathPatterns("/sendA");
-        loginRegistry.excludePathPatterns("/sendB");
-        loginRegistry.excludePathPatterns("/activation/save");
-        loginRegistry.excludePathPatterns("/ads");
+        loginRegistry.excludePathPatterns("/img/**");
+        loginRegistry.excludePathPatterns("/user/login");
+        loginRegistry.excludePathPatterns("/order/");
+        loginRegistry.excludePathPatterns("/save");
+        loginRegistry.excludePathPatterns("/{**}");
+
     }
 
     @Bean(name = "localeResolver")

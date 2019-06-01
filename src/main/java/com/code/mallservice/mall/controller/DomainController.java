@@ -1,7 +1,10 @@
 package com.code.mallservice.mall.controller;
 
 import com.code.mallservice.mall.entity.DomailEntity;
+import com.code.mallservice.mall.entity.UserEntity;
 import com.code.mallservice.mall.service.IDomainService;
+import com.code.mallservice.mall.utils.AuthorUtils;
+import com.code.mallservice.mall.utils.JwtUtils;
 import com.code.mallservice.mall.utils.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -41,7 +44,9 @@ public class DomainController {
     @RequestMapping("/list/all")
     public Result findAllByUser(HttpServletRequest request){
         try {
-            return Result.ok(domainService.findByUser(-1));
+            UserEntity entity = JwtUtils.getUserByToken(request.getHeader("token"));
+            if(entity == null) return Result.error();
+            return Result.ok(domainService.findByUser(AuthorUtils.getUserRole(entity)));
         }catch (Exception e){
             e.printStackTrace();
         }

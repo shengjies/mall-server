@@ -103,4 +103,21 @@ public class OrderAttrEntity {
     public void setAttr_status(int attr_status) {
         this.attr_status = attr_status;
     }
+
+    @Override
+    public String toString() {
+        return "OrderAttrEntity{" +
+                "id=" + id +
+                ", attr_value='" + attr_value + '\'' +
+                ", attr_size='" + attr_size + '\'' +
+                ", num=" + num +
+                ", cattr_value='" + cattr_value + '\'' +
+                ", cattr_size='" + cattr_size + '\'' +
+                ", cnum=" + cnum +
+                ", order_id=" + order_id +
+                ", attr_status=" + attr_status +
+                ", up_date='" + up_date + '\'' +
+                ", c_date='" + c_date + '\'' +
+                '}';
+    }
 }

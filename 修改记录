@@ -167,3 +167,36 @@ CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT ;
 SELECT * FROM `order`.ip2location_db19_171228 where IP_FROM <= inet_aton(#{ip_address}) order by IP_FROM desc limit 1
 ALTER TABLE `mall`.`tab_order`
 ADD COLUMN `user_id` INT NULL AFTER `c_date`;
+
+
+#===============项目初始部署后记录
+
+# 添加组长分配
+ALTER TABLE `mall`.`tab_user`
+ADD COLUMN `is_group` TINYINT(4) NULL DEFAULT 0 AFTER `role_code`;
+
+#添加产品711 和 全家
+ALTER TABLE `mall`.`tab_product`
+ADD COLUMN `ps711` TINYINT NULL DEFAULT 0 AFTER `teml_order`,
+ADD COLUMN `psqj` TINYINT NULL DEFAULT 0 AFTER `ps711`;
+
+
+img/favicon.jpg
+
+
+ALTER TABLE `mall`.`tab_product`
+ADD COLUMN `cg_price` FLOAT(8,2) NULL AFTER `psqj`;
+
+
+
+#=============未部署
+//添加物流运单号
+ALTER TABLE `mall`.`tab_order`
+ADD COLUMN `tracking_number` VARCHAR(145) NULL AFTER `unit`;
+
+ALTER TABLE `mall`.`tab_order`
+ADD COLUMN `wl_uptime` DATETIME NULL AFTER `tracking_number`;
+
+
+
+

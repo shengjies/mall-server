@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="320" name="MobileOptimized">
+	<meta content="telephone=no" name="format-detection">
+	<link href="http://thdtop.fun/res/img/favicon.jpg" type="image/x-icon" rel="icon">
+	<title th:utext="${title}"></title>
+	<link rel="stylesheet" href="http://thdtop.fun/res/tem2/reset.css">
+	<link href="http://thdtop.fun/res/tem2/index.min.css" rel="stylesheet">
+	<link href="http://thdtop.fun/res/c1/swiper.css" rel="stylesheet">
+	<link href="http://thdtop.fun/res/tem2/styles.css" rel="stylesheet">
+
+	<script src="http://thdtop.fun/res/c1/jquery.js"></script>
+
+	<script src="http://thdtop.fun/res/c1/swiper.js"></script>
+	<script src="http://thdtop.fun/res/tem2/time.lesser.js"></script>
+	<style>
+	html {
+    height: 100%;
+    font-family: 微软雅黑;
+    background: url("http://thdtop.fun/res/img/bg1.jpg") 50% 50% / cover no-repeat fixed rgb(255, 255, 255);
+	}
+	.swiper-container{
+		padding-top: 0px !important;
+	}
+	footer div:last-child{
+		width: 96% !important;
+	}
+	.m-img img{
+		width: 100% !important;
+	}
+	.m-img p{
+		margin: 0px !important;
+	}
+</style>
+	<style>
+		::-webkit-scrollbar {
+			width: 10px;
+			background-color: #F5F5F5;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			background: rgba(241, 241, 242, 1);
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background-color: #F90;
+			border-radius: 10px;
+			background-image: -webkit-linear-gradient(45deg, rgba(255, 255, 255, .5) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, .5) 50%,
+				rgba(255, 255, 255, .5) 75%, transparent 75%, transparent)
+		}
+
+		::-webkit-scrollbar-thumb:window-inactive {
+			background: rgba(144, 24, 53, 0.8);
+		}
+
+		.buy_now a,
+		.product_info img {
+			max-width: 100% !important;
+		}
+
+		.swiper-slide img {
+			max-height: 100% !important;
+		}
+
+		#pingjia #allpj ul li {
+			height: auto !important;
+		}
+
+		#show_iploak {
+			display: block;
+		}
+
+		#show_iploak_none {
+			display: none;
+		}
+	</style>
+	<style type="text/css">
+		@keyframes tawkMaxOpen {
+			0% {
+				opacity: 0;
+				transform: translate(30px, 0);
+				;
+			}
+
+			to {
+				opacity: 1;
+				transform: translate(0px, 0);
+			}
+		}
+
+		@-moz-keyframes tawkMaxOpen {
+			0% {
+				opacity: 0;
+				transform: translate(30px, 0);
+				;
+			}
+
+			to {
+				opacity: 1;
+				transform: translate(0px, 0);
+			}
+		}
+
+		@-webkit-keyframes tawkMaxOpen {
+			0% {
+				opacity: 0;
+				transform: translate(30px, 0);
+				;
+			}
+
+			to {
+				opacity: 1;
+				transform: translate(0px, 0);
+			}
+		}
+
+		#pyDr55x-1552381797595 {
+			outline: none !important;
+			visibility: visible !important;
+			resize: none !important;
+			box-shadow: none !important;
+			overflow: visible !important;
+			background: none !important;
+			opacity: 1 !important;
+			filter: alpha(opacity=100) !important;
+			-ms-filter: progid:DXImageTransform.Microsoft.Alpha(Opacity1) !important;
+			-moz-opacity: 1 !important;
+			-khtml-opacity: 1 !important;
+			top: auto !important;
+			right: 90px !important;
+			bottom: 139.5px !important;
+			left: auto !important;
+			position: fixed !important;
+			border: 0 !important;
+			min-height: 0 !important;
+			min-width: 0 !important;
+			max-height: none !important;
+			max-width: none !important;
+			padding: 0 !important;
+			margin: 0 !important;
+			-moz-transition-property: none !important;
+			-webkit-transition-property: none !important;
+			-o-transition-property: none !important;
+			transition-property: none !important;
+			transform: none !important;
+			-webkit-transform: none !important;
+			-ms-transform: none !important;
+			width: auto !important;
+			height: auto !important;
+			display: none !important;
+			z-index: 2000000000 !important;
+			background-color: transparent !important;
+			cursor: auto !important;
+			float: none !important;
+			border-radius: unset !important;
+		}
+
+		#XHxFKjr-1552381797597.open {
+			animation: tawkMaxOpen .25s ease !important;
+		}
+	</style>
+	<script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+	<script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+	</script>
+	<script th:each="fb : ${fbs}">
+        fbq('init', '[[${fb}]]');
+	</script>
+	<script>
+        fbq('track', 'PageView');
+	</script>
+</head>
+
+<body>
+	<div id="show_iploak">
+		<section id="page-index">
+			<!-- 标题 -->
+			<div class="header">
+				<h1 th:utext="${title}"></h1>
+			</div>
+			<div class="img_wrap">
+				<!-- 轮播s -->
+				<div class="swiper-container swiper-container-horizontal swiper-container-autoheight">
+					<div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}"
+						style="transform: translate3d(-3828px, 0px, 0px); transition-duration: 0ms;">
+						<div class="swiper-slide" th:each="item,start :${product.roundImageList}"
+							 th:data-swiper-slide-index="${start.index}" style="width: 608px; margin-right: 30px;">
+							<img th:src="${item.url}" width="100%">
+						</div>
+					</div>
+					<!-- Add Pagination -->
+					<div th:if="${not #lists.isEmpty(product.roundImageList)}"
+						 class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+						<span th:each="item:${product.roundImageList}" class="swiper-pagination-bullet"></span>
+					</div>
+				</div>
+			</div>
+			<!-- 价格提示 -->
+			<div class="details">
+				<div class="service">
+					<div class="fship bb"><span th:utext="#{label.click.free_freight}"></span></div>
+					<div class="cdeli bb"><span th:utext="#{label.click.delivery_to_payment}"></span></div>
+					<div class="shiwu bb"><span th:utext="#{label.click.return_goods}"></span></div>
+					<div class="clear"></div>
+				</div>
+				<div class="title">
+
+					<h1 style="font-weight:bold;font-size:18px;" th:utext="${title}"></h1>
+					<div class="sales">
+						<div class="price">
+							<span th:utext="${product.unit}"></span><ins th:utext="${product.price}"></ins>
+						</div>
+						<div class="sales_info">
+							<div>
+								<del><span th:utext="${product.unit}"></span> <span th:utext="${product.o_price}"></span></del>
+							</div>
+							<div class="sales_num">
+								<span th:utext="#{label.click.rush_to_buy}"></span>:<span th:utext="${product.sold}"></span>
+							</div>
+						</div>
+					</div>
+					<!-- 产品描述 -->
+					<p class="boom"  th:utext="${product.introduction}"></p>
+					<div class="i-p-b" style="padding: 2%;">
+						<div class="time-count" style="background-color: rgb(173, 20, 21); position: relative;">
+							<p class="time-count-bg"
+								style="width: 20.42361111111111%; background-color: #d21f17; position: absolute; z-index: 99;">
+								<span class="loading"
+									style="position: absolute; background-size: 100% 100%; left: 0; top: 0; background-position: center center; background-repeat: no-repeat;"></span>
+							</p>
+							<center>
+								<div id="remainTime_1" style="color: #FFFFFF;">
+									<span th:utext="#{label.click.flash_sale}"></span>:
+									<span class="time">14:09:11</span>
+								</div>
+							</center>
+						</div>
+					</div>
+
+				</div>
+				<div class="buy_now">
+					<a id="btnPay1" href="javascript:void(0)" th:utext="#{label.click.now.buy}"></a>
+				</div>
+			</div>
+
+
+			<div class="product_info">
+				<div class="wttl">
+					<h2 th:utext="#{label.click.introduction}"></h2>
+				</div>
+				<div class="m-img" th:utext="${product.description}">
+
+				</div>
+			</div>
+
+			<div id="to_lead"></div>
+			<!--评论开始-->
+			<div class="detail_tab3 User_notes" style="background:#fff;" id="detail_tab3" th:if="${product.comment}">
+				<article>
+					<div class="wttl">
+						<h2 style="font-size:16px;" th:utext="#{label.click.pj}"></h2>
+					</div>
+					<div id="pingjia" class="pingjia">
+						<ul class="allpj" id="allpj" th:if="${not #lists.isEmpty(product.commentEntityList)}">
+							<li class="le" style=" display: list-item;" th:each="item,start :${product.commentEntityList}">
+								<span class="touxiang">
+									<span class="username" style="position:relative;top:41px;font-size:13px;left:4px;" th:utext="${item.comment_name}"></span></span>
+								<img th:if="${start.index % 2 == 0}"
+									class="lj"
+									style="transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
+									src="http://thdtop.fun/res/img/pl2.png">
+								<img th:if="${start.index % 2 != 0}"
+										class="lj" src="http://thdtop.fun/res/img/pl3.png">
+								<section th:if="${start.index % 2 == 0}" class="l" style="max-width:75%;width:75%;height:auto;background:rgb(188,227,249);">
+									<span th:utext="${item.comment_content}"></span>
+									<div class="images" th:if="${item.imageEntity != null}">
+										<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+									</div>
+								</section>
+								<section th:if="${start.index % 2 != 0}" class="l" style="max-width:75%;width:75%;height:auto;">
+									<span th:utext="${item.comment_content}"></span>
+									<div class="images" th:if="${item.imageEntity != null}">
+										<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+									</div>
+								</section>
+							</li>
+						</ul>
+						<ul class="allpj" id="allpj2" th:if="${not #lists.isEmpty(product.commentEntityList)}">
+							<li class="le" style=" display: list-item;" th:each="item,start :${product.commentEntityList}">
+								<span class="touxiang">
+									<span class="username" style="position:relative;top:41px;font-size:13px;left:4px;" th:utext="${item.comment_name}"></span></span>
+								<img th:if="${start.index % 2 == 0}"
+									 class="lj"
+									 style="transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
+									 src="http://thdtop.fun/res/img/pl2.png">
+								<img th:if="${start.index % 2 != 0}"
+									 class="lj" src="http://thdtop.fun/res/img/pl3.png">
+								<section th:if="${start.index % 2 == 0}" class="l" style="max-width:75%;width:75%;height:auto;background:rgb(188,227,249);">
+									<span th:utext="${item.comment_content}"></span>
+									<div class="images" th:if="${item.imageEntity != null}">
+										<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+									</div>
+								</section>
+								<section th:if="${start.index % 2 != 0}" class="l" style="max-width:75%;width:75%;height:auto;">
+									<span th:utext="${item.comment_content}"></span>
+									<div class="images" th:if="${item.imageEntity != null}">
+										<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+									</div>
+								</section>
+							</li>
+						</ul>
+					</div>
+				</article>
+			</div>
+			<!--评论结束-->
+
+		</section>
+		<div class="User_notes">
+			<div class="wttl">
+				<h2 class="notes" th:utext="#{label.click.condition}"></h2>
+			</div>
+			<div class="note_text" th:utext="#{label.click.to.know1}"></div>
+			<div class="note_title" th:utext="#{label.click.to.know2}"></div>
+			<div class="note_text" th:utext="#{label.click.to.tnow3}">
+				<a href="mailto:wisinmy@hotmail.com"
+				   style="color:#fff;">wisinmy@hotmail.com</a>
+				<span th:utext="#{label.click.to.tnow4}"></span>
+			</div>
+			<div class="note_title"  th:utext="#{label.click.to.tnow5}"></div>
+			<div class="note_text" th:utext="#{label.click.to.tnow6}"></div>
+			<div class="note_title" th:utext="#{label.click.to.tnow7}"></div>
+			<div class="note_text">
+				<span th:utext="#{label.click.to.tnow8}"></span>
+				<a href="mailto:wisinmy@hotmail.com"
+				   style="text-decoration:none;outline:0;color: #fff">wisinmy@hotmail.com</a>
+				<span th:utext="#{label.click.to.tnow9}"></span>
+			</div>
+			<div class="note_title" th:utext="#{label.click.to.tnow10 }"></div>
+			<div class="note_text" th:utext="#{label.click.to.tnow11}"></div>
+			<div class="note_title" th:utext="#{label.click.to.tnow12}"></div>
+			<div class="note_title" th:utext="#{label.click.to.tnow13 }"></div>
+			<div class="note_text" th:utext="#{label.click.to.tnow14}"></div>
+		</div>
+		<i class="top" style="display: none;"></i>
+		<footer>
+			<div ><a id="btnPay" href="javascript:void(0)" th:utext="#{label.click.now.buy}"></a></div>
+		</footer>
+		<form id="payForm" action="/pay" method="post">
+			<input type="hidden" name="code" th:value="${url_id}"/>
+			<input type="hidden" name="lang" th:value="${lang}"/>
+		</form>
+	</div>
+	<script type="text/javascript">
+		
+		//向上滚动
+		var area = document.getElementById('pingjia');
+		var cont1 = document.getElementById('allpj');
+		var cont2 = document.getElementById('allpj2');
+		if(area && cont1 && cont2){
+            area.scrollTop = 0;
+            cont2.innerHTML = cont1.innerHTML;
+            function myScroll() {
+                if (area.scrollTop >= cont1.scrollHeight) {
+                    area.scrollTop = 0;
+                } else {
+                    area.scrollTop++;
+                }
+            }
+            var time = 20;
+            var interval = setInterval('myScroll()', time);
+            area.onmouseover = function () {
+                clearInterval(interval);
+            };
+            area.onmouseout = function () {
+                // 继续执行之前的定时器
+                interval = setInterval('myScroll()', time);
+            };
+		}
+
+
+		function throttle(fun, delay, time) {
+			var timeout, startTime = new Date();
+			return function () {
+				var context = this,
+					args = arguments,
+					curTime = new Date();
+				clearTimeout(timeout);
+				// 如果达到了规定的触发时间间隔，触发 handler  
+				if (curTime - startTime >= time) {
+					fun.apply(context, args);
+					startTime = curTime;
+					// 没达到触发间隔，重新设定定时器  
+				} else {
+					timeout = setTimeout(function () {
+						fun.apply(context, args);
+					}, delay);
+				}
+			};
+		};
+
+		$(window).scroll(function () {
+			if ($(window).scrollTop() >= 250) {
+				$(".top").show();
+			} else {
+				$(".top").hide();
+			}
+		});
+		$(".top").click(function () {
+			$('html,body').animate({ "scrollTop": 0 }, 800);
+		});
+
+		var swiper = new Swiper('.swiper-container', {
+			pagination: '.swiper-pagination',
+			nextButton: '.swiper-button-next',
+			prevButton: '.swiper-button-prev',
+			paginationClickable: true,
+			spaceBetween: 30,
+			centeredSlides: true,
+			autoHeight: true,
+			autoplayDisableOnInteraction: false,
+			loop: true, autoplay: 3000,
+		});
+	</script>
+	<script>
+        var facebook_viewcontent = true;
+        var facebook_lead = true;
+        var facebook_addcart = true;
+		//倒计时
+        (function () {
+            setInterval(function () {
+                var leftTime = (new Date(2118, 0, 1, 0, 0, 0)) - (new Date());
+                var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10);
+                var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);
+                var seconds = parseInt(leftTime / 1000 % 60, 10);
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                $("#remainTime_1 .time").text(hours + ':' + minutes + ':' + seconds);
+            }, 1000);
+        })();
+        (function () {
+            $(document, window).on("scroll", function (e) {
+                if (facebook_viewcontent) {
+                    facebook_viewcontent = false;
+                    try {
+                        fbq('track', 'ViewContent');
+                    } catch (e) {
+                    }
+                }
+                if (isInView('#to_lead') && facebook_lead) {
+                    facebook_lead = false;
+                    try {
+                        fbq('track', 'Lead');
+                    } catch (e) {
+                    }
+                }
+            });
+        })();
+        // 页面滚动监听事件end
+        function isInView(elem) {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+        }
+        $("#btnPay").click(function () {
+            $("#payForm").submit();
+        });
+        $("#btnPay1").click(function () {
+            $("#payForm").submit();
+        });
+	</script>
+</body>
+
+</html>

@@ -37,6 +37,9 @@
         <if test="username != null and username != ''">
             and username like '${username}%'
         </if>
+        <if test="role_code != null and role_code !=''">
+            and role_code = #{role_code}
+        </if>
          order by c_date desc limit #{page},#{size};
     </select>
 
@@ -51,6 +54,9 @@
         SELECT count(*) FROM mall.tab_user where 1=1
         <if test="username != null and username != ''">
             and username like '${username}%'
+        </if>
+        <if test="role_code != null and role_code !=''">
+            and role_code = #{role_code}
         </if>
     </select>
     <!-- 用户登录-->

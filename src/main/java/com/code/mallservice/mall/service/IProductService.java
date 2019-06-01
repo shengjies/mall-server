@@ -4,6 +4,7 @@ import com.code.mallservice.mall.entity.ProductEntity;
 import com.code.mallservice.mall.utils.Page;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 产品信息
@@ -32,7 +33,7 @@ public interface IProductService {
      * @param size
      * @return
      */
-    Page<ProductEntity> findPage(int id,String product_name,int user_id,int page,int size);
+    Page<ProductEntity> findPage(int id,String product_name,String user_id,int page,int size);
 
     /**
      * 按编号查询
@@ -55,4 +56,18 @@ public interface IProductService {
      * @throws Exception
      */
     void copyInfo(int id,String country) throws Exception;
+
+    /**
+     * 根据产品编号查询对应的属性
+     * @param product_id
+     * @return
+     */
+    Map<String,Object> findAttrByProductId(int product_id);
+
+    /**
+     * 删除产品
+     * @param id
+     * @return
+     */
+    int del(int id);
 }

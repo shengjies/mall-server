@@ -25,7 +25,7 @@ public class OrderEntity {
     private String male;//赠品信息
     private String remark;//备注信息
     private String ps;//派送方式
-    private int order_status =0;//订单状态 0、待确认 1、已确认 2、已取消 2、需再次确认
+    private int order_status =0;//订单状态 0、待确认 1、已确认 2、已取消 3、需再次确认
     private int wl_status =0;//物流状态 0、未知 1、已发货 2、派送中 3、Peding 4、拒收 5、已退回 6、签收  7、退回仓库 8、达到门市 9、退货退款 10查询不到
     private int cg_status =0;//采购状态 0、未采购 1、已采购 2、不采购 3、入库
     private int dh_status = 0;//电话是否重复 0、未重复 1、已重复
@@ -34,8 +34,19 @@ public class OrderEntity {
     private String up_date;//修改时间
     private String c_date;//下单时间
     private int user_id;
+    private String unit;//金额单位
+    private String tracking_number;//运单号
+    private String wl_uptime;//物流更新时间
+
+    //物流表
+    private int wl;//物流
+    private String trackingnumber;
+    private String u_date;
+    private String track_msg;
 
     private List<OrderAttrEntity> attrs;
+    private UserEntity userEntity;
+    private ProductEntity productEntity;
 
     //详情信息
     private String detal;
@@ -282,36 +293,75 @@ public class OrderEntity {
         this.user_id = user_id;
     }
 
-    @Override
-    public String toString() {
-        return "OrderEntity{" +
-                "id=" + id +
-                ", product_id=" + product_id +
-                ", url_id='" + url_id + '\'' +
-                ", priview_url='" + priview_url + '\'' +
-                ", username='" + username + '\'' +
-                ", mobile='" + mobile + '\'' +
-                ", country='" + country + '\'' +
-                ", addr='" + addr + '\'' +
-                ", caddres='" + caddres + '\'' +
-                ", ip='" + ip + '\'' +
-                ", totla_num=" + totla_num +
-                ", money=" + money +
-                ", postzip='" + postzip + '\'' +
-                ", cpostzip='" + cpostzip + '\'' +
-                ", emaill='" + emaill + '\'' +
-                ", msg='" + msg + '\'' +
-                ", male='" + male + '\'' +
-                ", remark='" + remark + '\'' +
-                ", ps='" + ps + '\'' +
-                ", order_status=" + order_status +
-                ", wl_status=" + wl_status +
-                ", cg_status=" + cg_status +
-                ", dh_status=" + dh_status +
-                ", ip_status=" + ip_status +
-                ", up_date='" + up_date + '\'' +
-                ", c_date='" + c_date + '\'' +
-                ", detal='" + detal + '\'' +
-                '}';
+    public UserEntity getUserEntity() {
+        return userEntity;
+    }
+
+    public void setUserEntity(UserEntity userEntity) {
+        this.userEntity = userEntity;
+    }
+
+    public ProductEntity getProductEntity() {
+        return productEntity;
+    }
+
+    public void setProductEntity(ProductEntity productEntity) {
+        this.productEntity = productEntity;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getTracking_number() {
+        return tracking_number;
+    }
+
+    public void setTracking_number(String tracking_number) {
+        this.tracking_number = tracking_number;
+    }
+
+    public String getWl_uptime() {
+        return wl_uptime;
+    }
+
+    public void setWl_uptime(String wl_uptime) {
+        this.wl_uptime = wl_uptime;
+    }
+
+    public int getWl() {
+        return wl;
+    }
+
+    public void setWl(int wl) {
+        this.wl = wl;
+    }
+
+    public String getTrackingnumber() {
+        return trackingnumber;
+    }
+
+    public void setTrackingnumber(String trackingnumber) {
+        this.trackingnumber = trackingnumber;
+    }
+
+    public String getU_date() {
+        return u_date;
+    }
+
+    public void setU_date(String u_date) {
+        this.u_date = u_date;
+    }
+
+    public String getTrack_msg() {
+        return track_msg;
+    }
+
+    public void setTrack_msg(String track_msg) {
+        this.track_msg = track_msg;
     }
 }

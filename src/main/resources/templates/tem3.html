@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="yes" name="apple-touch-fullscreen">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="320" name="MobileOptimized">
+	<meta content="telephone=no" name="format-detection">
+	<link href="http://thdtop.fun/res/img/favicon.jpg" type="image/x-icon" rel="icon">
+	<title th:utext="${title}"></title>
+	<link href="http://thdtop.fun/res/tem3/index.min.css" rel="stylesheet">
+	<link href="http://thdtop.fun/res/tem3/styles.css" rel="stylesheet">
+	<link href="http://thdtop.fun/res/c1/swiper.css" rel="stylesheet">
+
+	<noscript>&lt;img height="1" width="1" style="display:none"
+		src="https://www.facebook.com/tr?id=142868243027836&amp;ev=PageView&amp;noscript=1"
+		/&gt;</noscript>
+	<script src="http://thdtop.fun/res/c1/jquery.js"></script>
+	<script src="http://thdtop.fun/res/c1/swiper.js"></script>
+	<style>
+		.swiper-container{
+			padding-top: 0px !important;
+		}
+		.m-img img{
+			width: 100% !important;
+		}
+		.m-img p{
+			margin: 0px !important;
+		}
+	</style>
+	<script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script>
+	<script>
+        !function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
+	</script>
+	<script th:each="fb : ${fbs}">
+        fbq('init', '[[${fb}]]');
+	</script>
+	<script>
+        fbq('track', 'PageView');
+	</script>
+</head>
+<body>
+	<section id="page-index">
+		<div class="header">
+			<h1 th:utext="${title}"></h1>
+		</div>
+		<div class="img_wrap">
+			<h2 th:utext="#{label.click.product.image}"></h2>
+			<div class="swiper-container swiper-container-horizontal swiper-container-autoheight">
+				<div class="swiper-wrapper" th:if="${not #lists.isEmpty(product.roundImageList)}"
+					 style="transform: translate3d(-3828px, 0px, 0px); transition-duration: 0ms;">
+					<div class="swiper-slide" th:each="item,start :${product.roundImageList}"
+						 th:data-swiper-slide-index="${start.index}" style="width: 608px; margin-right: 30px;">
+						<img th:src="${item.url}" width="100%">
+					</div>
+				</div>
+				<!-- Add Pagination -->
+				<div th:if="${not #lists.isEmpty(product.roundImageList)}"
+					 class="swiper-pagination swiper-pagination-clickable swiper-pagination-bullets">
+					<span th:each="item:${product.roundImageList}" class="swiper-pagination-bullet"></span>
+				</div>
+			</div>
+
+		</div>
+		<!--限時下殺-->
+		<div class="details">
+			<h2 class="timettle" th:utext="#{label.click.flash_sale}"></h2>
+			<div class="sales_wrap">
+				<div class="sales" style="padding: 2.5% 0;">
+					<div class="price">
+						<span th:utext="${product.unit}"></span><ins th:utext="${product.price}"></ins>
+					</div>
+					<div class="sales_info">
+						<div style="float:left;">
+							<del th:utext="${product.o_price}"></del>
+						</div>
+						<div class="sales_num" style="float:left;position: relative;left: 15%;">
+							<span th:utext="${product.sold}"></span>
+							<span th:utext="#{label.click.rush_to_buy}"></span>
+						</div>
+					</div>
+				</div>
+				<div class="time_wrapper">
+					<div class="timeWrap">
+						<h1 th:utext="#{label.click.flash_sale}"></h1>
+						<br/>
+						<div id="remainTime_1" style="color: #333;">
+							<span class="time"></span>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="title">
+				<h1 style="font-weight:bold;" th:utext="${product.introduction}"></h1>
+			</div>
+
+			<div class="service">
+				<span th:utext="#{label.click.free_freight}"></span>
+				<span th:utext="#{label.click.delivery_to_payment}"></span>
+				<span th:utext="#{label.click.return_goods}"></span>
+			</div>
+
+			<div id="buyBtn1" class="buy_now">
+				<a href="javascript:viod(0)"
+					style="display:block;"  th:utext="#{label.click.purchase_immediately}"></a>
+
+			</div>
+
+		</div>
+		<!--产品详情-->
+		<div class="product_info">
+			<h2 th:utext="#{label.click.introduction}"></h2>
+			<div class="m-img" th:utext="${product.description}">
+			</div>
+			<div id="to_lead"></div>
+		</div>
+		<!--评论开始-->
+		<div class="User_notes" style="background:#fff;margin:2.5%;" id="detail_tab3" th:if="${product.comment}">
+			<article>
+				<div class="wttl">
+					<h2 style="font-size:16px;" th:utext="#{label.click.pj}"></h2>
+				</div>
+				<div id="pingjia" class="pingjia" style="max-height: 700px;height: auto;">
+					<ul class="allpj" id="allpj" th:if="${not #lists.isEmpty(product.commentEntityList)}">
+						<li class="le" style="display: block; min-height: 65px; overflow: hidden;" th:each="item,start :${product.commentEntityList}">
+							<span class="touxiang">
+								<span class="username" style="position:relative;top:41px;font-size:13px;left:4px;" th:utext="${item.comment_name}"></span>
+							</span>
+							<img  style="transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */" th:if="${start.index % 2 == 0}" class="lj" src="http://thdtop.fun/res/img/pl2.png">
+							<img th:if="${start.index % 2 != 0}" class="lj" src="http://thdtop.fun/res/img/pl3.png">
+							<section th:if="${start.index % 2 == 0}" class="l" style="max-width:75%;width:75%;height:auto;background:rgb(188,227,249);">
+								<span th:utext="${item.comment_content}"></span>
+								<div th:if="${item.imageEntity != null}">
+									<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+								</div>
+							</section>
+							<section th:if="${start.index % 2 != 0}" class="l" style="max-width:75%;width:75%;height:auto;">
+								<span th:utext="${item.comment_content}"></span>
+								<div th:if="${item.imageEntity != null}">
+									<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+								</div>
+							</section>
+						</li>
+					</ul>
+					<ul class="allpj" id="allpj2" th:if="${not #lists.isEmpty(product.commentEntityList)}">
+						<li class="le" style="display: block;min-height: 65px; overflow: hidden;" th:each="item,start :${product.commentEntityList}">
+							<span class="touxiang">
+								<span class="username" style="position:relative;top:41px;font-size:13px;left:4px;" th:utext="${item.comment_name}"></span>
+							</span>
+							<img  style="transform:rotate(180deg);-ms-transform:rotate(180deg); /* Internet Explorer */-moz-transform:rotate(180deg); /* Firefox */-webkit-transform:rotate(180deg); /* Safari 和 Chrome */-o-transform:rotate(180deg); /* Opera */"
+								  th:if="${start.index % 2 == 0}" class="lj" src="http://thdtop.fun/res/img/pl2.png">
+							<img th:if="${start.index % 2 != 0}" class="lj" src="http://thdtop.fun/res/img/pl3.png">
+							<section th:if="${start.index % 2 == 0}" class="l" style="max-width:75%;width:75%;height:auto;background:rgb(188,227,249);">
+								<span th:utext="${item.comment_content}"></span>
+								<div th:if="${item.imageEntity != null}">
+									<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+								</div>
+							</section>
+							<section th:if="${start.index % 2 != 0}" class="l" style="max-width:75%;width:75%;height:auto;">
+								<span th:utext="${item.comment_content}"></span>
+								<div th:if="${item.imageEntity != null}">
+									<img width="180px" height="200px" th:src="${item.imageEntity.url}">
+								</div>
+							</section>
+						</li>
+					</ul>
+				</div>
+			</article>
+		</div>
+		<!--评论结束-->
+	</section>
+
+	<div class="User_notes">
+		<h2 class="notes" th:utext="#{label.click.condition}"></h2>
+		<div class="note_text" th:utext="#{label.click.to.know1}"></div>
+		<div class="note_title" th:utext="#{label.click.to.know2}"></div>
+		<div class="note_text">
+			<span th:utext="#{label.click.to.tnow3}"></span>
+			<a href="mailto:wisinmy@hotmail.com" style="color:#fff;">wisinmy@hotmail.com</a>
+			<span th:utext="#{label.click.to.tnow4}"></span>
+		</div>
+		<div class="note_title" th:utext="#{label.click.to.tnow5}"></div>
+		<div class="note_text" th:utext="#{label.click.to.tnow6}"></div>
+
+		<div class="note_title" th:utext="#{label.click.to.tnow7}"></div>
+
+		<div class="note_text">
+			<span th:utext="#{label.click.to.tnow8}"></span>
+			<a href="mailto:wisinmy@hotmail.com"
+				style="text-decoration:none;outline:0;color: #fff">wisinmy@hotmail.com</a>
+			<span th:utext="#{label.click.to.tnow9}"></span>
+		</div>
+
+		<div class="note_title" th:utext="#{label.click.to.tnow10 }"></div>
+		<div class="note_text" th:utext="#{label.click.to.tnow11}"></div>
+		<div class="note_title" th:utext="#{label.click.to.tnow12}"></div>
+
+		<div class="note_title" th:utext="#{label.click.to.tnow13 }"></div>
+
+		<div class="note_text" th:utext="#{label.click.to.tnow14}"></div>
+
+	</div>
+
+	<footer>
+		<div class="top">top</div>
+		<div id="buyBtn2"><a href="javascript:void(0)" th:utext="#{label.click.now.buy}"></a></div>
+	</footer>
+	<form id="payForm" action="/pay" method="post">
+		<input type="hidden" name="code" th:value="${url_id}"/>
+		<input type="hidden" name="lang" th:value="${lang}"/>
+	</form>
+	<script type="text/javascript">
+
+        //向上滚动
+        var area = document.getElementById('pingjia');
+        var cont1 = document.getElementById('allpj');
+        var cont2 = document.getElementById('allpj2');
+        if(area && cont1 && cont2){
+            area.scrollTop = 0;
+            cont2.innerHTML = cont1.innerHTML;
+            function myScroll() {
+                if (area.scrollTop >= cont1.scrollHeight) {
+                    area.scrollTop = 0;
+                } else {
+                    area.scrollTop++;
+                }
+            }
+            var time = 20;
+            var interval = setInterval('myScroll()', time);
+            area.onmouseover = function () {
+                clearInterval(interval);
+            };
+            area.onmouseout = function () {
+                // 继续执行之前的定时器
+                interval = setInterval('myScroll()', time);
+            };
+        }
+
+        $(".top").click(function () {
+			$('html,body').animate({ "scrollTop": 0 }, 800);
+		});
+		var swiper = new Swiper('.swiper-container', {
+
+			pagination: '.swiper-pagination',
+
+			nextButton: '.swiper-button-next',
+
+			prevButton: '.swiper-button-prev',
+
+			paginationClickable: true,
+
+			spaceBetween: 30,
+
+			centeredSlides: true,
+
+			autoHeight: true,
+
+			autoplayDisableOnInteraction: false,
+
+			loop: true, autoplay: 3000,
+
+		});
+
+	</script>
+	<script>
+        var facebook_viewcontent = true;
+        var facebook_lead = true;
+        //倒计时
+        (function () {
+            setInterval(function () {
+                var leftTime = (new Date(2118, 0, 1, 0, 0, 0)) - (new Date());
+                var hours = parseInt(leftTime / 1000 / 60 / 60 % 24, 10);
+                var minutes = parseInt(leftTime / 1000 / 60 % 60, 10);
+                var seconds = parseInt(leftTime / 1000 % 60, 10);
+                hours = hours < 10 ? '0' + hours : hours;
+                minutes = minutes < 10 ? '0' + minutes : minutes;
+                seconds = seconds < 10 ? '0' + seconds : seconds;
+                $("#remainTime_1 .time").text(hours + ':' + minutes + ':' + seconds);
+            }, 1000);
+        })();
+        (function () {
+            $(document, window).on("scroll", function (e) {
+                if (facebook_viewcontent) {
+                    facebook_viewcontent = false;
+                    try {
+                        fbq('track', 'ViewContent');
+                    } catch (e) {
+                    }
+                }
+                if (isInView('#to_lead') && facebook_lead) {
+                    facebook_lead = false;
+                    try {
+                        fbq('track', 'Lead');
+                    } catch (e) {
+                    }
+                }
+            });
+        })();
+        // 页面滚动监听事件end
+        function isInView(elem) {
+            var docViewTop = $(window).scrollTop();
+            var docViewBottom = docViewTop + $(window).height();
+            var elemTop = $(elem).offset().top;
+            return ((elemTop <= docViewBottom) && (elemTop >= docViewTop));
+        }
+        $("#buyBtn1").click(function () {
+            $("#payForm").submit();
+        });
+        $("#buyBtn2").click(function () {
+            $("#payForm").submit();
+        });
+	</script>
+</body>
+
+</html>

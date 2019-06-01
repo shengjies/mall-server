@@ -10,7 +10,10 @@ public class UserEntity {
     private String username;
     private String password;
     private String role_code;
+    private int is_group;//默认未0 未分配
     private String  c_date;
+
+    private List<String> groupId;//组员编号
 
     private List<Integer> fb_id;
     private List<Integer> domain_id;
@@ -88,5 +91,21 @@ public class UserEntity {
 
     public void setDomailEntities(List<DomailEntity> domailEntities) {
         this.domailEntities = domailEntities;
+    }
+
+    public int getIs_group() {
+        return is_group;
+    }
+
+    public void setIs_group(int is_group) {
+        this.is_group = is_group;
+    }
+
+    public List<String> getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(List<String> groupId) {
+        this.groupId = groupId;
     }
 }

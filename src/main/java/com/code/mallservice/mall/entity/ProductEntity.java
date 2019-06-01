@@ -14,6 +14,7 @@ public class ProductEntity {
     private int cl_id;//产品营销策略
     private int price;//产品单价
     private int o_price;//产品原价
+    private float cg_price;//採購單價
     private String country;//国家
     private String unit;//货币单位
     private int sold;//已经出售
@@ -30,6 +31,9 @@ public class ProductEntity {
 
     private String teml_page;//模板主页
     private String teml_order;//模板订单页面
+
+    private  boolean ps711;//是否支持711
+    private boolean psqj;//是否支持全家
 
     //属性操作
     private ImageEntity mainImage;//主图
@@ -297,37 +301,28 @@ public class ProductEntity {
         this.commentEntityList = commentEntityList;
     }
 
-    @Override
-    public String toString() {
-        return "ProductEntity{" +
-                "id=" + id +
-                ", main_image_id=" + main_image_id +
-                ", name='" + name + '\'' +
-                ", introduction='" + introduction + '\'' +
-                ", description='" + description + '\'' +
-                ", cl_id=" + cl_id +
-                ", price=" + price +
-                ", o_price=" + o_price +
-                ", country='" + country + '\'' +
-                ", unit='" + unit + '\'' +
-                ", sold=" + sold +
-                ", comment_num=" + comment_num +
-                ", max_buy_num=" + max_buy_num +
-                ", facebook='" + facebook + '\'' +
-                ", comment=" + comment +
-                ", templ=" + templ +
-                ", c_date='" + c_date + '\'' +
-                ", user_id=" + user_id +
-                ", lang='" + lang + '\'' +
-                ", purchase_url='" + purchase_url + '\'' +
-                ", remark='" + remark + '\'' +
-                ", mainImage=" + mainImage +
-                ", roundImage=" + roundImage +
-                ", roundImageList=" + roundImageList +
-                ", userEntity=" + userEntity +
-                ", sizes=" + sizes +
-                ", types=" + types +
-                ", policys=" + policys +
-                '}';
+    public boolean isPs711() {
+        return ps711;
+    }
+
+    public void setPs711(boolean ps711) {
+        this.ps711 = ps711;
+    }
+
+    public boolean isPsqj() {
+        return psqj;
+    }
+
+    public void setPsqj(boolean psqj) {
+        this.psqj = psqj;
+    }
+
+
+    public float getCg_price() {
+        return cg_price;
+    }
+
+    public void setCg_price(float cg_price) {
+        this.cg_price = cg_price;
     }
 }
